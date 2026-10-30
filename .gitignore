@@ -1,0 +1,32 @@
+# Secrets et configuration locale
+application-local.properties
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Backend (Java, Maven)
+target/
+*.class
+*.log
+.classpath
+.project
+.settings/
+
+# Frontend (Angular, Node)
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+
+# Éditeurs et système
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Sauvegardes locales de base de données
+*.dump
+*.sql.gz
