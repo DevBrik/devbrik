@@ -1,0 +1,35 @@
+<a class="lien-evitement" href="#contenu">Aller au contenu</a>
+
+<mat-toolbar class="entete" role="banner">
+  <a routerLink="/briques" class="logo">DevBrik</a>
+  <nav class="nav" aria-label="Navigation principale">
+    <a mat-button routerLink="/briques" routerLinkActive="actif">Briques</a>
+    <a mat-button routerLink="/demandes" routerLinkActive="actif">Demandes</a>
+  </nav>
+  <span class="espace"></span>
+
+  @if (auth.estConnecte()) {
+    <button mat-button type="button" [matMenuTriggerFor]="menuCompte">{{ auth.utilisateur()?.pseudo }}</button>
+    <mat-menu #menuCompte="matMenu">
+      <a mat-menu-item routerLink="/briques/mes">Mes briques</a>
+      <a mat-menu-item routerLink="/compte/profil">Mon compte</a>
+      @if (auth.estAdmin()) {
+        <a mat-menu-item routerLink="/admin/signalements">Administration</a>
+      }
+      <button mat-menu-item type="button" (click)="deconnecter()">Se déconnecter</button>
+    </mat-menu>
+  } @else {
+    <a mat-button routerLink="/compte/connexion">Se connecter</a>
+    <a mat-flat-button routerLink="/compte/inscription">S'inscrire</a>
+  }
+</mat-toolbar>
+
+<main id="contenu" tabindex="-1">
+  <router-outlet />
+</main>
+
+<footer class="pied" role="contentinfo">
+  <a routerLink="/infos/conditions">Conditions d'utilisation</a>
+  <a routerLink="/infos/confidentialite">Confidentialité</a>
+  <a routerLink="/infos/a-propos">À propos</a>
+</footer>
