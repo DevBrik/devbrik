@@ -78,8 +78,6 @@ class BriqueServiceTest {
         @DisplayName("titre déjà utilisé → TITRE_DEJA_UTILISE")
         void titreDuplique_lanceException() {
             when(briqueRepo.existsByIdAuteurAndTitreIgnoreCase(anyLong(), anyString())).thenReturn(true);
-            when(catRepo.findById(1L)).thenReturn(Optional.of(cat));
-            when(langRepo.findById(1L)).thenReturn(Optional.of(lang));
             when(briqueRepo.compterCreationsDepuis(anyLong(), any())).thenReturn(0L);
 
             // IdentiteUtilisateur.obligatoire() est statique — on mocke via mockStatic
