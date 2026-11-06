@@ -1,0 +1,1 @@
+CREATE DATABASE devbrik_test OWNER devbrik;

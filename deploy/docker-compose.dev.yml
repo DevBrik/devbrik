@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:18
+    container_name: devbrik-db
+    environment:
+      POSTGRES_USER: devbrik
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Définir DB_PASSWORD dans deploy/.env}
+      POSTGRES_DB: devbrik
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - devbrik-data:/var/lib/postgresql
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devbrik -d devbrik"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  devbrik-data:
