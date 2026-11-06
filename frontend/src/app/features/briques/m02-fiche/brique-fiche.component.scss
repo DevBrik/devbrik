@@ -1,0 +1,69 @@
+.fiche-page {
+  padding: 1.5rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.btn-retour { margin-bottom: 1rem; }
+
+.fiche-entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fiche-titre {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+}
+
+.fiche-auteur {
+  font-size: 0.875rem;
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0;
+}
+
+.chips-meta { margin-bottom: 1rem; }
+
+.divider { margin: 1rem 0; }
+
+.section-texte {
+  margin-bottom: 1.5rem;
+  h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+}
+
+.section-code {
+  margin-bottom: 1.5rem;
+
+  .code-entete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h2 { font-size: 1.1rem; font-weight: 600; margin: 0; }
+  }
+}
+
+/* RG18 : code en texte brut — pas d'interprétation HTML */
+.code-bloc {
+  background: var(--mat-sys-surface-variant);
+  color: var(--mat-sys-on-surface-variant);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  white-space: pre;
+  margin: 0.5rem 0 0;
+}
+
+.whitespace-pre { white-space: pre-wrap; }
+
+@media (max-width: 600px) {
+  .fiche-page { padding: 1rem; }
+  .fiche-titre { font-size: 1.375rem; }
+  .fiche-entete { flex-direction: column; }
+}
