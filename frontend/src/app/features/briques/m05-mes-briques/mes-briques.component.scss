@@ -1,0 +1,100 @@
+.mes-briques-page {
+  padding: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h1 { font-size: 1.5rem; font-weight: 700; margin: 0; }
+}
+
+.compteur {
+  font-size: 0.875rem;
+  color: var(--mat-sys-on-surface-variant);
+  margin-bottom: 1rem;
+}
+
+.briques-liste {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.brique-ligne {
+  transition: box-shadow 150ms ease;
+  &:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+  &.masquee { border-left: 4px solid var(--mat-sys-error); opacity: 0.85; }
+
+  mat-card-content { padding: 0.75rem !important; }
+}
+
+.ligne-contenu { display: flex; align-items: center; gap: 1rem; }
+
+.ligne-info {
+  flex: 1;
+  cursor: pointer;
+  min-width: 0;
+  &:focus-visible { outline: 2px solid var(--mat-sys-primary); border-radius: 4px; }
+}
+
+.ligne-titre-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.ligne-titre {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ligne-version {
+  font-size: 0.75rem;
+  color: var(--mat-sys-on-surface-variant);
+  flex-shrink: 0;
+}
+
+.chip-masquee {
+  --mdc-chip-label-text-size: 0.7rem;
+  background: var(--mat-sys-error-container);
+  color: var(--mat-sys-on-error-container);
+  height: 1.25rem;
+}
+
+.ligne-resume {
+  font-size: 0.8125rem;
+  color: var(--mat-sys-on-surface-variant);
+  margin: 0 0 0.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ligne-meta {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--mat-sys-on-surface-variant);
+  flex-wrap: wrap;
+  .meta-date { margin-left: auto; }
+}
+
+.ligne-actions { display: flex; gap: 0.25rem; flex-shrink: 0; }
+
+@media (max-width: 600px) {
+  .mes-briques-page { padding: 1rem; }
+  .page-entete h1   { font-size: 1.25rem; }
+  .ligne-resume     { display: none; }
+  .meta-date        { display: none; }
+}
