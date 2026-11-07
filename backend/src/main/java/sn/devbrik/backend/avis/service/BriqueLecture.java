@@ -16,7 +16,8 @@ import java.util.Set;
 
 /**
  * Lecture seule de la table brique (règle 2 de 9.4) : aucune écriture, aucune relation JPA.
- * À remplacer par BriqueService.resume / resumes quand le membre 2 les publiera.
+ * BriqueService.resume et BriqueService.references (13.4) sont maintenant publiés : cette lecture peut leur être substituée plus tard,
+ * mais elle reste valable (elle ne passe que par une requête SQL en lecture seule).
  */
 @Component
 public class BriqueLecture {

@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 import sn.devbrik.backend.common.ApiException;
+import sn.devbrik.backend.common.CodeErreur;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -21,7 +22,8 @@ class StatistiquesServiceTest {
     void test_S4_un_non_administrateur_ne_voit_pas_les_statistiques() {
         assertThatThrownBy(() -> service.statistiques(false))
                 .isInstanceOf(ApiException.class)
-                .extracting("code").isEqualTo("ACCES_REFUSE");
+                .extracting(e -> ((ApiException) e).getCode())
+                .isEqualTo(CodeErreur.ACCES_REFUSE);
         verifyNoInteractions(jdbcTemplate);
     }
 }

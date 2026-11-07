@@ -42,8 +42,8 @@ class QuotaApiTest extends ApiTestSupport {
     void test_RG15_le_51e_avis_en_24_h_donne_429() throws Exception {
         Compte auteur = inscrire();
         Compte dev = inscrire();
+        Brique nouvelle = creerBrique(auteur); // avant les briques SQL : elles comptent dans le quota de 20 briques (RG15)
         insererAvis(dev.id(), briquesSql(50, auteur.id()), "1 hour");
-        Brique nouvelle = creerBrique(auteur);
 
         mvc.perform(avec(put("/api/briques/{id}/avis", nouvelle.id()), dev).contentType(JSON).content("{\"note\":5}"))
                 .andExpect(status().isTooManyRequests())
@@ -54,8 +54,8 @@ class QuotaApiTest extends ApiTestSupport {
     void test_RG15_le_49e_avis_passe_et_les_avis_de_plus_de_24_h_ne_comptent_pas() throws Exception {
         Compte auteur = inscrire();
         Compte dev = inscrire();
+        Brique nouvelle = creerBrique(auteur); // avant les briques SQL : elles comptent dans le quota de 20 briques (RG15)
         insererAvis(dev.id(), briquesSql(49, auteur.id()), "1 hour");
-        Brique nouvelle = creerBrique(auteur);
 
         mvc.perform(avec(put("/api/briques/{id}/avis", nouvelle.id()), dev).contentType(JSON).content("{\"note\":5}"))
                 .andExpect(status().isCreated());
@@ -72,8 +72,8 @@ class QuotaApiTest extends ApiTestSupport {
     void test_RG15_le_51e_test_en_24_h_donne_429() throws Exception {
         Compte auteur = inscrire();
         Compte dev = inscrire();
+        Brique nouvelle = creerBrique(auteur); // avant les briques SQL : elles comptent dans le quota de 20 briques (RG15)
         insererTests(dev.id(), briquesSql(50, auteur.id()), "1 hour");
-        Brique nouvelle = creerBrique(auteur);
 
         mvc.perform(avec(put("/api/briques/{id}/test", nouvelle.id()), dev).contentType(JSON)
                         .content("{\"resultat\":\"OK\"}"))
@@ -85,8 +85,8 @@ class QuotaApiTest extends ApiTestSupport {
     void test_RG15_les_tests_de_plus_de_24_h_ne_comptent_pas() throws Exception {
         Compte auteur = inscrire();
         Compte dev = inscrire();
+        Brique nouvelle = creerBrique(auteur); // avant les briques SQL : elles comptent dans le quota de 20 briques (RG15)
         insererTests(dev.id(), briquesSql(50, auteur.id()), "25 hours");
-        Brique nouvelle = creerBrique(auteur);
 
         mvc.perform(avec(put("/api/briques/{id}/test", nouvelle.id()), dev).contentType(JSON)
                         .content("{\"resultat\":\"OK\"}"))
@@ -99,8 +99,8 @@ class QuotaApiTest extends ApiTestSupport {
     void test_RG15_le_11e_signalement_en_24_h_donne_429() throws Exception {
         Compte auteur = inscrire();
         Compte dev = inscrire();
+        Brique nouvelle = creerBrique(auteur); // avant les briques SQL : elles comptent dans le quota de 20 briques (RG15)
         insererSignalements(dev.id(), briquesSql(10, auteur.id()), "1 hour");
-        Brique nouvelle = creerBrique(auteur);
 
         mvc.perform(avec(post("/api/briques/{id}/signalements", nouvelle.id()), dev).contentType(JSON)
                         .content("{\"motif\":\"SPAM\"}"))
@@ -112,8 +112,8 @@ class QuotaApiTest extends ApiTestSupport {
     void test_RG15_les_signalements_de_plus_de_24_h_ne_comptent_pas() throws Exception {
         Compte auteur = inscrire();
         Compte dev = inscrire();
+        Brique nouvelle = creerBrique(auteur); // avant les briques SQL : elles comptent dans le quota de 20 briques (RG15)
         insererSignalements(dev.id(), briquesSql(10, auteur.id()), "25 hours");
-        Brique nouvelle = creerBrique(auteur);
 
         mvc.perform(avec(post("/api/briques/{id}/signalements", nouvelle.id()), dev).contentType(JSON)
                         .content("{\"motif\":\"SPAM\"}"))

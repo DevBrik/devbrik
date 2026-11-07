@@ -186,7 +186,7 @@ class SignalementApiTest extends ApiTestSupport {
         long id = idSignalement(dev, b);
 
         mvc.perform(avec(get("/api/admin/signalements"), administrateur()))
-                .andExpect(jsonPath("$.contenu[?(@.id==" + id + ")].brique.auteur.id").value(auteur.id()))
-                .andExpect(jsonPath("$.contenu[?(@.id==" + id + ")].auteur.id").value(dev.id()));
+                .andExpect(jsonPath("$.contenu[?(@.id==" + id + ")].brique.auteur.id").value((int) auteur.id()))
+                .andExpect(jsonPath("$.contenu[?(@.id==" + id + ")].auteur.id").value((int) dev.id()));
     }
 }

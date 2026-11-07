@@ -1,23 +1,18 @@
 package sn.devbrik.backend.brique.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sn.devbrik.backend.brique.dto.*;
 import sn.devbrik.backend.brique.service.BriqueService;
 import sn.devbrik.backend.common.PageReponse;
 
 /**
- * Endpoints briques.
- *
- * Sécurité gérée globalement par SecurityConfig :
- *   - GET /api/briques/**   → public (permitAll)
- *   - POST, PUT, DELETE     → authenticated
- *   - /api/admin/**         → ADMIN
- *   - /api/moi/**           → authenticated
+ * Routes briques (11.4). Sécurité gérée par SecurityConfig :
+ *   - GET /api/briques/**  : public ;
+ *   - /api/admin/**        : administrateur ;
+ *   - /api/moi/**          : connecté ;
+ *   - les autres routes    : connecté.
  */
 @RestController
 public class BriqueController {
@@ -28,28 +23,28 @@ public class BriqueController {
         this.briqueService = briqueService;
     }
 
-    // ── M01 — Liste publique ──────────────────────────────────────────────────
+    // ── M01 : liste publique ──────────────────────────────────────────────────
 
     @GetMapping("/api/briques")
     public PageReponse<BriqueResumeDto> lister(
-            @RequestParam(required = false) Long categorieId,
-            @RequestParam(required = false) Long langageId,
-            @RequestParam(defaultValue = "0")  int page,
-            @RequestParam(defaultValue = "20") int taille) {
-
-        PageRequest pageable = PageRequest.of(page, Math.min(taille, 50),
-                                              Sort.by("dateCreation").descending());
-        return briqueService.listerPubliees(categorieId, langageId, pageable);
+            @RequestParam(name = "q", required = false) String q,
+            @RequestParam(name = "categorie", required = false) String categorie,
+            @RequestParam(name = "langage", required = false) String langage,
+            @RequestParam(name = "auteur", required = false) Long auteur,
+            @RequestParam(name = "tri", required = false) String tri,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "taille", required = false) Integer taille) {
+        return briqueService.listerPubliees(q, categorie, langage, auteur, tri, page, taille);
     }
 
-    // ── M02 — Fiche publique ──────────────────────────────────────────────────
+    // ── M02 : fiche ───────────────────────────────────────────────────────────
 
     @GetMapping("/api/briques/{id}")
-    public BriqueDetailDto obtenir(@PathVariable Long id) {
-        return briqueService.obtenirPublique(id);
+    public BriqueDetailDto obtenir(@PathVariable("id") Long id) {
+        return briqueService.obtenir(id);
     }
 
-    // ── M03 — Publier ─────────────────────────────────────────────────────────
+    // ── M03 : publier, modifier ───────────────────────────────────────────────
 
     @PostMapping("/api/briques")
     @ResponseStatus(HttpStatus.CREATED)
@@ -57,52 +52,51 @@ public class BriqueController {
         return briqueService.publier(dto);
     }
 
-    // ── M03 — Modifier ────────────────────────────────────────────────────────
-
     @PutMapping("/api/briques/{id}")
-    public BriqueDetailDto modifier(@PathVariable Long id,
+    public BriqueDetailDto modifier(@PathVariable("id") Long id,
                                     @Valid @RequestBody BriqueModificationDto dto) {
         return briqueService.modifier(id, dto);
     }
 
-    // ── M05 — Mes briques ─────────────────────────────────────────────────────
-
-    @GetMapping("/api/moi/briques")
-    public PageReponse<BriqueResumeInterne> mesBriques(
-            @RequestParam(defaultValue = "0")  int page,
-            @RequestParam(defaultValue = "20") int taille) {
-
-        PageRequest pageable = PageRequest.of(page, Math.min(taille, 50),
-                                              Sort.by("dateCreation").descending());
-        return briqueService.mesBriques(pageable);
-    }
-
-    // ── M05 — Supprimer ───────────────────────────────────────────────────────
+    // ── M05 : supprimer, mes briques ──────────────────────────────────────────
 
     @DeleteMapping("/api/briques/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void supprimer(@PathVariable Long id) {
+    public void supprimer(@PathVariable("id") Long id) {
         briqueService.supprimer(id);
     }
 
-    // ── Admin — Masquer / Republier ───────────────────────────────────────────
-
-    @PatchMapping("/api/admin/briques/{id}/masquer")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void masquer(@PathVariable Long id) {
-        briqueService.masquer(id);
+    @GetMapping("/api/moi/briques")
+    public PageReponse<BriqueResumeDto> mesBriques(
+            @RequestParam(name = "q", required = false) String q,
+            @RequestParam(name = "categorie", required = false) String categorie,
+            @RequestParam(name = "langage", required = false) String langage,
+            @RequestParam(name = "tri", required = false) String tri,
+            @RequestParam(name = "statut", required = false) String statut,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "taille", required = false) Integer taille) {
+        return briqueService.mesBriques(q, categorie, langage, tri, statut, page, taille);
     }
 
-    @PatchMapping("/api/admin/briques/{id}/republier")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void republier(@PathVariable Long id) {
-        briqueService.republier(id);
+    // ── Administration (M11) ──────────────────────────────────────────────────
+
+    @GetMapping("/api/admin/briques")
+    public PageReponse<BriqueResumeDto> listerPourAdmin(
+            @RequestParam(name = "q", required = false) String q,
+            @RequestParam(name = "categorie", required = false) String categorie,
+            @RequestParam(name = "langage", required = false) String langage,
+            @RequestParam(name = "auteur", required = false) Long auteur,
+            @RequestParam(name = "tri", required = false) String tri,
+            @RequestParam(name = "statut", required = false) String statut,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "taille", required = false) Integer taille) {
+        return briqueService.listerPourAdmin(q, categorie, langage, auteur, tri, statut, page, taille);
     }
 
-    // ── Référence légère (inter-modules) ─────────────────────────────────────
-
-    @GetMapping("/api/briques/{id}/reference")
-    public BriqueReference reference(@PathVariable Long id) {
-        return briqueService.reference(id);
+    /** PUT { statut: "PUBLIEE" | "MASQUEE" } → 200 BriqueDetail. */
+    @PutMapping("/api/admin/briques/{id}/statut")
+    public BriqueDetailDto changerStatut(@PathVariable("id") Long id,
+                                         @Valid @RequestBody StatutRequete requete) {
+        return briqueService.changerStatut(id, requete.statut());
     }
 }

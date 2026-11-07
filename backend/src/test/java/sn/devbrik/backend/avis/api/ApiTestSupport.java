@@ -1,6 +1,8 @@
 package sn.devbrik.backend.avis.api;
 
 import com.jayway.jsonpath.JsonPath;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +37,7 @@ abstract class ApiTestSupport {
 
     @Autowired protected MockMvc mvc;
     @Autowired protected JdbcTemplate jdbc;
+    @PersistenceContext protected EntityManager em;
 
     protected record Compte(long id, String pseudo, String jeton) {}
 
@@ -55,6 +58,10 @@ abstract class ApiTestSupport {
     protected Compte administrateur() throws Exception {
         Compte c = inscrire();
         jdbc.update("UPDATE utilisateur SET role = 'ADMIN' WHERE id_utilisateur = ?", c.id());
+        // Le test partage sa transaction (donc son cache Hibernate) avec MockMvc : sans ceci, la connexion
+        // relit l'entité en cache (rôle DEVELOPPEUR) et le jeton émis n'est pas celui d'un administrateur.
+        em.flush();
+        em.clear();
         String corps = mvc.perform(post("/api/auth/connexion").contentType(JSON)
                         .content("{\"pseudo\":\"" + c.pseudo() + "\",\"motDePasse\":\"" + MOT_DE_PASSE + "\"}"))
                 .andExpect(status().isOk())

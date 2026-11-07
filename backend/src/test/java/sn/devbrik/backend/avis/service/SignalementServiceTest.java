@@ -74,7 +74,7 @@ class SignalementServiceTest {
 
     private void briqueAvecStatut(long idAuteur, StatutBrique statut) {
         InfoBrique info = brique(idAuteur, statut);
-        when(briques.trouver(BRIQUE)).thenReturn(Optional.of(info));
+        lenient().when(briques.trouver(BRIQUE)).thenReturn(Optional.of(info));
         lenient().when(briques.parLot(anyCollection())).thenReturn(Map.of(BRIQUE, info));
     }
 
