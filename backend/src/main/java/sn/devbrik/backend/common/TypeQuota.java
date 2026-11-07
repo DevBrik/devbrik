@@ -2,7 +2,7 @@ package sn.devbrik.backend.common;
 
 public enum TypeQuota {
     BRIQUE(20, "briques"),
-    AVIS(50, "avis"),
+    AVIS(50, "sn/devbrik/backend/avis"),
     TEST(50, "tests"),
     DEMANDE(10, "demandes"),
     REPONSE(50, "réponses"),

@@ -353,7 +353,7 @@ class ApiComptesHttpIntegrationTest {
         assertTrue(export.corps().contains("Brique export A"));
         assertFalse(export.corps().contains("Brique export B"));
         assertFalse(export.corps().contains(pseudoB));
-        for (String section : new String[]{"profil", "briques", "avis", "tests", "demandes", "reponses", "signalements"}) {
+        for (String section : new String[]{"profil", "briques", "sn/devbrik/backend/avis", "tests", "demandes", "reponses", "signalements"}) {
             assertTrue(export.corps().contains("\"" + section + "\""), section);
         }
     }
