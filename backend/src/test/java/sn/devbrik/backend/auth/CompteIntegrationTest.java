@@ -70,7 +70,7 @@ class CompteIntegrationTest {
     void test_RG17_la_suppression_du_compte_supprime_en_cascade_tout_son_contenu() {
         long id = creerUtilisateur("test.cascade");
         creerContenu(id, "Brique cascade");
-        for (String table : new String[]{"brique", "avis", "test_brique", "signalement_brique", "demande", "reponse"}) {
+        for (String table : new String[]{"brique", "sn/devbrik/backend/avis", "test_brique", "signalement_brique", "demande", "reponse"}) {
             assertEquals(1, compter(table, id), "avant suppression : " + table);
         }
 
@@ -78,7 +78,7 @@ class CompteIntegrationTest {
 
         assertEquals(0, jdbc.queryForObject(
                 "SELECT count(*) FROM utilisateur WHERE id_utilisateur = ?", Integer.class, id));
-        for (String table : new String[]{"brique", "avis", "test_brique", "signalement_brique", "demande", "reponse"}) {
+        for (String table : new String[]{"brique", "sn/devbrik/backend/avis", "test_brique", "signalement_brique", "demande", "reponse"}) {
             assertEquals(0, compter(table, id), "après suppression : " + table);
         }
     }
@@ -93,7 +93,7 @@ class CompteIntegrationTest {
         compteService.supprimer(a, new SuppressionRequete(MOT_DE_PASSE));
 
         assertEquals(1, compter("brique", b));
-        assertEquals(1, compter("avis", b));
+        assertEquals(1, compter("sn/devbrik/backend/avis", b));
         assertEquals(1, compter("reponse", b));
     }
 
