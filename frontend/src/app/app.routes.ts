@@ -4,10 +4,6 @@ import { adminGuard } from './core/auth/gardes';
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'briques' },
   {
-    path: 'briques',
-    loadChildren: () => import('./features/briques/briques.routes').then((m) => m.BRIQUES_ROUTES),
-  },
-  {
     path: 'demandes',
     loadChildren: () => import('./features/demandes/demandes.routes').then((m) => m.DEMANDES_ROUTES),
   },
