@@ -30,3 +30,5 @@ Thumbs.db
 # Sauvegardes locales de base de données
 *.dump
 *.sql.gz
+
+deploy/.env

@@ -1,0 +1,13 @@
+{
+  "name": "b4-date-dakar",
+  "version": "1.0.0",
+  "description": "Brique B4 — Formateur de date/heure pour le fuseau Africa/Dakar (UTC+0)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "license": "MIT"
+}

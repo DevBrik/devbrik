@@ -1,0 +1,143 @@
+<!-- M03 — Formulaire publier / modifier une brique -->
+<section class="formulaire-page">
+
+  <h1 class="page-titre">
+    {{ mode() === 'creation' ? 'Publier une brique' : 'Modifier la brique' }}
+  </h1>
+
+  @if (chargement()) {
+    <app-etat-page mode="chargement" />
+  }
+
+  @if (!chargement()) {
+    <form [formGroup]="form" (ngSubmit)="soumettre()" novalidate>
+      <mat-card class="formulaire-card">
+        <mat-card-content>
+
+          <!-- Titre -->
+          <mat-form-field appearance="outline" class="champ-plein">
+            <mat-label>Titre</mat-label>
+            <input matInput formControlName="titre" maxlength="120" autocomplete="off" />
+            <mat-hint align="end">{{ longueur(form.controls['titre']) }}/120</mat-hint>
+            <mat-error>
+              @if (form.controls['titre'].hasError('required')) { Le titre est obligatoire. }
+              @else if (form.controls['titre'].hasError('maxlength')) { 120 caractères maximum. }
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Résumé -->
+          <mat-form-field appearance="outline" class="champ-plein">
+            <mat-label>Résumé</mat-label>
+            <textarea matInput formControlName="resume" rows="3" maxlength="300"></textarea>
+            <mat-hint align="end">{{ longueur(form.controls['resume']) }}/300</mat-hint>
+            <mat-error>
+              @if (form.controls['resume'].hasError('required')) { Le résumé est obligatoire. }
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Code source (RG18 : texte brut) -->
+          <mat-form-field appearance="outline" class="champ-plein">
+            <mat-label>Code source</mat-label>
+            <textarea matInput formControlName="code" rows="12"
+                      class="textarea-code"
+                      maxlength="30000"
+                      spellcheck="false"
+                      autocorrect="off" autocapitalize="off"></textarea>
+            <mat-hint align="end">{{ longueur(form.controls['code']) }}/30 000</mat-hint>
+            <mat-error>
+              @if (form.controls['code'].hasError('required')) { Le code est obligatoire. }
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Mode d'emploi -->
+          <mat-form-field appearance="outline" class="champ-plein">
+            <mat-label>Mode d'emploi</mat-label>
+            <textarea matInput formControlName="modeEmploi" rows="5"
+                      placeholder="Expliquez comment utiliser cette brique (10 à 10 000 car.)"></textarea>
+            <mat-error>
+              @if (form.controls['modeEmploi'].hasError('required')) { Le mode d'emploi est obligatoire. }
+              @else if (form.controls['modeEmploi'].hasError('minlength')) { 10 caractères minimum. }
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Prérequis -->
+          <mat-form-field appearance="outline" class="champ-plein">
+            <mat-label>Prérequis (facultatif)</mat-label>
+            <textarea matInput formControlName="prerequis" rows="3" maxlength="500"></textarea>
+            <mat-hint align="end">{{ longueur(form.controls['prerequis']) }}/500</mat-hint>
+          </mat-form-field>
+
+          <!-- Catégorie + Langage -->
+          <div class="champs-grille">
+            <mat-form-field appearance="outline">
+              <mat-label>Catégorie</mat-label>
+              <mat-select formControlName="idCategorie">
+                @for (cat of categories; track cat.id) {
+                  <mat-option [value]="cat.id">{{ cat.nom }}</mat-option>
+                }
+              </mat-select>
+              <mat-error>Sélectionnez une catégorie.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Langage</mat-label>
+              <mat-select formControlName="idLangage">
+                @for (lang of langages; track lang.id) {
+                  <mat-option [value]="lang.id">{{ lang.nom }}</mat-option>
+                }
+              </mat-select>
+              <mat-error>Sélectionnez un langage.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Licence -->
+          <mat-form-field appearance="outline" class="champ-mi">
+            <mat-label>Licence</mat-label>
+            <mat-select formControlName="licence">
+              @for (lic of licences; track lic.valeur) {
+                <mat-option [value]="lic.valeur">{{ lic.libelle }}</mat-option>
+              }
+            </mat-select>
+            <mat-hint>Licences permissives uniquement (pas GPL/AGPL/LGPL).</mat-hint>
+            <mat-error>Sélectionnez une licence.</mat-error>
+          </mat-form-field>
+
+          <!-- Droits confirmés (RG4, création uniquement) -->
+          @if (mode() === 'creation') {
+            <div class="droits-section">
+              <mat-checkbox formControlName="droitsConfirmes" color="primary">
+                Je confirme détenir tous les droits sur ce code ou qu'il est sous la licence
+                sélectionnée, et j'autorise sa publication sur DevBrik (RG4).
+              </mat-checkbox>
+              @if (form.controls['droitsConfirmes'].invalid &&
+                   form.controls['droitsConfirmes'].touched) {
+                <p class="erreur-droits" role="alert">
+                  <mat-icon>warning</mat-icon>
+                  Vous devez confirmer vos droits pour publier cette brique.
+                </p>
+              }
+            </div>
+          }
+
+        </mat-card-content>
+
+        <mat-card-actions align="end" class="formulaire-actions">
+          <button mat-stroked-button type="button" (click)="annuler()" [disabled]="soumission()">
+            Annuler
+          </button>
+          <button mat-flat-button color="primary" type="submit"
+                  [disabled]="form.invalid || soumission()">
+            @if (soumission()) {
+              <mat-spinner diameter="20" class="spinner-inline" />
+            } @else {
+              <mat-icon>{{ mode() === 'creation' ? 'publish' : 'save' }}</mat-icon>
+            }
+            {{ mode() === 'creation' ? 'Publier' : 'Enregistrer' }}
+          </button>
+        </mat-card-actions>
+
+      </mat-card>
+    </form>
+  }
+
+</section>
