@@ -1,14 +1,15 @@
 package sn.devbrik.backend.brique.dto;
 
 import sn.devbrik.backend.brique.entity.Brique;
+import sn.devbrik.backend.brique.entity.StatutBrique;
 
 /**
- * Référence légère d'une brique (id + titre + langage).
- * Utilisée par d'autres modules (ex. module réponse) sans dépendance cyclique.
+ * Référence légère publiée aux autres modules par BriqueService.references (13.4) :
+ * id, titre, et si la brique est publiée ou non.
  */
-public record BriqueReference(Long id, String titre, String langageNom) {
+public record BriqueReference(Long id, String titre, boolean publiee) {
 
     public static BriqueReference de(Brique b) {
-        return new BriqueReference(b.getId(), b.getTitre(), b.getLangage().getNom());
+        return new BriqueReference(b.getId(), b.getTitre(), b.getStatut() == StatutBrique.PUBLIEE);
     }
 }

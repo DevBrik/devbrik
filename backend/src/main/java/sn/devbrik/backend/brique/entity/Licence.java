@@ -1,7 +1,7 @@
 package sn.devbrik.backend.brique.entity;
 
 /**
- * Licences permissives autorisées sur DevBrik (RG5).
+ * Licences permissives autorisées sur DevBrik (RG4).
  * Pas de GPL, AGPL ni LGPL (licences copyleft exclues).
  */
 public enum Licence {

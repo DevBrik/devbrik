@@ -89,6 +89,10 @@ public class Brique {
     public void modifier(String titre, String resume, String code, String modeEmploi,
                          String prerequis, Licence licence,
                          Categorie categorie, Langage langage) {
+        // RG6 : la version du code augmente de 1 seulement si le champ code change.
+        if (!this.code.equals(code)) {
+            this.versionCode += 1;
+        }
         this.titre          = titre;
         this.resume         = resume;
         this.code           = code;
@@ -97,7 +101,6 @@ public class Brique {
         this.licence        = licence;
         this.categorie      = categorie;
         this.langage        = langage;
-        this.versionCode   += 1;
         this.dateModification = Instant.now();
     }
 

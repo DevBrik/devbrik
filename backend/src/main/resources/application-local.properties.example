@@ -1,0 +1,13 @@
+# Modèle du fichier de configuration locale (profil "local").
+# Copiez ce fichier en "application-local.properties" (ignoré par Git, S9) puis remplacez les valeurs.
+# Ne mettez JAMAIS de vrai secret dans ce modèle.
+
+# Mot de passe de la base de développement (base devbrik, utilisateur devbrik)
+spring.datasource.password=REMPLACER_PAR_LE_MOT_DE_PASSE_LOCAL
+
+# Clé de signature du jeton : au moins 32 caractères
+app.jwt.secret=REMPLACER_PAR_UNE_CLE_LOCALE_D_AU_MOINS_32_CARACTERES
+
+# Premier administrateur local (facultatif) : laissez vide pour ne créer aucun administrateur
+app.admin.pseudo=
+app.admin.mot-de-passe=

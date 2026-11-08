@@ -1,39 +1,48 @@
 package sn.devbrik.backend.brique.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import sn.devbrik.backend.brique.entity.Licence;
 
 /**
- * Corps de la requête POST /api/briques (RG3–RG7).
- * droitsConfirmes=true obligatoire (RG4).
+ * Corps de POST /api/briques (RG3, RG4, RG5).
+ * Les chaînes sont rognées avant validation (11.1).
+ * droitsConfirmes absent ou faux : 400 DROITS_NON_CONFIRMES, levé par le service (RG4).
  */
 public record BriqueCreationDto(
 
-    @NotBlank @Size(max = 120)
+    @NotBlank @Size(min = 5, max = 120, message = "Le titre doit contenir entre 5 et 120 caractères.")
     String titre,
 
-    @NotBlank @Size(max = 300)
+    @NotBlank @Size(min = 10, max = 300, message = "Le résumé doit contenir entre 10 et 300 caractères.")
     String resume,
 
-    @NotBlank @Size(min = 1, max = 30000)
+    @NotBlank @Size(min = 1, max = 30000, message = "Le code doit contenir entre 1 et 30 000 caractères.")
     String code,
 
-    @NotBlank @Size(min = 10, max = 10000)
+    @NotBlank @Size(min = 10, max = 10000, message = "Le mode d'emploi doit contenir entre 10 et 10 000 caractères.")
     String modeEmploi,
 
-    @Size(max = 500)
+    @Size(max = 500, message = "Les prérequis ne peuvent pas dépasser 500 caractères.")
     String prerequis,
 
-    @NotNull
+    @NotNull(message = "La licence est obligatoire.")
     Licence licence,
 
-    @NotNull
+    @NotNull(message = "La catégorie est obligatoire.")
     Long idCategorie,
 
-    @NotNull
+    @NotNull(message = "Le langage est obligatoire.")
     Long idLangage,
 
-    /** RG4 : l'auteur doit cocher la case droits. */
-    @AssertTrue(message = "Vous devez confirmer détenir les droits sur ce code (RG4).")
-    boolean droitsConfirmes
-) {}
+    Boolean droitsConfirmes
+) {
+    public BriqueCreationDto {
+        titre      = Textes.rogner(titre);
+        resume     = Textes.rogner(resume);
+        code       = Textes.rogner(code);
+        modeEmploi = Textes.rogner(modeEmploi);
+        prerequis  = Textes.vide(Textes.rogner(prerequis));
+    }
+}

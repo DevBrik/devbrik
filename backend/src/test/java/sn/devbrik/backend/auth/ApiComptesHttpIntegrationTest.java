@@ -22,6 +22,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -73,7 +74,10 @@ class ApiComptesHttpIntegrationTest {
     @Autowired
     private Environment env;
 
-    private final HttpClient client = HttpClient.newHttpClient();
+    /** Délais explicites : si le serveur bloque, le test échoue au lieu de rester suspendu. */
+    private final HttpClient client = HttpClient.newBuilder()
+            .connectTimeout(Duration.ofSeconds(5))
+            .build();
     /** Toutes les réponses reçues, pour vérifier qu'aucun secret n'y figure. */
     private final List<String> reponsesRecues = new ArrayList<>();
 
@@ -107,7 +111,8 @@ class ApiComptesHttpIntegrationTest {
 
     private Reponse appeler(String methode, String chemin, String jeton, String corps) throws Exception {
         String port = env.getProperty("local.server.port");
-        HttpRequest.Builder b = HttpRequest.newBuilder(URI.create("http://localhost:" + port + chemin));
+        HttpRequest.Builder b = HttpRequest.newBuilder(URI.create("http://localhost:" + port + chemin))
+                .timeout(Duration.ofSeconds(15));
         if (jeton != null) {
             b.header("Authorization", "Bearer " + jeton);
         }

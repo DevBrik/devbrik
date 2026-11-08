@@ -1,38 +1,61 @@
 package sn.devbrik.backend.brique.service;
 
-import org.springframework.data.domain.Pageable;
 import sn.devbrik.backend.brique.dto.*;
+import sn.devbrik.backend.brique.entity.StatutBrique;
 import sn.devbrik.backend.common.PageReponse;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
+
 /**
- * Contrat du service briques.
+ * Service public du module briques (11.4 et 13.4).
+ * Les autres modules n'utilisent que resume, references, masquer et compterPubliees.
  */
 public interface BriqueService {
 
-    /** M01 — Liste publique paginée. */
-    PageReponse<BriqueResumeDto> listerPubliees(Long idCategorie, Long idLangage, Pageable pageable);
+    // ── Routes (11.4) ─────────────────────────────────────────────────────────
 
-    /** M02 — Fiche publique. */
-    BriqueDetailDto obtenirPublique(Long id);
+    /** GET /api/briques : briques PUBLIEES uniquement. tri : recentes (défaut), mieux-notees, plus-testees. */
+    PageReponse<BriqueResumeDto> listerPubliees(String q, String categorie, String langage, Long auteur,
+                                                String tri, Integer page, Integer taille);
 
-    /** M03 — Publier une nouvelle brique. */
+    /** GET /api/briques/{id} : une brique MASQUEE n'est visible que de son auteur et des administrateurs (RG7). */
+    BriqueDetailDto obtenir(Long id);
+
+    /** POST /api/briques. */
     BriqueDetailDto publier(BriqueCreationDto dto);
 
-    /** M03 — Modifier une brique existante. */
+    /** PUT /api/briques/{id} : auteur seulement (RG19). */
     BriqueDetailDto modifier(Long id, BriqueModificationDto dto);
 
-    /** M05 — Mes briques (auteur connecté). */
-    PageReponse<BriqueResumeInterne> mesBriques(Pageable pageable);
-
-    /** M05 — Supprimer une brique (auteur ou admin, RG19). */
+    /** DELETE /api/briques/{id} : auteur ou administrateur (RG19). */
     void supprimer(Long id);
 
-    /** Admin — Masquer une brique (RG16). */
+    /** GET /api/moi/briques : briques de l'appelant, MASQUEES comprises ; statut facultatif. */
+    PageReponse<BriqueResumeDto> mesBriques(String q, String categorie, String langage, String tri,
+                                            String statut, Integer page, Integer taille);
+
+    /** GET /api/admin/briques : toutes les briques, filtre statut facultatif. */
+    PageReponse<BriqueResumeDto> listerPourAdmin(String q, String categorie, String langage, Long auteur,
+                                                 String tri, String statut, Integer page, Integer taille);
+
+    /** PUT /api/admin/briques/{id}/statut : renvoie la brique à jour. */
+    BriqueDetailDto changerStatut(Long id, StatutBrique statut);
+
+    // ── Méthodes publiques pour les autres modules (13.4) ─────────────────────
+
+    /** id, idAuteur, statut, versionCode, titre ; vide si la brique n'existe pas. */
+    Optional<BriqueResumeInterne> resume(Long id);
+
+    /** id, titre, publiée ou non. Les identifiants inconnus sont absents de la map. */
+    Map<Long, BriqueReference> references(Collection<Long> ids);
+
+    /** Masque une brique (RG7). 404 RESSOURCE_INTROUVABLE si elle n'existe pas. */
     void masquer(Long id);
 
-    /** Admin — Republier une brique masquée. */
     void republier(Long id);
 
-    /** Référence légère (utilisée par d'autres modules). */
-    BriqueReference reference(Long id);
+    /** Nombre de briques PUBLIEES de l'auteur (réputation, RG14). */
+    long compterPubliees(Long idAuteur);
 }

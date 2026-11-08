@@ -7,6 +7,8 @@
     </Appenders>
     <Loggers>
         <Logger name="sn.devbrik" level="info"/>
+        <!-- RG2 : le DEBUG d'Hibernate imprime les entités (dont le hachage du mot de passe) -->
+        <Logger name="org.hibernate" level="warn"/>
         <Root level="warn">
             <AppenderRef ref="Console"/>
         </Root>
