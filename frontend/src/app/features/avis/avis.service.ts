@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { BriqueResume, PageReponse } from '../../core/api/modeles';
+import { PageReponse } from '../../core/api/modeles';
 import {
   ActionTraitement,
   Avis,
+  BriqueResumeAdmin,
   CorpsAvis,
   CorpsSignalement,
   CorpsTest,
@@ -83,8 +84,8 @@ export class AvisService {
   }
 
   // ---------- routes du membre 2 utilisées par M11 (11.4) ----------
-  listerBriquesMasquees(page = 0, taille = 20): Observable<PageReponse<BriqueResume>> {
-    return this.http.get<PageReponse<BriqueResume>>('/api/admin/briques', {
+  listerBriquesMasquees(page = 0, taille = 20): Observable<PageReponse<BriqueResumeAdmin>> {
+    return this.http.get<PageReponse<BriqueResumeAdmin>>('/api/admin/briques', {
       params: { statut: 'MASQUEE', page, taille },
     });
   }
