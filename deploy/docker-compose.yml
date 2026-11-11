@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:18
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      retries: 10
+    # aucun port publie : seule la couche nginx est exposee
+
+  backend:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_PSEUDO: ${ADMIN_PSEUDO}
+      ADMIN_MOT_DE_PASSE: ${ADMIN_MOT_DE_PASSE}
+      DEMO_MOT_DE_PASSE: ${DEMO_MOT_DE_PASSE}
+
+  nginx:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.nginx
+      args:
+        NGINX_CONF: ${NGINX_CONF:-http.conf}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+
+volumes:
+  pgdata:

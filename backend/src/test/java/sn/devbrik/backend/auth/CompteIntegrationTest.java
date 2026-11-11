@@ -98,6 +98,41 @@ class CompteIntegrationTest {
     }
 
     @Test
+    void test_RG12_RG17_supprimer_le_repondant_rouvre_la_demande_dont_la_reponse_acceptee_disparait() {
+        long auteur = creerUtilisateur("test.demandeur");
+        long repondant = creerUtilisateur("test.repondant");
+        long idDemande = jdbc.queryForObject("""
+                INSERT INTO demande (titre, description, statut, id_auteur)
+                VALUES ('Titre de demande', 'Description de demande assez longue', 'RESOLUE', ?)
+                RETURNING id_demande""", Long.class, auteur);
+        jdbc.update("INSERT INTO reponse (contenu, acceptee, id_demande, id_auteur) VALUES ('Réponse acceptée', TRUE, ?, ?)",
+                idDemande, repondant);
+
+        compteService.supprimer(repondant, new SuppressionRequete(MOT_DE_PASSE));
+
+        assertEquals("OUVERTE", jdbc.queryForObject(
+                "SELECT statut FROM demande WHERE id_demande = ?", String.class, idDemande));
+    }
+
+    @Test
+    void test_RG12_supprimer_un_compte_ne_rouvre_pas_une_demande_dont_la_reponse_acceptee_reste() {
+        long auteur = creerUtilisateur("test.demandeur2");
+        long repondant = creerUtilisateur("test.repondant2");
+        long autre = creerUtilisateur("test.autre2");
+        long idDemande = jdbc.queryForObject("""
+                INSERT INTO demande (titre, description, statut, id_auteur)
+                VALUES ('Titre de demande', 'Description de demande assez longue', 'RESOLUE', ?)
+                RETURNING id_demande""", Long.class, auteur);
+        jdbc.update("INSERT INTO reponse (contenu, acceptee, id_demande, id_auteur) VALUES ('Réponse acceptée', TRUE, ?, ?)",
+                idDemande, repondant);
+
+        compteService.supprimer(autre, new SuppressionRequete(MOT_DE_PASSE));
+
+        assertEquals("RESOLUE", jdbc.queryForObject(
+                "SELECT statut FROM demande WHERE id_demande = ?", String.class, idDemande));
+    }
+
+    @Test
     void export_contient_uniquement_les_donnees_de_l_utilisateur_et_aucun_mot_de_passe() {
         long a = creerUtilisateur("test.export.a");
         long b = creerUtilisateur("test.export.b");

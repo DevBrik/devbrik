@@ -1,34 +1,19 @@
-# Secrets et configuration locale
-application-local.properties
+# Secrets
 .env
-.env.*
-!.env.example
+deploy/.env
 *.pem
 *.key
-
-# Backend (Java, Maven)
-target/
-*.class
+# Backend
+backend/target/
 *.log
-.classpath
-.project
-.settings/
-
-# Frontend (Angular, Node)
-node_modules/
-dist/
-.angular/
-npm-debug.log*
-
-# Éditeurs et système
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+# IDE / OS
 .idea/
 .vscode/
 *.iml
 .DS_Store
 Thumbs.db
-
-# Sauvegardes locales de base de données
-*.dump
-*.sql.gz
-
-deploy/.env
+*.bak-membre1

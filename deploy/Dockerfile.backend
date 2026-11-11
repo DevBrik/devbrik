@@ -1,0 +1,12 @@
+FROM eclipse-temurin:21-jdk AS build
+WORKDIR /src
+COPY backend/ ./
+RUN chmod +x mvnw && ./mvnw -q -DskipTests package
+
+FROM eclipse-temurin:21-jre
+RUN useradd -r -u 1001 devbrik
+WORKDIR /app
+COPY --from=build /src/target/*.jar app.jar
+USER devbrik
+EXPOSE 8080
+ENTRYPOINT ["java","-Xmx384m","-jar","app.jar"]

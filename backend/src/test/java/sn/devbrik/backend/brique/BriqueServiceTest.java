@@ -609,6 +609,42 @@ class BriqueServiceTest {
         }
 
         @Test
+        @DisplayName("liste d'administration : sans statut, les briques MASQUEE sont listées par défaut (11.4)")
+        void listeAdminStatutParDefaut() {
+            when(recherche.rechercher(any(), anyInt(), anyInt()))
+                .thenReturn(new BriqueRecherche.Resultat(List.of(), 0));
+
+            try (MockedStatic<IdentiteUtilisateur> ms = mockStatic(IdentiteUtilisateur.class)) {
+                ms.when(IdentiteUtilisateur::obligatoire)
+                  .thenReturn(new IdentiteUtilisateur(99L, "ADMIN"));
+
+                service.listerPourAdmin(null, null, null, null, null, null, null, null);
+            }
+
+            ArgumentCaptor<Critere> critere = ArgumentCaptor.forClass(Critere.class);
+            verify(recherche).rechercher(critere.capture(), eq(0), eq(20));
+            assertThat(critere.getValue().statut()).isEqualTo(StatutBrique.MASQUEE);
+        }
+
+        @Test
+        @DisplayName("liste d'administration : statut=PUBLIEE transmis à la recherche")
+        void listeAdminStatutPubliee() {
+            when(recherche.rechercher(any(), anyInt(), anyInt()))
+                .thenReturn(new BriqueRecherche.Resultat(List.of(), 0));
+
+            try (MockedStatic<IdentiteUtilisateur> ms = mockStatic(IdentiteUtilisateur.class)) {
+                ms.when(IdentiteUtilisateur::obligatoire)
+                  .thenReturn(new IdentiteUtilisateur(99L, "ADMIN"));
+
+                service.listerPourAdmin(null, null, null, null, null, "PUBLIEE", null, null);
+            }
+
+            ArgumentCaptor<Critere> critere = ArgumentCaptor.forClass(Critere.class);
+            verify(recherche).rechercher(critere.capture(), eq(0), eq(20));
+            assertThat(critere.getValue().statut()).isEqualTo(StatutBrique.PUBLIEE);
+        }
+
+        @Test
         @DisplayName("liste d'administration : filtre statut=MASQUEE transmis à la recherche")
         void listeAdminFiltreStatut() {
             when(recherche.rechercher(any(), anyInt(), anyInt()))

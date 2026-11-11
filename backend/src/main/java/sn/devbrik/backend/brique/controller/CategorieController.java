@@ -1,5 +1,6 @@
 package sn.devbrik.backend.brique.controller;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import sn.devbrik.backend.brique.dto.CategorieDto;
 import sn.devbrik.backend.brique.repository.CategorieRepository;
@@ -21,6 +22,6 @@ public class CategorieController {
 
     @GetMapping
     public List<CategorieDto> lister() {
-        return repo.findAll().stream().map(CategorieDto::de).toList();
+        return repo.findAll(Sort.by("nom")).stream().map(CategorieDto::de).toList();
     }
 }

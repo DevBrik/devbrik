@@ -85,7 +85,10 @@ public class BriqueServiceImpl implements BriqueService {
         if (!moi.estAdmin()) {
             throw new ApiException(CodeErreur.ACCES_REFUSE, "Réservé aux administrateurs.");
         }
-        Critere critere = critere(q, categorie, langage, auteur, lireStatut(statut), tri);
+        // 11.4 : sans paramètre statut, la liste d'administration montre les briques MASQUEE
+        // (écran « Briques masquées ») ; statut=PUBLIEE affiche les briques publiées.
+        StatutBrique filtre = (statut == null || statut.isBlank()) ? StatutBrique.MASQUEE : lireStatut(statut);
+        Critere critere = critere(q, categorie, langage, auteur, filtre, tri);
         return lister(critere, page, taille);
     }
 

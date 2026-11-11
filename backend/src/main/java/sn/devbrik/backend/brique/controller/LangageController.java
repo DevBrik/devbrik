@@ -1,5 +1,6 @@
 package sn.devbrik.backend.brique.controller;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import sn.devbrik.backend.brique.dto.LangageDto;
 import sn.devbrik.backend.brique.repository.LangageRepository;
@@ -21,6 +22,6 @@ public class LangageController {
 
     @GetMapping
     public List<LangageDto> lister() {
-        return repo.findAll().stream().map(LangageDto::de).toList();
+        return repo.findAll(Sort.by("nom")).stream().map(LangageDto::de).toList();
     }
 }
