@@ -49,6 +49,7 @@ export interface DonneesDialogueTest {
                 type="radio"
                 formControlName="resultat"
                 [value]="r.valeur"
+                [attr.value]="r.valeur"
                 [attr.aria-invalid]="resultatInvalide() ? 'true' : null"
                 [attr.data-invalide]="resultatInvalide() ? 'true' : null"
                 [attr.aria-describedby]="resultatInvalide() ? 'erreur-resultat' : null"

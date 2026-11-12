@@ -38,6 +38,7 @@ export interface DonneesDialogueSignalement {
                 type="radio"
                 formControlName="motif"
                 [value]="m.valeur"
+                [attr.value]="m.valeur"
                 [attr.aria-invalid]="motifInvalide() ? 'true' : null"
                 [attr.data-invalide]="motifInvalide() ? 'true' : null"
                 [attr.aria-describedby]="motifInvalide() ? 'erreur-motif' : null"
