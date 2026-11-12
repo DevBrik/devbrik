@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
-abstract class ApiTestSupport {
+public abstract class ApiTestSupport {
 
     protected static final MediaType JSON = MediaType.APPLICATION_JSON;
     protected static final String MOT_DE_PASSE = "MotDePasse123";

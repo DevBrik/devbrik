@@ -15,6 +15,7 @@ import sn.devbrik.backend.auth.entity.Role;
 import sn.devbrik.backend.auth.entity.Utilisateur;
 import sn.devbrik.backend.auth.repository.UtilisateurRepository;
 import sn.devbrik.backend.common.ApiException;
+import sn.devbrik.backend.demande.service.DemandeService;
 
 import java.util.Optional;
 
@@ -35,13 +36,15 @@ class CompteServiceTest {
 
     @Mock
     private UtilisateurRepository depot;
+    @Mock
+    private DemandeService demandes;
 
     private final PasswordEncoder encodeur = new BCryptPasswordEncoder(4);
     private CompteService service;
 
     @BeforeEach
     void preparer() {
-        service = new CompteService(depot, encodeur);
+        service = new CompteService(depot, encodeur, demandes);
     }
 
     private Utilisateur compte(long id, Role role) {
@@ -107,6 +110,8 @@ class CompteServiceTest {
 
         verify(depot).delete(u);
         verify(depot).flush();
+        // RG12 : les demandes privées de leur réponse acceptée par la cascade sont rouvertes.
+        verify(demandes).rouvrirDemandesSansReponseAcceptee();
     }
 
     @Test

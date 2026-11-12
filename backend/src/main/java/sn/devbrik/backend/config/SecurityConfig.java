@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import sn.devbrik.backend.auth.service.UtilisateurService;
 
 @Configuration
 public class SecurityConfig {
@@ -20,7 +21,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain chaine(HttpSecurity http, JwtService jwt, ReponseErreurSecurite erreurs) throws Exception {
+    SecurityFilterChain chaine(HttpSecurity http, JwtService jwt, ReponseErreurSecurite erreurs,
+                               UtilisateurService utilisateurs) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable) // API sans cookie : le jeton est dans l'en-tête
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -32,7 +34,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/categories", "/api/langages",
                         "/api/briques/**", "/api/demandes/**", "/api/developpeurs/**").permitAll()
                 .anyRequest().authenticated())
-            .addFilterBefore(new JwtFiltre(jwt, erreurs), UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(new JwtFiltre(jwt, erreurs, utilisateurs::existe), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

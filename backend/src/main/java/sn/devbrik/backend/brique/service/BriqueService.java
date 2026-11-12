@@ -36,7 +36,7 @@ public interface BriqueService {
     PageReponse<BriqueResumeDto> mesBriques(String q, String categorie, String langage, String tri,
                                             String statut, Integer page, Integer taille);
 
-    /** GET /api/admin/briques : toutes les briques, filtre statut facultatif. */
+    /** GET /api/admin/briques : statut MASQUEE par défaut, ou PUBLIEE si demandé (11.4). */
     PageReponse<BriqueResumeDto> listerPourAdmin(String q, String categorie, String langage, Long auteur,
                                                  String tri, String statut, Integer page, Integer taille);
 
