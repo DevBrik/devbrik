@@ -32,7 +32,8 @@
       @for (m of equipe; track m.numero) {
         <li class="membre">
           <span class="pastille-membre" aria-hidden="true">{{ m.numero }}</span>
-          <h3>Membre {{ m.numero }} · {{ m.role }}</h3>
+          <h3>{{ m.nom }}</h3>
+          <p class="role">Membre {{ m.numero }} · {{ m.role }}</p>
           <p>{{ m.module }}</p>
         </li>
       }

@@ -1,21 +1,37 @@
 <nav class="barre" aria-label="Navigation mobile">
-  <a routerLink="/briques" routerLinkActive="actif" ariaCurrentWhenActive="page">
-    <span class="material-icons" aria-hidden="true">widgets</span><span>Briques</span>
+  <a routerLink="/briques" class="entree" [class.actif]="active() === 'briques'" [attr.aria-current]="active() === 'briques' ? 'page' : null">
+    <span class="icone masque brique" aria-hidden="true"></span>
+    <span class="libelle" [class.sr-only]="active() !== 'briques'">Briques</span>
   </a>
-  <a routerLink="/demandes" routerLinkActive="actif" ariaCurrentWhenActive="page">
-    <span class="material-icons" aria-hidden="true">forum</span><span>Demandes</span>
+  <a routerLink="/demandes" class="entree" [class.actif]="active() === 'demandes'" [attr.aria-current]="active() === 'demandes' ? 'page' : null">
+    <span class="icone masque demande" aria-hidden="true"></span>
+    <span class="libelle" [class.sr-only]="active() !== 'demandes'">Demandes</span>
   </a>
-  <a routerLink="/developpeurs/classement" routerLinkActive="actif" ariaCurrentWhenActive="page">
-    <span class="material-icons" aria-hidden="true">emoji_events</span><span>Classement</span>
+  <a [routerLink]="ajout().lien" class="ajout" [attr.aria-label]="ajout().libelle">
+    <span class="rond"><span class="icone masque plus" aria-hidden="true"></span></span>
+  </a>
+  <a routerLink="/developpeurs/classement" class="entree" [class.actif]="active() === 'classement'" [attr.aria-current]="active() === 'classement' ? 'page' : null">
+    <span class="icone masque classement" aria-hidden="true"></span>
+    <span class="libelle" [class.sr-only]="active() !== 'classement'">Classement</span>
   </a>
   @if (auth.estConnecte()) {
-    <button type="button" [matMenuTriggerFor]="menuCompte.menu()">
-      <span class="material-icons" aria-hidden="true">account_circle</span><span>Compte</span>
+    <button type="button" class="entree" [class.actif]="active() === 'profil'" [matMenuTriggerFor]="menuCompte.menu()">
+      @if (active() === 'profil') {
+        <span class="icone masque profil" aria-hidden="true"></span>
+      } @else {
+        <span class="material-icons icone-police" aria-hidden="true">person_outline</span>
+      }
+      <span class="libelle" [class.sr-only]="active() !== 'profil'">Profil</span>
     </button>
     <db-menu-compte #menuCompte="menuCompte" yPosition="above" />
   } @else {
-    <a routerLink="/compte/connexion" routerLinkActive="actif" ariaCurrentWhenActive="page">
-      <span class="material-icons" aria-hidden="true">account_circle</span><span>Compte</span>
+    <a routerLink="/compte/connexion" class="entree" [class.actif]="active() === 'profil'" [attr.aria-current]="active() === 'profil' ? 'page' : null">
+      @if (active() === 'profil') {
+        <span class="icone masque profil" aria-hidden="true"></span>
+      } @else {
+        <span class="material-icons icone-police" aria-hidden="true">person_outline</span>
+      }
+      <span class="libelle" [class.sr-only]="active() !== 'profil'">Profil</span>
     </a>
   }
 </nav>

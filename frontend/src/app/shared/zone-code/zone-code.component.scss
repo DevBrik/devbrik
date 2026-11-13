@@ -15,3 +15,5 @@
 pre { margin: 0; padding: 1rem 0.75rem; font-size: 0.9rem; line-height: 1.6; }
 .numeros { text-align: right; color: #94A3B8; user-select: none; border-right: 1px solid rgb(248 250 252 / 0.15); }
 .code { flex: 1; white-space: pre; tab-size: 4; }
+.copier { min-width: 11rem; justify-content: center; transition: background-color 0.2s, color 0.2s; }
+.copier.copie { background: #F8FAFC; color: var(--db-succes); border-color: #F8FAFC; }

@@ -5,7 +5,7 @@
 | Catégorie | Validation de données |
 | Langage | Java (17 ou plus) |
 | Licence | MIT |
-| Auteur | Membre 1 |
+| Auteur | Amadou Fleury BA |
 
 **Résumé** : vérifie qu'un numéro est un mobile sénégalais (préfixes 70, 75, 76, 77, 78, 9 chiffres) et le normalise au format E.164 (`+221XXXXXXXXX`).
 

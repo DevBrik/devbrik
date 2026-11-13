@@ -1,0 +1,16 @@
+:host { display: block; }
+.notification { display: flex; align-items: center; gap: 1rem; padding: 0.875rem 1.25rem; }
+.icone { flex: none; width: 32px; height: 32px; font-size: 32px; }
+.masque {
+  display: inline-block; background-color: var(--db-orange);
+  mask-size: contain; mask-repeat: no-repeat; mask-position: center;
+  -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
+}
+.coche { mask-image: url('/assets/icones/coche.png'); -webkit-mask-image: url('/assets/icones/coche.png'); }
+.chargement {
+  mask-image: url('/assets/icones/chargement.png'); -webkit-mask-image: url('/assets/icones/chargement.png');
+  animation: tourne 0.9s linear infinite;
+}
+.material-icons.erreur { color: var(--db-erreur); }
+.texte { color: var(--db-encre); font-size: 1.0625rem; font-weight: 700; line-height: 1.35; }
+@keyframes tourne { to { transform: rotate(360deg); } }

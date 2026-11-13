@@ -3,13 +3,38 @@
   :host { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; }
 }
 .barre {
-  display: grid; grid-template-columns: repeat(4, 1fr); background: var(--db-surface);
-  border-top: 1px solid var(--db-bordure-deco); box-shadow: 0 -2px 8px rgb(15 23 42 / 0.06);
-  padding-bottom: env(safe-area-inset-bottom);
+  display: grid; grid-template-columns: repeat(5, 1fr); align-items: center; height: 64px;
+  background: var(--db-surface); border-top: 1px solid var(--db-bordure-deco);
+  box-shadow: 0 -2px 8px rgb(15 23 42 / 0.06); padding-bottom: env(safe-area-inset-bottom);
 }
-a, button {
+.entree {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-  min-height: 56px; border: 0; background: none; font: inherit; font-size: 0.75rem; font-weight: 500;
-  color: var(--db-encre); text-decoration: none; cursor: pointer;
+  min-height: 56px; border: 0; background: none; font: inherit; text-decoration: none; cursor: pointer;
+  color: var(--db-primaire);
 }
-.actif { color: var(--db-orange-texte); font-weight: 600; }
+.libelle { font-size: 0.75rem; font-weight: 600; }
+.entree.actif { color: var(--db-orange-texte); }
+
+// Icônes PNG de l'équipe utilisées comme masques : la couleur suit la charte (currentColor).
+.icone { display: block; width: 26px; height: 26px; }
+.masque {
+  background-color: currentColor;
+  mask-size: contain; mask-repeat: no-repeat; mask-position: center;
+  -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
+}
+.brique { mask-image: url('/assets/icones/brique.png'); -webkit-mask-image: url('/assets/icones/brique.png'); }
+.demande { mask-image: url('/assets/icones/demande.png'); -webkit-mask-image: url('/assets/icones/demande.png'); }
+.classement { mask-image: url('/assets/icones/classement.png'); -webkit-mask-image: url('/assets/icones/classement.png'); }
+.profil { mask-image: url('/assets/icones/profil.png'); -webkit-mask-image: url('/assets/icones/profil.png'); }
+.icone-police { font-size: 28px; }
+
+// Bouton central surélevé
+.ajout { display: flex; justify-content: center; align-items: center; height: 100%; }
+.rond {
+  display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; margin-top: -28px;
+  border-radius: 50%; background: var(--db-orange-bouton); color: #fff;
+  box-shadow: 0 6px 16px rgb(99 102 241 / 0.35), 0 2px 4px rgb(15 23 42 / 0.15);
+}
+.plus { width: 26px; height: 26px; mask-image: url('/assets/icones/plus.png'); -webkit-mask-image: url('/assets/icones/plus.png'); }
+.ajout:focus-visible { outline: none; }
+.ajout:focus-visible .rond { outline: 3px solid var(--db-focus); outline-offset: 2px; }

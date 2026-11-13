@@ -5,7 +5,7 @@
 | Catégorie | Sécurité et authentification |
 | Langage | Kotlin (1.9 ou plus, JVM) |
 | Licence | MIT |
-| Auteur | Membre 5 |
+| Auteur | Magatte TALL |
 
 **Résumé** : masque les numéros de téléphone avant de les écrire dans les journaux (« +221771234567 » → « +22177*****67 »), pour limiter l'exposition de données personnelles.
 

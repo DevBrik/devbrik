@@ -94,7 +94,10 @@
 
       <p class="licence"><strong>Licence : {{ licence() }}</strong><br />Version : {{ b.versionCode }}</p>
 
-      <db-actions-evaluation [brique]="b" (changed)="recharger()" />
+      <!-- Sur sa propre brique : ni test, ni avis, ni signalement (RG8, RG9) ; seulement Modifier et Supprimer. -->
+      @if (!estAuteur()) {
+        <db-actions-evaluation [brique]="b" (changed)="recharger()" />
+      }
 
       @if (estAuteur() || estAdmin()) {
         <div class="actions-gestion" role="group" aria-label="Gérer la brique">

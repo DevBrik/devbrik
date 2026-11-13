@@ -70,7 +70,7 @@ features/
 | `db-etat-page` | États vide, chargement, erreur réseau, 401, 403, 404 |
 | `db-squelette-cartes` | Squelettes de chargement aux formes des cartes |
 | `db-dialogue-confirmation` + `DialogueService` | Confirmations (variante avec mot de passe) |
-| `NotificationService` | `mat-snack-bar` annoncé aux lecteurs d'écran |
+| `NotificationService` | Carte blanche en haut au centre (icône + texte) : `succes`, `erreur`, `chargement` (« Publication en cours… ») ; annoncée aux lecteurs d'écran |
 
 ### Comportements transverses
 

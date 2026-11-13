@@ -5,7 +5,7 @@
 | Catégorie | Réseaux instables et hors ligne |
 | Langage | JavaScript (module ES) |
 | Licence | MIT |
-| Auteur | Membre 4 |
+| Auteur | Ndiémé NDIAYE |
 
 **Résumé** : met en file les envois faits sans réseau (formulaires, commandes, relevés), les conserve dans le stockage du navigateur et les renvoie dans l'ordre au retour de la connexion.
 

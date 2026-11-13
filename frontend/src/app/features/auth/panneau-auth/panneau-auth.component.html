@@ -1,12 +1,15 @@
-<aside class="panneau" aria-hidden="true">
-  <div class="apercu">
-    <div class="ligne l1"></div>
-    <div class="ligne l2"></div>
-    <div class="bloc"></div>
-    <div class="code">
-      <span></span><span></span><span></span><span></span>
-    </div>
-    <div class="ligne l3"></div>
+<aside class="panneau">
+  <div class="visuels" aria-hidden="true">
+    @for (d of diapositives; track d.image; let i = $index) {
+      <div class="diapositive" [class.visible]="i === index()">
+        <div class="cadre"><img class="apercu" [src]="d.image" alt="" loading="lazy" width="760" height="654" /></div>
+        <p class="message">{{ verbe() }} {{ d.suite }}</p>
+      </div>
+    }
   </div>
-  <p class="message">{{ message() }}</p>
+  @if (!mouvementReduit) {
+    <button type="button" class="pause" (click)="basculer()" [attr.aria-label]="enPause() ? 'Reprendre le défilement des aperçus' : 'Mettre en pause le défilement des aperçus'">
+      <span class="material-icons" aria-hidden="true">{{ enPause() ? 'play_arrow' : 'pause' }}</span>
+    </button>
+  }
 </aside>

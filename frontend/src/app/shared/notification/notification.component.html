@@ -1,0 +1,14 @@
+<div class="notification" [class]="'notification ' + donnees.type">
+  @switch (donnees.type) {
+    @case ('chargement') {
+      <span class="icone masque chargement" aria-hidden="true"></span>
+    }
+    @case ('erreur') {
+      <span class="material-icons icone erreur" aria-hidden="true">error</span>
+    }
+    @default {
+      <span class="icone masque coche" aria-hidden="true"></span>
+    }
+  }
+  <span class="texte">{{ donnees.message }}</span>
+</div>

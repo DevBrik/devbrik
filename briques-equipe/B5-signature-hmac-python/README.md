@@ -5,7 +5,7 @@
 | Catégorie | Sécurité et authentification |
 | Langage | Python (3.8 ou plus) |
 | Licence | MIT |
-| Auteur | Membre 3 |
+| Auteur | Mame Diarra Bousso DIEME |
 
 **Résumé** : vérifie en temps constant la signature HMAC-SHA256 d'un rappel HTTP (webhook), avec une variante anti-rejeu par horodatage. Générique : aucun fournisseur nommé.
 

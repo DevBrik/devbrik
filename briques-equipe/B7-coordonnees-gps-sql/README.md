@@ -5,7 +5,7 @@
 | Catégorie | Données géographiques |
 | Langage | SQL (PostgreSQL 12 ou plus) |
 | Licence | MIT |
-| Auteur | Membre 4 |
+| Auteur | Ndiémé NDIAYE |
 
 **Résumé** : deux fonctions SQL pures : `coordonnee_valide(lat, lon)` contrôle une coordonnée WGS 84 et `distance_km(...)` calcule la distance du grand cercle (haversine), utiles pour des points de livraison ou des agences.
 

@@ -67,14 +67,17 @@ export class NouvelleDemandeComponent {
     }
     const v = this.formulaire.getRawValue();
     this.envoi.set(true);
+    const enCours = this.notifications.chargement('Publication en cours…');
     this.service
       .creer({ titre: v.titre.trim(), description: v.description.trim(), idCategorie: v.idCategorie, idLangage: v.idLangage })
       .subscribe({
         next: (d) => {
+          enCours.fermer();
           this.notifications.succes('Demande publiée');
           void this.router.navigate(['/demandes', d.id]);
         },
         error: (e: unknown) => {
+          enCours.fermer();
           this.envoi.set(false);
           const err = lireErreur(e);
           if (err.code === 'REQUETE_INVALIDE' && appliquerDetails(err, this.formulaire)) {

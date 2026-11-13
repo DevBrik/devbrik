@@ -1,6 +1,7 @@
 // DevBrik : thème global (charte DevBrik-design-system-v1.1, sections 3, 4, 11).
 // Couleurs uniquement par variables : jamais #EA580C en dur dans un composant.
 @use '@angular/material' as mat;
+@use '@angular/cdk' as cdk;
 @use 'styles/communs';
 @use 'styles/utilitaires';
 
@@ -70,9 +71,24 @@ pre { overflow-x: auto; }
 a { color: var(--db-primaire); }
 h1, h2, h3 { color: var(--db-encre); }
 
-.mat-mdc-snack-bar-container.notification-erreur {
-  --mdc-snackbar-container-color: var(--db-erreur);
-  --mat-snack-bar-button-color: #fff;
+// Éléments réservés aux lecteurs d'écran (annonces de navigation, notifications) : jamais visibles.
+// Sans ce mixin, le texte de l'annonceur apparaissait sous le pied de page.
+@include cdk.a11y-visually-hidden();
+
+// Notifications (maquette « Publication en cours ») : carte blanche en haut au centre.
+.mat-mdc-snack-bar-container.notification-db {
+  --mat-snack-bar-container-color: var(--db-surface);
+  --mdc-snackbar-container-color: var(--db-surface);
+  --mat-snack-bar-supporting-text-color: var(--db-encre);
+  --mat-snack-bar-container-shape: 16px;
+  margin-top: 16px;
+  .mdc-snackbar__surface {
+    background: var(--db-surface);
+    box-shadow: 0 8px 24px rgb(15 23 42 / 0.16), 0 1px 3px rgb(15 23 42 / 0.08);
+    border-radius: 16px;
+    min-width: 0;
+  }
+  .mdc-snackbar__label { padding: 0; }
 }
 .mat-mdc-dialog-container { --mdc-dialog-container-shape: 16px; }
 

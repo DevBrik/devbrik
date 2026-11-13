@@ -183,8 +183,10 @@ export class MonCompteComponent {
   /** Téléchargement du JSON de GET /api/moi/export (fichier devbrik-export-AAAA-MM-JJ.json, par Blob). */
   protected exporter(): void {
     this.export.set(true);
+    const enCours = this.notifications.chargement('Export en cours…');
     this.compte.exporter().subscribe({
       next: (donnees) => {
+        enCours.fermer();
         this.export.set(false);
         const blob = new Blob([JSON.stringify(donnees, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
@@ -198,6 +200,7 @@ export class MonCompteComponent {
         this.notifications.succes('Export téléchargé');
       },
       error: (e: unknown) => {
+        enCours.fermer();
         this.export.set(false);
         this.notifications.erreur(lireErreur(e).message);
       },

@@ -47,6 +47,8 @@ La dépendance npm `devicon` a été retirée : seules les neuf icônes utilisé
 | --- | --- | --- | --- |
 | Icônes de langages Devicon (Java, TypeScript, JavaScript, Python, PHP, C#, Kotlin, Dart, Go) | `frontend/public/langages/*.svg` | MIT (projet Devicon) | La licence couvre les fichiers d'icônes, pas les marques des langages ; le nom du langage est toujours affiché en texte (dossier 19, V16) |
 | Material Icons | police locale | Apache 2.0 | SQL et Shell : icônes `storage` et `terminal` |
+| Icônes de la barre mobile et des notifications (brique, demande, classement, profil, plus, chargement, coche) | `frontend/public/assets/icones/` | Fournies par l'équipe (zip d'assets) ; **source et licence à confirmer par le membre 1** avant la soumission (si elles viennent d'une banque d'icônes, vérifier l'obligation d'attribution) | Utilisées comme masques CSS : la couleur suit la charte |
+| Aperçus du panneau de connexion | `frontend/public/assets/apercus/` | Captures de l'application DevBrik elle-même (données fictives) | |
 | Logo et monogramme DevBrik | `frontend/public/assets/`, `favicon.ico` | Création de l'équipe | Généré avec un outil d'IA puis corrigé : déclaré dans `docs/IA.md` |
 | Maquettes | `docs/maquettes/` | Création de l'équipe | Aucune photo de personne, aucun logo de partenaire |
 

@@ -5,7 +5,7 @@
 | Catégorie | Formats, dates et devises |
 | Langage | JavaScript |
 | Licence | MIT |
-| Auteur | Membre 2 |
+| Auteur | Papa Birane DIAO |
 
 **Résumé** : formate une date et une heure en français pour le fuseau Africa/Dakar (UTC+0 toute l'année, sans heure d'été), quel que soit le fuseau du serveur ou du navigateur.
 

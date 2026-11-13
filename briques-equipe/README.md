@@ -4,16 +4,16 @@ Dix briques réelles, **vérifiables sans compte externe**, sous licence **MIT**
 
 | ID | Brique | Catégorie | Langage | Auteur | Tests |
 | --- | --- | --- | --- | --- | --- |
-| B1 | Validation et normalisation des numéros de téléphone sénégalais | Validation de données | Java | Membre 1 | `javac` + classe de test (22 vérifications) |
-| B2 | Formatage d'un montant en FCFA | Formats, dates et devises | TypeScript | Membre 2 | `node --test` (5) |
-| B3 | Montant en lettres en français | Formats, dates et devises | Java | Membre 2 | `javac` + classe de test (36) |
-| B4 | Date et heure en Africa/Dakar | Formats, dates et devises | JavaScript | Membre 2 | Jest (29) |
-| B5 | Vérification d'une signature de rappel (webhook) HMAC-SHA256 | Sécurité et authentification | Python | Membre 3 | `unittest`, vecteurs RFC 4231 (5) |
-| B6 | Réessai avec attente exponentielle | Réseaux instables et hors ligne | TypeScript | Membre 3 | `node --test`, horloge simulée (6) |
-| B7 | Validation de coordonnées GPS et distance en SQL | Données géographiques | SQL | Membre 4 | `psql` (11 assertions) |
-| B8 | File d'envoi hors ligne avec reprise | Réseaux instables et hors ligne | JavaScript | Membre 4 | `node --test` (6) |
-| B9 | Normalisation de texte sans accents pour la recherche | Outils divers | Java | Membre 5 | `javac` + classe de test (11) |
-| B10 | Masquage d'un numéro de téléphone dans les journaux | Sécurité et authentification | Kotlin | Membre 5 | `kotlinc` + test (11) |
+| B1 | Validation et normalisation des numéros de téléphone sénégalais | Validation de données | Java | Amadou Fleury BA | `javac` + classe de test (22 vérifications) |
+| B2 | Formatage d'un montant en FCFA | Formats, dates et devises | TypeScript | Papa Birane DIAO | `node --test` (5) |
+| B3 | Montant en lettres en français | Formats, dates et devises | Java | Papa Birane DIAO | `javac` + classe de test (36) |
+| B4 | Date et heure en Africa/Dakar | Formats, dates et devises | JavaScript | Papa Birane DIAO | Jest (29) |
+| B5 | Vérification d'une signature de rappel (webhook) HMAC-SHA256 | Sécurité et authentification | Python | Mame Diarra Bousso DIEME | `unittest`, vecteurs RFC 4231 (5) |
+| B6 | Réessai avec attente exponentielle | Réseaux instables et hors ligne | TypeScript | Mame Diarra Bousso DIEME | `node --test`, horloge simulée (6) |
+| B7 | Validation de coordonnées GPS et distance en SQL | Données géographiques | SQL | Ndiémé NDIAYE | `psql` (11 assertions) |
+| B8 | File d'envoi hors ligne avec reprise | Réseaux instables et hors ligne | JavaScript | Ndiémé NDIAYE | `node --test` (6) |
+| B9 | Normalisation de texte sans accents pour la recherche | Outils divers | Java | Magatte TALL | `javac` + classe de test (11) |
+| B10 | Masquage d'un numéro de téléphone dans les journaux | Sécurité et authentification | Kotlin | Magatte TALL | `kotlinc` + test (11) |
 
 Tous les tests passent (vérification du 12 novembre 2026).
 

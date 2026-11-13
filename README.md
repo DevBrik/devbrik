@@ -6,6 +6,16 @@ DevBrik est la bibliothèque de briques de code locales, partagées, testées et
 
 *Concours CADEV 2026 · thème « Construire la plateforme d'échange africaine, pour les devs, par les devs » · équipe « Les Lions et les Lionnes du code ».*
 
+## Équipe
+
+| Membre | Rôle | Module |
+| --- | --- | --- |
+| Amadou Fleury BA | Lead technique | Socle, sécurité, déploiement, maquettes |
+| Papa Birane DIAO | Briques | Catalogue, recherche, publication |
+| Mame Diarra Bousso DIEME | Confiance et modération | Avis, tests, signalements, statistiques |
+| Ndiémé NDIAYE | Échange | Demandes, réponses, profils, réputation |
+| Magatte TALL | Comptes et conformité | Comptes, pages légales |
+
 ## Fonctionnalités
 
 | Niveau | Contenu | État |

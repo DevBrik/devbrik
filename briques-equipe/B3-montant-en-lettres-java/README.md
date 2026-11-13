@@ -5,7 +5,7 @@
 | Catégorie | Formats, dates et devises |
 | Langage | Java (17 ou plus) |
 | Licence | MIT |
-| Auteur | Membre 2 |
+| Auteur | Papa Birane DIAO |
 
 **Résumé** : écrit un entier en toutes lettres en français (0 à 999 999 999 999), par exemple pour les factures en FCFA : 15000 → « quinze mille francs CFA ».
 

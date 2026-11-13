@@ -24,6 +24,7 @@ Rien n'est repris d'AgriLion dans le frontend ni dans les briques. Pour le backe
 - Composants partagés `db-*` de la section 12.6 (carte de brique, pastilles, note, pagination, barre de filtres, tuiles, zone et champ de code, saisie par lignes, mot de passe, états, dialogue de confirmation).
 - Écrans M01, M02, M03, M05 (membre 2), M06, M07, M08, M09 et classement (membre 4), M04, M10, M13 (membre 5), M14 (membre 1).
 - Séparation de **tous** les composants en trois fichiers (`.ts`, `.html`, `.scss`), y compris ceux du module avis écrits par le membre 3 ; remplacement de ses gabarits locaux (pagination, dialogue de confirmation, carte de brique masquée, champ de note) par les composants partagés.
+- Ajustements du 13 novembre : notifications (carte blanche en haut au centre), bouton « Code copié », barre de navigation mobile de la maquette, panneau de connexion avec aperçus des pages (captures de l'application), tuiles du classement, actions masquées sur sa propre brique, noms de l'équipe.
 - Textes provisoires des Conditions et de la Confidentialité (à faire relire, dossier 19, V10).
 
 ## 3. Briques de l'équipe avec Claude (12 novembre 2026)
@@ -49,8 +50,8 @@ Chaque membre relit et sait expliquer les parties produites avec l'IA dans son m
 
 | Membre | Parties relues | Date | Signature |
 | --- | --- | --- | --- |
-| 1 | Socle, coquille, composants partagés, déploiement, documentation | | |
-| 2 | M01, M02, M03, M05 ; B2, B3, B4 | | |
-| 3 | Blocs de M02, M11, M12 ; B5, B6 | | |
-| 4 | M06 à M09, classement ; B7, B8 | | |
-| 5 | M04, M10, M13 ; B9, B10 ; textes légaux | | |
+| Amadou Fleury BA | Socle, coquille, composants partagés, déploiement, documentation | | |
+| Papa Birane DIAO | M01, M02, M03, M05 ; B2, B3, B4 | | |
+| Mame Diarra Bousso DIEME | Blocs de M02, M11, M12 ; B5, B6 | | |
+| Ndiémé NDIAYE | M06 à M09, classement ; B7, B8 | | |
+| Magatte TALL | M04, M10, M13 ; B9, B10 ; textes légaux | | |

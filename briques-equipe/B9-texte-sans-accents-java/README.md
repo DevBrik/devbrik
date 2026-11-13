@@ -5,7 +5,7 @@
 | Catégorie | Outils divers |
 | Langage | Java (11 ou plus) |
 | Licence | MIT |
-| Auteur | Membre 5 |
+| Auteur | Magatte TALL |
 
 **Résumé** : retire les accents et développe les ligatures pour comparer des textes sans tenir compte des accents ni de la casse (« Thiès » = « thies », « sénégalais » contient « SENEGAL »).
 

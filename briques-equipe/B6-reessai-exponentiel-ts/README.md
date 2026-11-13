@@ -5,7 +5,7 @@
 | Catégorie | Réseaux instables et hors ligne |
 | Langage | TypeScript |
 | Licence | MIT |
-| Auteur | Membre 3 |
+| Auteur | Mame Diarra Bousso DIEME |
 
 **Résumé** : relance automatiquement une opération réseau qui échoue, avec des attentes croissantes (100 ms, 200 ms, 400 ms…), un plafond, une part aléatoire et l'annulation.
 

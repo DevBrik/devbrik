@@ -3,8 +3,12 @@
     <h1 class="titre-page">Classement des développeurs</h1>
     <p class="sous-titre-page">Découvrez les contributeurs qui font grandir la communauté DevBrik.</p>
 
-    @if (resultat(); as r) {
-      <div class="tuile-unique"><db-tuile [valeur]="r.totalElements" libelle="Contributeurs" /></div>
+    @if (synthese(); as s) {
+      <div class="grille-tuiles">
+        <db-tuile [valeur]="s.contributeurs.toLocaleString('fr-FR')" libelle="Contributeurs" />
+        <db-tuile [valeur]="s.briquesPubliees.toLocaleString('fr-FR')" libelle="Briques publiées" />
+        <db-tuile [valeur]="s.pointsCumules.toLocaleString('fr-FR')" libelle="Points cumulés" />
+      </div>
     }
 
     @if (chargement() && !resultat()) {

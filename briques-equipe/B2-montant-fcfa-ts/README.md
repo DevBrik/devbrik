@@ -5,7 +5,7 @@
 | Catégorie | Formats, dates et devises |
 | Langage | TypeScript |
 | Licence | MIT |
-| Auteur | Membre 2 |
+| Auteur | Papa Birane DIAO |
 
 **Résumé** : formate un montant en francs CFA (« 1 500 000 FCFA ») et relit une saisie (« 15.000 F CFA » → 15000), sans dépendance.
 

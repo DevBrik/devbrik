@@ -1,12 +1,14 @@
 <figure class="zone-code">
   <figcaption class="entete-code">
     <span class="titre-code"><span class="material-icons" aria-hidden="true">code</span> Code source</span>
-    <button type="button" class="copier" (click)="copier()">
-      <span class="material-icons" aria-hidden="true">content_copy</span> Copier le code
+    <button type="button" class="copier" [class.copie]="copie()" (click)="copier()">
+      <span class="material-icons" aria-hidden="true">{{ copie() ? 'check' : 'content_copy' }}</span>
+      {{ copie() ? 'Code copié' : 'Copier le code' }}
     </button>
   </figcaption>
   <div class="defilement" tabindex="0" role="region" aria-label="Code source de la brique">
     <pre class="numeros" aria-hidden="true">{{ numeros() }}</pre>
     <pre class="code"><code>{{ code() }}</code></pre>
   </div>
+  <p class="sr-only" aria-live="polite">{{ copie() ? 'Code copié' : '' }}</p>
 </figure>

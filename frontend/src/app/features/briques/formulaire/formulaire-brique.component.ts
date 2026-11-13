@@ -174,13 +174,16 @@ export class FormulaireBriqueComponent {
       droitsConfirmes: v.droitsConfirmes,
     };
     this.envoi.set(true);
+    const enCours = this.notifications.chargement(this.modification() ? 'Enregistrement en cours…' : 'Publication en cours…');
     const appel = this.modification() ? this.service.modifier(Number(this.id()), corps) : this.service.creer(corps);
     appel.subscribe({
       next: (b) => {
+        enCours.fermer();
         this.notifications.succes(this.modification() ? 'Modifications enregistrées' : 'Brique publiée');
         void this.router.navigate(['/briques', b.id]);
       },
       error: (e: unknown) => {
+        enCours.fermer();
         this.envoi.set(false);
         this.traiterErreur(e);
       },
