@@ -2,8 +2,8 @@
 
 Les visuels de droite des pages de connexion et d'inscription sont **pré-rendus** : dégradé, aperçu de la page, arrondi et fusion « Lumière tamisée » sont appliqués dans l'image, avec les réglages Penpot de la maquette (page 4). Le navigateur n'a plus qu'à faire défiler des images finies.
 
-- `sources/*.png` : captures de l'application (900 × 800, données fictives) pour chaque phrase.
-- `rendu.py` : compose chaque visuel (640 × 800, rendu en ×2) avec Chrome (Playwright).
+- `sources/*.png` : captures de l'application (1300 × 800, données fictives) pour chaque phrase.
+- `rendu.py` : compose chaque visuel (1100 × 800, rendu en ×2 ; ajusté à la hauteur du panneau et coupé à droite) avec Chrome (Playwright).
 
 Régénérer après un changement d'écran :
 

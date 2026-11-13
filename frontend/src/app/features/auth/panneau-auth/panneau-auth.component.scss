@@ -3,21 +3,25 @@
 // fusion soft-light) : voir public/assets/apercus/panneau-*.webp. Le navigateur ne fait que les afficher.
 :host { display: block; height: 100%; }
 .panneau {
-  position: relative; height: 100%; min-height: 640px; box-sizing: border-box; overflow: hidden;
+  position: relative; height: 100%; min-height: 560px; box-sizing: border-box; overflow: hidden;
   // Même dégradé que les visuels : couvre le panneau pendant le chargement et sous l'image si le panneau est plus haut.
   background: linear-gradient(180deg, #1E3A8A 0%, rgb(177 178 181 / 0) 100%), var(--db-fond);
 }
 .visuels { position: absolute; inset: 0; }
-// Images : fondu enchaîné (les deux visuels sont déjà « finis », il n'y a donc aucun saut).
+// Images : ajustées à la HAUTEUR du panneau (le bas blanc reste visible sous la phrase), coupées à droite
+// comme sur la maquette. Les visuels font 1100 × 800 : assez larges pour les écrans larges.
+// Fondu enchaîné : les deux visuels sont déjà « finis », il n'y a donc aucun saut.
 .visuel {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left top;
+  position: absolute; left: 0; top: 0; height: 100%; width: auto; max-width: none;
   opacity: 0; transition: opacity 0.9s ease;
 }
 .visuel.visible { opacity: 1; }
 // Phrases : l'ancienne disparaît d'abord (0,35 s), puis la nouvelle apparaît : jamais deux textes superposés.
 .message {
-  position: absolute; left: 0; right: 0; bottom: 72px; margin: 0; padding: 0 2.5rem;
-  text-align: center; font-size: 1.75rem; font-weight: 600; line-height: 1.25; color: var(--db-encre);
+  // Position et taille proportionnelles à la hauteur du panneau (maquette : 700 px sur 800) :
+  // la phrase reste dans la zone blanche du bas, même sur une fenêtre peu haute.
+  position: absolute; left: 0; right: 0; bottom: 9%; margin: 0; padding: 0 2.5rem;
+  text-align: center; font-size: clamp(1.125rem, 3.2vh, 1.75rem); font-weight: 600; line-height: 1.25; color: var(--db-encre);
   opacity: 0; transition: opacity 0.35s ease;
 }
 .message.visible { opacity: 1; transition: opacity 0.45s ease 0.4s; }
