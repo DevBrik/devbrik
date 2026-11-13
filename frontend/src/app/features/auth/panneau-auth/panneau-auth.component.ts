@@ -3,16 +3,20 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, signal }
 interface Diapositive {
   /** Suite de la phrase après « Connectez-vous » ou « Inscrivez-vous ». */
   suite: string;
-  /** Aperçu flouté de la page correspondante (captures de l'application, public/assets/apercus). */
+  /**
+   * Visuel FINI du panneau (public/assets/apercus) : dégradé, aperçu de la page, arrondi et fusion
+   * « Lumière tamisée » sont déjà appliqués dans l'image (réglages Penpot de la maquette M04).
+   * Rien n'est calculé par le navigateur : le défilement reste fluide et l'aperçu brut n'apparaît jamais.
+   */
   image: string;
 }
 
 const DIAPOSITIVES: Diapositive[] = [
-  { suite: 'et commencez à publier vos briques', image: '/assets/apercus/publier.webp' },
-  { suite: 'et réutilisez les briques de la communauté', image: '/assets/apercus/briques.webp' },
-  { suite: 'et testez les briques de la communauté', image: '/assets/apercus/tester.webp' },
-  { suite: 'et demandez la brique qui vous manque', image: '/assets/apercus/demandes.webp' },
-  { suite: 'et grimpez dans le classement des contributeurs', image: '/assets/apercus/classement.webp' },
+  { suite: 'et commencez à publier vos briques', image: '/assets/apercus/panneau-publier.webp' },
+  { suite: 'et réutilisez les briques de la communauté', image: '/assets/apercus/panneau-briques.webp' },
+  { suite: 'et testez les briques de la communauté', image: '/assets/apercus/panneau-tester.webp' },
+  { suite: 'et demandez la brique qui vous manque', image: '/assets/apercus/panneau-demandes.webp' },
+  { suite: 'et grimpez dans le classement des contributeurs', image: '/assets/apercus/panneau-classement.webp' },
 ];
 
 const INTERVALLE_MS = 5000;

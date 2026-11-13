@@ -1,26 +1,26 @@
 // Maquette M04 (Penpot, page 4) : panneau = moitié droite, du haut au bas du contenu.
-//  - fond : dégradé linéaire vertical #1E3A8A (100 %) → #B1B2B5 (0 %) sur le fond de page ;
-//  - aperçu : 725 × 646 sur 640 de large (113 %), à 73 px du bord gauche et 70 px du haut,
-//    rayon 15 px, mode de fusion « Lumière tamisée » (soft-light), sans flou ;
-//  - phrase en bas, centrée, couleur encre.
+// Les visuels sont pré-rendus (dégradé #1E3A8A → transparent, aperçu 725 px à 73/70 px, rayon 15 px,
+// fusion soft-light) : voir public/assets/apercus/panneau-*.webp. Le navigateur ne fait que les afficher.
 :host { display: block; height: 100%; }
 .panneau {
   position: relative; height: 100%; min-height: 640px; box-sizing: border-box; overflow: hidden;
-  isolation: isolate; // la fusion ne porte que sur le fond du panneau
+  // Même dégradé que les visuels : couvre le panneau pendant le chargement et sous l'image si le panneau est plus haut.
   background: linear-gradient(180deg, #1E3A8A 0%, rgb(177 178 181 / 0) 100%), var(--db-fond);
 }
 .visuels { position: absolute; inset: 0; }
-.diapositive { position: absolute; inset: 0; opacity: 0; transition: opacity 0.8s ease; }
-.diapositive.visible { opacity: 1; }
-.cadre { position: absolute; left: 11.4%; top: 70px; width: 113%; }
-.apercu {
-  display: block; width: 100%; height: auto; border-radius: 15px;
-  mix-blend-mode: soft-light;
+// Images : fondu enchaîné (les deux visuels sont déjà « finis », il n'y a donc aucun saut).
+.visuel {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left top;
+  opacity: 0; transition: opacity 0.9s ease;
 }
+.visuel.visible { opacity: 1; }
+// Phrases : l'ancienne disparaît d'abord (0,35 s), puis la nouvelle apparaît : jamais deux textes superposés.
 .message {
   position: absolute; left: 0; right: 0; bottom: 72px; margin: 0; padding: 0 2.5rem;
   text-align: center; font-size: 1.75rem; font-weight: 600; line-height: 1.25; color: var(--db-encre);
+  opacity: 0; transition: opacity 0.35s ease;
 }
+.message.visible { opacity: 1; transition: opacity 0.45s ease 0.4s; }
 .pause {
   position: absolute; right: 16px; bottom: 16px; width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
   border: 1px solid var(--db-bordure-deco); background: rgb(255 255 255 / 0.85); color: var(--db-primaire);
