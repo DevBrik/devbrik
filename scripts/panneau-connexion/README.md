@@ -11,7 +11,7 @@ Régénérer après un changement d'écran :
 pip install playwright        # Chrome ou Chromium doit être installé
 python3 scripts/panneau-connexion/rendu.py scripts/panneau-connexion/sources /tmp/visuels
 for n in publier briques tester demandes classement; do
-  cwebp -q 78 /tmp/visuels/$n.png -o frontend/public/assets/apercus/panneau-$n.webp   # ou ImageMagick : convert … -quality 78
+  cwebp -q 78 /tmp/visuels/$n.png -o frontend/public/assets/apercus/connexion-$n.webp   # ou ImageMagick : convert … -quality 78
 done
 ```
 Dans `rendu.py`, adapter `executable_path` au chemin de Chrome sur votre poste.

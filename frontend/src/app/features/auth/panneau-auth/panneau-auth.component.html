@@ -3,6 +3,8 @@
     @for (d of diapositives; track d.image; let i = $index) {
       <img class="visuel" [class.visible]="i === index()" [src]="d.image" alt="" width="2200" height="1600" decoding="async" />
     }
+    <!-- Voile blanc du bas : la phrase reste lisible quel que soit l'aperçu. -->
+    <div class="voile"></div>
     @for (d of diapositives; track d.image; let i = $index) {
       <p class="message" [class.visible]="i === index()">{{ verbe() }} {{ d.suite }}</p>
     }

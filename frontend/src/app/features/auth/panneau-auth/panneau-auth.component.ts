@@ -12,11 +12,11 @@ interface Diapositive {
 }
 
 const DIAPOSITIVES: Diapositive[] = [
-  { suite: 'et commencez à publier vos briques', image: '/assets/apercus/panneau-publier.webp' },
-  { suite: 'et réutilisez les briques de la communauté', image: '/assets/apercus/panneau-briques.webp' },
-  { suite: 'et testez les briques de la communauté', image: '/assets/apercus/panneau-tester.webp' },
-  { suite: 'et demandez la brique qui vous manque', image: '/assets/apercus/panneau-demandes.webp' },
-  { suite: 'et grimpez dans le classement des contributeurs', image: '/assets/apercus/panneau-classement.webp' },
+  { suite: 'et commencez à publier vos briques', image: '/assets/apercus/connexion-publier.webp' },
+  { suite: 'et réutilisez les briques de la communauté', image: '/assets/apercus/connexion-briques.webp' },
+  { suite: 'et testez les briques de la communauté', image: '/assets/apercus/connexion-tester.webp' },
+  { suite: 'et demandez la brique qui vous manque', image: '/assets/apercus/connexion-demandes.webp' },
+  { suite: 'et grimpez dans le classement des contributeurs', image: '/assets/apercus/connexion-classement.webp' },
 ];
 
 const INTERVALLE_MS = 5000;

@@ -1,6 +1,6 @@
 // Maquette M04 (Penpot, page 4) : panneau = moitié droite, du haut au bas du contenu.
 // Les visuels sont pré-rendus (dégradé #1E3A8A → transparent, aperçu 725 px à 73/70 px, rayon 15 px,
-// fusion soft-light) : voir public/assets/apercus/panneau-*.webp. Le navigateur ne fait que les afficher.
+// fusion soft-light) : voir public/assets/apercus/connexion-*.webp. Le navigateur ne fait que les afficher.
 :host { display: block; height: 100%; }
 .panneau {
   position: relative; height: 100%; min-height: 560px; box-sizing: border-box; overflow: hidden;
@@ -16,12 +16,18 @@
   opacity: 0; transition: opacity 0.9s ease;
 }
 .visuel.visible { opacity: 1; }
+// Voile : du transparent (65 % de la hauteur) au fond de page (88 %), au-dessus des visuels et sous la phrase.
+// Il ne bouge pas pendant le défilement : aucun saut.
+.voile {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgb(248 250 252 / 0) 62%, rgb(248 250 252 / 0.92) 80%, var(--db-fond) 90%);
+}
 // Phrases : l'ancienne disparaît d'abord (0,35 s), puis la nouvelle apparaît : jamais deux textes superposés.
 .message {
   // Position et taille proportionnelles à la hauteur du panneau (maquette : 700 px sur 800) :
   // la phrase reste dans la zone blanche du bas, même sur une fenêtre peu haute.
   position: absolute; left: 0; right: 0; bottom: 9%; margin: 0; padding: 0 2.5rem;
-  text-align: center; font-size: clamp(1.125rem, 3.2vh, 1.75rem); font-weight: 600; line-height: 1.25; color: var(--db-encre);
+  text-align: center; font-size: clamp(1.125rem, 3.2vh, 1.75rem); font-weight: 700; line-height: 1.25; color: var(--db-encre);
   opacity: 0; transition: opacity 0.35s ease;
 }
 .message.visible { opacity: 1; transition: opacity 0.45s ease 0.4s; }
