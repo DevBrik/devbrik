@@ -1,7 +1,14 @@
 // Mise en page commune à la connexion et à l'inscription (M04).
 :host { display: block; }
-.disposition-auth { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; align-items: stretch; }
-.formulaire-auth { max-width: 420px; width: 100%; justify-self: center; align-self: center; }
+// Comme sur la maquette : formulaire à gauche, panneau collé au bord droit de la fenêtre,
+// du dessous de l'en-tête jusqu'au pied de page.
+.disposition-auth {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch;
+  max-width: none; padding: 0; min-height: calc(100vh - 64px);
+}
+.formulaire-auth {
+  max-width: 420px; width: 100%; justify-self: center; align-self: center; padding: 48px 16px; box-sizing: border-box;
+}
 .titre-auth { margin: 1rem 0 0.25rem; font-size: 1.75rem; font-weight: 700; }
 .marque { color: var(--db-primaire); }
 .bascule { margin: 0 0 1.5rem; a { color: var(--db-orange-texte); font-weight: 600; } }
@@ -16,6 +23,6 @@
   background: var(--db-rose-pale); color: var(--db-erreur); font-weight: 600; outline: none;
 }
 @media (max-width: 900px) {
-  .disposition-auth { grid-template-columns: 1fr; }
+  .disposition-auth { grid-template-columns: 1fr; min-height: 0; }
   .panneau { display: none; }
 }

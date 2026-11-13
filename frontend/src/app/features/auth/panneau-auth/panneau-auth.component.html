@@ -2,7 +2,7 @@
   <div class="visuels" aria-hidden="true">
     @for (d of diapositives; track d.image; let i = $index) {
       <div class="diapositive" [class.visible]="i === index()">
-        <div class="cadre"><img class="apercu" [src]="d.image" alt="" loading="lazy" width="760" height="654" /></div>
+        <div class="cadre"><img class="apercu" [src]="d.image" alt="" loading="lazy" width="820" height="729" /></div>
         <p class="message">{{ verbe() }} {{ d.suite }}</p>
       </div>
     }

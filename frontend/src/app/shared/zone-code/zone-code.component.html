@@ -1,9 +1,19 @@
 <figure class="zone-code">
   <figcaption class="entete-code">
     <span class="titre-code"><span class="material-icons" aria-hidden="true">code</span> Code source</span>
-    <button type="button" class="copier" [class.copie]="copie()" (click)="copier()">
-      <span class="material-icons" aria-hidden="true">{{ copie() ? 'check' : 'content_copy' }}</span>
-      {{ copie() ? 'Code copié' : 'Copier le code' }}
+    <!-- Bouton de 44 px de haut (cible tactile) ; la pastille visible fait 32 px (maquette « Statuts »). -->
+    <button type="button" class="copier" (click)="copier()">
+      <span class="pastille-copie">
+        @if (copie()) {
+          <span class="material-icons" aria-hidden="true">check</span> Code copié
+        } @else {
+          <svg class="icone-copie" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <rect x="4.5" y="1" width="10.5" height="10.5" rx="1.5" opacity="0.55" />
+            <rect x="1" y="4.5" width="10.5" height="10.5" rx="1.5" />
+          </svg>
+          Copier le code
+        }
+      </span>
     </button>
   </figcaption>
   <div class="defilement" tabindex="0" role="region" aria-label="Code source de la brique">
