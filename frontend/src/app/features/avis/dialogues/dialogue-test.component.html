@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>Enregistrer un test</h2>
+<form [formGroup]="formulaire" (ngSubmit)="envoyer()" novalidate>
+  <mat-dialog-content>
+    <p>Indiquez le résultat de votre test sur la version actuelle du code.</p>
+    @if (donnees.titreBrique) {
+      <p class="objet">Brique : <strong>{{ donnees.titreBrique }}</strong></p>
+    }
+    <p class="aide">Votre test sera enregistré pour la version {{ donnees.versionCode }} du code.</p>
+    @if (donnees.test && donnees.test.versionCode !== donnees.versionCode) {
+      <p class="info" role="note">
+        Votre test actuel porte sur la version {{ donnees.test.versionCode }}, qui n’est plus la version
+        actuelle. Il sera remplacé par ce nouveau test.
+      </p>
+    }
+
+    <fieldset class="champ">
+      <legend class="etiquette">
+        Résultat du test <span class="obligatoire" aria-hidden="true">*</span>
+      </legend>
+      @for (r of resultats; track r.valeur) {
+        <label class="option">
+          <input
+            type="radio"
+            formControlName="resultat"
+            [value]="r.valeur"
+            [attr.value]="r.valeur"
+            [attr.aria-invalid]="resultatInvalide() ? 'true' : null"
+            [attr.data-invalide]="resultatInvalide() ? 'true' : null"
+            [attr.aria-describedby]="resultatInvalide() ? 'erreur-resultat' : null"
+          />
+          <span class="pastille" [class.ok]="r.valeur === 'OK'" [class.ko]="r.valeur === 'KO'">
+            <span aria-hidden="true">{{ r.icone }}</span> {{ r.libelle }}
+          </span>
+        </label>
+      }
+      @if (resultatInvalide()) {
+        <p class="erreur" id="erreur-resultat" role="alert">Indiquez si la brique fonctionne ou non.</p>
+      }
+    </fieldset>
+
+    <div class="champ">
+      <label class="etiquette" for="test-environnement">Environnement (facultatif)</label>
+      <input
+        id="test-environnement"
+        type="text"
+        formControlName="environnement"
+        autocomplete="off"
+        placeholder="Exemple : Java 21, Windows 11"
+        aria-describedby="compteur-environnement erreur-environnement"
+        [attr.aria-invalid]="erreurEnvironnement() ? 'true' : null"
+        [attr.data-invalide]="erreurEnvironnement() ? 'true' : null"
+      />
+      <p class="compteur" id="compteur-environnement">{{ longueur() }} / 120</p>
+      @if (erreurEnvironnement(); as message) {
+        <p class="erreur" id="erreur-environnement" role="alert">{{ message }}</p>
+      }
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="actions">
+    <button type="submit" class="btn btn-primaire" [disabled]="envoi()">
+      {{ envoi() ? 'Enregistrement en cours…' : 'Enregistrer' }}
+    </button>
+    <button type="button" class="btn btn-destructif" mat-dialog-close>Annuler</button>
+  </mat-dialog-actions>
+</form>

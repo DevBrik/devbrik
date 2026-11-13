@@ -1,0 +1,9 @@
+{
+  "name": "b6-reessai-exponentiel-ts",
+  "version": "1.0.0",
+  "description": "Brique B6 : réessai avec attente exponentielle (TypeScript, sans dépendance)",
+  "type": "module",
+  "scripts": { "test": "node --test index.test.ts" },
+  "engines": { "node": ">=22.18" },
+  "license": "MIT"
+}

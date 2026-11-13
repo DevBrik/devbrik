@@ -1,0 +1,31 @@
+@if (totalPages() > 1) {
+  <nav class="pagination" [attr.aria-label]="libelle()">
+    <button type="button" class="pas" [disabled]="page() === 0" (click)="aller(page() - 1)">
+      <span aria-hidden="true">←</span> Précédent
+    </button>
+    <ol class="numeros">
+      @for (n of numeros(); track $index) {
+        <li>
+          @if (n === null) {
+            <span class="ellipse" aria-hidden="true">…</span>
+          } @else {
+            <button
+              type="button"
+              class="numero"
+              [class.courante]="n === page()"
+              [attr.aria-current]="n === page() ? 'page' : null"
+              [attr.aria-label]="'Page ' + (n + 1)"
+              (click)="aller(n)"
+            >
+              {{ n + 1 }}
+            </button>
+          }
+        </li>
+      }
+    </ol>
+    <span class="position">Page {{ page() + 1 }} sur {{ totalPages() }}</span>
+    <button type="button" class="pas" [disabled]="page() + 1 >= totalPages()" (click)="aller(page() + 1)">
+      Suivant <span aria-hidden="true">→</span>
+    </button>
+  </nav>
+}

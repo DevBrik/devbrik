@@ -1,0 +1,58 @@
+<div class="page">
+  <div class="entete-page">
+    <div>
+      <h1 class="titre-page">Mes briques</h1>
+      <p class="sous-titre-page">Retrouvez et gérez toutes vos publications.</p>
+    </div>
+    <a class="btn btn-primaire" routerLink="/briques/nouvelle"><span aria-hidden="true">+</span> Publier une brique</a>
+  </div>
+
+  <div class="grille-tuiles" role="group" aria-label="Filtrer par statut">
+    <button type="button" class="tuile-bouton" [attr.aria-pressed]="statut() === null" (click)="filtrerStatut(null)">
+      <db-tuile [valeur]="compteurs()?.total ?? '–'" libelle="Total" [active]="statut() === null" />
+    </button>
+    <button type="button" class="tuile-bouton" [attr.aria-pressed]="statut() === 'PUBLIEE'" (click)="filtrerStatut('PUBLIEE')">
+      <db-tuile [valeur]="compteurs()?.publiees ?? '–'" libelle="Publiées" [active]="statut() === 'PUBLIEE'" />
+    </button>
+    <button type="button" class="tuile-bouton" [attr.aria-pressed]="statut() === 'MASQUEE'" (click)="filtrerStatut('MASQUEE')">
+      <db-tuile [valeur]="compteurs()?.masquees ?? '–'" libelle="Masquées" [active]="statut() === 'MASQUEE'" />
+    </button>
+  </div>
+
+  <db-barre-filtres [valeurs]="filtres()" identifiant="mes-briques" (filtresChange)="changerFiltres($event)" />
+
+  @if (resultat(); as r) {
+    <p class="compteur-liste" role="status">
+      {{ r.totalElements }} {{ r.totalElements > 1 ? 'briques' : 'brique' }}
+      @if (statut() === 'PUBLIEE') { publiée{{ r.totalElements > 1 ? 's' : '' }} }
+      @if (statut() === 'MASQUEE') { masquée{{ r.totalElements > 1 ? 's' : '' }} }
+    </p>
+  }
+
+  @if (chargement() && !resultat()) {
+    <db-squelette-cartes [nombre]="3" libelle="Chargement de vos briques…" />
+  } @else if (erreur()) {
+    <db-etat-page type="erreur" (reessayer)="charger()" />
+  } @else if (resultat(); as r) {
+    @if (r.contenu.length === 0) {
+      @if (rechercheActive()) {
+        <db-etat-page type="vide" titre="Aucune brique ne correspond" message="Essayez un autre mot-clé ou retirez un filtre." />
+      } @else {
+        <db-etat-page
+          type="vide"
+          titre="Aucune brique pour le moment"
+          message="Vous n'avez pas encore publié de brique."
+          actionLibelle="+ Publier une brique"
+          actionLien="/briques/nouvelle"
+        />
+      }
+    } @else {
+      <ul class="grille-cartes" [attr.aria-busy]="chargement()">
+        @for (b of r.contenu; track b.id) {
+          <li><db-brique-carte [brique]="b" actions="auteur" (modifier)="modifier(b)" (supprimer)="supprimer(b)" /></li>
+        }
+      </ul>
+      <db-pagination libelle="Pagination de mes briques" [page]="r.page" [totalPages]="r.totalPages" (pageChange)="changerPage($event)" />
+    }
+  }
+</div>

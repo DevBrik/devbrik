@@ -1,0 +1,15 @@
+:host { display: block; }
+.bloc { margin-bottom: 1.25rem; }
+.centre { text-align: center; }
+.centre p { max-width: 60ch; margin-left: auto; margin-right: auto; }
+.titre-orange { margin: 0 0 0.5rem; font-size: 1.5rem; font-weight: 700; color: var(--db-orange-texte); }
+.titre-equipe { margin: 0; font-size: 1.5rem; font-weight: 800; text-transform: uppercase; }
+.liens { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+.equipe { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+.membre { padding: 1rem; border: 1px solid var(--db-bordure-deco); border-radius: 12px; display: grid; justify-items: center; gap: 0.375rem; }
+.membre h3 { margin: 0; font-size: 1rem; }
+.membre p { margin: 0; font-size: 0.875rem; color: var(--db-texte-secondaire); }
+.pastille-membre {
+  display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--db-primaire); color: #fff; font-weight: 700;
+}

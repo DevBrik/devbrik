@@ -1,0 +1,149 @@
+<div class="page page-etroite">
+  <a class="btn btn-primaire btn-petit retour" routerLink="/demandes"><span aria-hidden="true">←</span> Retour aux demandes</a>
+
+  @if (etat(); as e) {
+    @if (e === 'chargement') {
+      <db-etat-page type="chargement" titre="Chargement de la demande…" />
+    } @else if (e === 'erreur') {
+      <db-etat-page type="erreur" (reessayer)="recharger()" />
+    } @else {
+      <db-etat-page [type]="e" />
+    }
+  } @else if (demande(); as d) {
+    <article aria-labelledby="titre-demande">
+      <header class="entete-demande">
+        <div class="ligne-titre">
+          <h1 id="titre-demande" class="titre-demande">{{ d.titre }}</h1>
+          <db-pastille [type]="d.statut === 'RESOLUE' ? 'resolue' : 'ouverte'" />
+        </div>
+        <p class="publiee">
+          Publiée par
+          @if (d.auteur; as a) {
+            <a [routerLink]="['/developpeurs', a.id]">{{ nomAuteur(a) }}</a>
+          } @else {
+            {{ nomAuteur(null) }}
+          }
+          · <time [attr.datetime]="d.dateCreation">{{ d.dateCreation | date: 'd MMMM y' }}</time>
+        </p>
+      </header>
+
+      <div class="carte description texte-brut">{{ d.description }}</div>
+
+      <div class="tuiles-demande">
+        <div class="carte tuile-demande">
+          <span class="libelle">Catégorie</span>
+          <span class="valeur">{{ d.categorie?.nom ?? 'Non précisé' }}</span>
+        </div>
+        <div class="carte tuile-demande">
+          <span class="libelle">Langage</span>
+          <span class="valeur">{{ d.langage?.nom ?? 'Non précisé' }}</span>
+        </div>
+      </div>
+
+      @if (estAuteurDemande() || estAdmin()) {
+        <div class="actions-demande">
+          <button type="button" class="btn btn-destructif" [disabled]="enCours() !== null" (click)="supprimerDemande()">
+            {{ enCours() === 'demande' ? 'Suppression en cours…' : 'Supprimer la demande' }}
+          </button>
+        </div>
+      }
+
+      <section aria-labelledby="titre-reponses" class="reponses">
+        <h2 id="titre-reponses" class="titre-section">Réponses <span class="nombre">({{ d.reponses.length }})</span></h2>
+        @if (d.reponses.length === 0) {
+          <p class="aucune">Aucune réponse pour le moment. Proposez la première !</p>
+        } @else {
+          <ul class="liste-reponses">
+            @for (r of d.reponses; track r.id) {
+              <li class="carte reponse" [class.acceptee]="r.acceptee">
+                <div class="haut-reponse">
+                  @if (r.auteur; as a) {
+                    <a class="auteur" [routerLink]="['/developpeurs', a.id]">{{ nomAuteur(a) }}</a>
+                  } @else {
+                    <span class="auteur">{{ nomAuteur(null) }}</span>
+                  }
+                  @if (r.acceptee) {
+                    <db-pastille type="acceptee" />
+                  }
+                </div>
+                <p class="contenu texte-brut">{{ r.contenu }}</p>
+                @if (r.brique; as b) {
+                  <p class="brique-proposee"><strong>Brique proposée : {{ b.titre }}</strong></p>
+                  <a class="btn btn-primaire btn-petit" [routerLink]="['/briques', b.id]" [attr.aria-label]="'Consulter la brique ' + b.titre">
+                    Consulter la brique <span aria-hidden="true">→</span>
+                  </a>
+                }
+                <div class="bas-reponse">
+                  <div class="actions-reponse">
+                    @if (peutAccepter(r)) {
+                      <button type="button" class="btn btn-accent btn-petit" [disabled]="enCours() !== null" (click)="accepter(r)">
+                        {{ enCours() === r.id ? 'Acceptation en cours…' : 'Accepter cette réponse' }}
+                      </button>
+                    }
+                    @if (r.acceptee && estAuteurDemande()) {
+                      <button type="button" class="btn btn-destructif btn-petit" [disabled]="enCours() !== null" (click)="retirer(r)">
+                        {{ enCours() === r.id ? 'Retrait en cours…' : "Retirer l'acceptation" }}
+                      </button>
+                    }
+                    @if (estMienne(r) || estAdmin()) {
+                      <button type="button" class="btn btn-destructif btn-petit" [disabled]="enCours() !== null" (click)="supprimerReponse(r)">
+                        Supprimer
+                      </button>
+                    }
+                  </div>
+                  <time class="date" [attr.datetime]="r.dateCreation">{{ r.dateCreation | date: 'd MMMM y' }}</time>
+                </div>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+
+      <section aria-labelledby="titre-proposer" class="proposer">
+        <h2 id="titre-proposer" class="titre-section">Proposer une réponse</h2>
+        @if (connecte()) {
+          <form [formGroup]="formulaire" (ngSubmit)="repondre()" novalidate>
+            <div class="champ">
+              <div class="entete-champ">
+                <label class="etiquette" for="reponse-contenu">Votre réponse <span class="obligatoire" aria-hidden="true">*</span></label>
+                <span class="compteur" id="compteur-reponse">{{ compteur() }} / 5 000</span>
+              </div>
+              <textarea id="reponse-contenu" formControlName="contenu" rows="5" maxlength="5000" aria-required="true"
+                [attr.aria-invalid]="erreurContenu() ? 'true' : null" [attr.data-invalide]="erreurContenu() ? 'true' : null"
+                aria-describedby="compteur-reponse erreur-reponse"></textarea>
+              @if (erreurContenu(); as m) {<p class="erreur" id="erreur-reponse">{{ m }}</p>}
+            </div>
+            <div class="champ">
+              <label class="etiquette" for="reponse-brique">Lier une brique (facultatif)</label>
+              @if (briqueChoisie(); as b) {
+                <p class="brique-liee">
+                  <span class="material-icons" aria-hidden="true">link</span>
+                  <span>Brique liée : <strong>{{ b.titre }}</strong></span>
+                  <button type="button" class="btn-lien" (click)="retirerBrique()">Retirer</button>
+                </p>
+              }
+              <input id="reponse-brique" type="text" [formControl]="rechercheBrique" [matAutocomplete]="auto"
+                placeholder="Rechercher une brique publiée (2 caractères au moins)" autocomplete="off"
+                aria-describedby="aide-brique erreur-brique" [attr.data-invalide]="erreurBrique() ? 'true' : null" />
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="afficherBrique" (optionSelected)="choisirBrique($event)">
+                @for (b of suggestions(); track b.id) {
+                  <mat-option [value]="b">{{ b.titre }} · {{ b.langage.nom }}</mat-option>
+                }
+              </mat-autocomplete>
+              <p class="aide" id="aide-brique">Choisissez une brique dans les suggestions pour l'associer à votre réponse.</p>
+              @if (erreurBrique(); as m) {<p class="erreur" id="erreur-brique">{{ m }}</p>}
+            </div>
+            <div class="boutons-formulaire fin">
+              <button type="submit" class="btn btn-accent" [disabled]="envoi()">{{ envoi() ? 'Envoi en cours…' : 'Envoyer ma réponse' }}</button>
+            </div>
+          </form>
+        } @else {
+          <div class="carte connexion-requise">
+            <p>Connectez-vous pour répondre.</p>
+            <button type="button" class="btn btn-primaire" (click)="versConnexion()">Se connecter</button>
+          </div>
+        }
+      </section>
+    </article>
+  }
+</div>

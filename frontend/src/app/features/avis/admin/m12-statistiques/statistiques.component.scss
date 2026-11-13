@@ -1,0 +1,17 @@
+@use '../admin';
+
+.conteneur { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+h2 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+.sous-titre { margin: 0.25rem 0 1.5rem; color: var(--db-primaire); font-size: 1.125rem; }
+.tuiles {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+/* Mobile (12.8) : les statistiques restent sur deux colonnes. */
+@media (max-width: 640px) { .tuiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; } }
+.tuile { display: grid; gap: 0.25rem; justify-items: center; text-align: center; padding: 1.25rem 0.75rem; border-radius: 1rem; background: #fff; }
+.libelle { margin: 0; font-size: 1.25rem; font-weight: 600; overflow-wrap: anywhere; }
+.valeur { margin: 0; font-size: 2.25rem; font-weight: 700; line-height: 1.2; color: var(--db-orange-texte); }
+.detail { margin: 0; font-size: 0.875rem; }
+.squelette-tuiles span { display: block; height: 7rem; border-radius: 1rem; background: #e2e8f0; animation: pulsation 1.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .squelette-tuiles span { animation: none; } }

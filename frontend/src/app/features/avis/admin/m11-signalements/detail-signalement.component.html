@@ -1,0 +1,49 @@
+<div class="panneau">
+  <p class="ligne">
+    <span class="motif"
+      ><span class="material-icons" aria-hidden="true">flag</span> {{ libelleMotif(signalement().motif) }}</span
+    >
+    @if (signalement().brique?.statut === 'MASQUEE') {
+      <span class="pastille-masquee"
+        ><span class="material-icons" aria-hidden="true">circle</span> Masquée</span
+      >
+    }
+  </p>
+
+  <p class="brique"><strong>Brique :</strong> {{ titreBrique() }}</p>
+  @if (signalement().brique; as b) {
+    <p class="info"><strong>Auteur :</strong> {{ nomAuteur(b.auteur) }}</p>
+  }
+  <p class="info"><strong>Signalé par :</strong> {{ nomAuteur(signalement().auteur) }}</p>
+  <p class="info">
+    <strong>Date :</strong>
+    <time [attr.datetime]="signalement().dateCreation">{{ signalement().dateCreation | date: 'd MMMM y' }}</time>
+  </p>
+  <div class="description">
+    <strong>Description :</strong>
+    <p class="texte">{{ signalement().details || 'Aucune description' }}</p>
+  </div>
+
+  @if (signalement().brique; as b) {
+    <a class="btn btn-primaire lien-btn consulter" [routerLink]="['/briques', b.id]">Consulter la brique</a>
+  }
+
+  <div class="actions">
+    <button
+      type="button"
+      class="btn btn-accent"
+      [disabled]="enCours() !== null"
+      (click)="conserver.emit()"
+    >
+      {{ enCours() === 'CONSERVER' ? 'Traitement en cours…' : 'Conserver la brique' }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-destructif"
+      [disabled]="enCours() !== null"
+      (click)="masquer.emit()"
+    >
+      {{ enCours() === 'MASQUER_BRIQUE' ? 'Masquage en cours…' : 'Masquer la brique' }}
+    </button>
+  </div>
+</div>

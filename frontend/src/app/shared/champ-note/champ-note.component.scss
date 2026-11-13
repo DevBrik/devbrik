@@ -1,0 +1,7 @@
+.groupe { display: flex; gap: 0.25rem; }
+.etoile {
+  min-width: 44px; min-height: 44px; padding: 0; border: 0; background: transparent;
+  font-size: 2rem; line-height: 1; color: var(--db-orange); cursor: pointer;
+}
+.etoile:disabled { cursor: not-allowed; opacity: 0.55; }
+.texte { margin: 0.25rem 0 0; font-size: 1rem; }

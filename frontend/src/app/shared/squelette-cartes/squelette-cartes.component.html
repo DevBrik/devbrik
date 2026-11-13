@@ -1,0 +1,14 @@
+<p class="sr-only" role="status">{{ libelle() }}</p>
+<ul class="grille-cartes" aria-hidden="true">
+  @for (i of elements(); track i) {
+    <li>
+      <div class="carte faux">
+        <span class="squelette l1"></span>
+        <span class="squelette l2"></span>
+        <span class="squelette l3"></span>
+        <span class="squelette l4"></span>
+        <span class="squelette l5"></span>
+      </div>
+    </li>
+  }
+</ul>

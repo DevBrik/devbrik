@@ -1,0 +1,35 @@
+<footer class="pied">
+  <div class="interieur">
+    <div class="presentation">
+      <db-logo [taille]="48" [clair]="true" />
+      <p>La bibliothèque de briques de code créée par les développeurs.</p>
+    </div>
+    <nav class="colonnes" aria-label="Liens du pied de page">
+      <div>
+        <h2>Explorer</h2>
+        <ul>
+          <li><a routerLink="/briques">Découvrir les briques</a></li>
+          <li><a routerLink="/demandes">Demandes</a></li>
+          <li><a routerLink="/developpeurs/classement">Classement</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Communauté</h2>
+        <ul>
+          <li><a routerLink="/briques/nouvelle">Publier une brique</a></li>
+          <li><a routerLink="/demandes/nouvelle">Créer une demande</a></li>
+          <li><a routerLink="/compte/mon-profil">Mon profil</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Informations</h2>
+        <ul>
+          <li><a routerLink="/infos/a-propos">À propos</a></li>
+          <li><a routerLink="/infos/conditions">Conditions d'utilisation</a></li>
+          <li><a routerLink="/infos/confidentialite">Confidentialité</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <p class="copyright">© {{ annee }} DevBrik. Tous droits réservés.</p>
+</footer>

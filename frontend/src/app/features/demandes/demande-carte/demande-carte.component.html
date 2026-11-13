@@ -1,0 +1,19 @@
+<article class="carte-demande" [class.resolue]="demande().statut === 'RESOLUE'" [attr.aria-labelledby]="'titre-demande-' + demande().id">
+  <div class="haut">
+    <h3 class="titre" [id]="'titre-demande-' + demande().id">{{ demande().titre }}</h3>
+    @if (demande().statut === 'RESOLUE') {
+      <db-pastille type="resolue" />
+    }
+  </div>
+  <p class="extrait">{{ demande().extrait }}</p>
+  <p class="ligne">{{ ligne() }}</p>
+  <div class="bas">
+    <p class="meta">
+      {{ demande().nombreReponses }} {{ demande().nombreReponses > 1 ? 'réponses' : 'réponse' }} ·
+      <time [attr.datetime]="demande().dateCreation">{{ demande().dateCreation | date: 'd MMMM y' }}</time>
+    </p>
+    <a class="btn btn-accent btn-petit" [routerLink]="['/demandes', demande().id]" [attr.aria-label]="'Voir la demande : ' + demande().titre">
+      Voir la demande <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</article>

@@ -1,0 +1,22 @@
+<div class="champ-code" [class.invalide]="invalide()">
+  <div class="entete-code" aria-hidden="true">
+    <span class="material-icons">code</span> Code source
+  </div>
+  <textarea
+    [id]="identifiant()"
+    class="zone"
+    spellcheck="false"
+    autocapitalize="off"
+    autocomplete="off"
+    rows="14"
+    [value]="valeur()"
+    [disabled]="desactive()"
+    [attr.aria-describedby]="decritPar()"
+    [attr.aria-invalid]="invalide() ? 'true' : null"
+    [attr.data-invalide]="invalide() ? 'true' : null"
+    (input)="saisir($any($event.target).value)"
+    (keydown)="clavier($event)"
+    (blur)="surTouche()"
+  ></textarea>
+</div>
+<p class="compteur">{{ valeur().length.toLocaleString('fr-FR') }} / {{ max().toLocaleString('fr-FR') }} · Tabulation insère deux espaces ; Échap puis Tabulation pour quitter le champ.</p>

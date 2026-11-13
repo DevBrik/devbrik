@@ -1,4 +1,8 @@
+// DevBrik : thème global (charte DevBrik-design-system-v1.1, sections 3, 4, 11).
+// Couleurs uniquement par variables : jamais #EA580C en dur dans un composant.
 @use '@angular/material' as mat;
+@use 'styles/communs';
+@use 'styles/utilitaires';
 
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
@@ -9,30 +13,44 @@
 html {
   color-scheme: light;
   @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$orange-palette,
-      theme-type: light,
-    ),
+    color: (primary: mat.$azure-palette, tertiary: mat.$orange-palette, theme-type: light),
     typography: Inter,
     density: 0,
   ));
 
-  // Palette DevBrik (charte)
   --mat-sys-primary: #1E3A8A;
   --mat-sys-on-primary: #FFFFFF;
   --mat-sys-tertiary: #EA580C;
-  --mat-sys-on-tertiary: #0F172A; // texte sombre sur orange, jamais blanc
+  --mat-sys-on-tertiary: #FFFFFF; // version 1.1 : texte blanc sur orange (écart assumé, charte 3.2)
+  --mat-sys-error: #B91C1C;
   --mat-sys-background: #F8FAFC;
   --mat-sys-surface: #FFFFFF;
   --mat-sys-on-surface: #0F172A;
-  --mat-sys-error: #B91C1C;
 
   --db-primaire: #1E3A8A;
   --db-orange: #EA580C;
+  --db-orange-texte: #EA580C;   // passer à #C2410C si un audit l'exige (charte 3.2)
+  --db-orange-bouton: #EA580C;  // idem
   --db-sarcelle: #0F766E;
   --db-encre: #0F172A;
   --db-fond: #F8FAFC;
+  --db-surface: #FFFFFF;
+  --db-succes: #166534;
+  --db-erreur: #B91C1C;
+  --db-bordure: #64748B;
+  --db-focus: #1D4ED8;
+
+  // Teintes dérivées (fonds pastel, textes secondaires)
+  --db-texte-secondaire: #475569;
+  --db-bordure-deco: #CBD5E1;
+  --db-bleu-pale: #DBEAFE;
+  --db-vert-pale: #DCFCE7;
+  --db-rose-pale: #FEE2E2;
+  --db-orange-pale: #FFEDD5;
+  --db-gris-pale: #E8EDF3;
+  --db-desactive: #93A4C8;
+  --db-ombre: 0 1px 3px rgb(15 23 42 / 0.08), 0 1px 2px rgb(15 23 42 / 0.04);
+  --db-rayon: 16px;
 }
 
 html, body { height: 100%; }
@@ -41,15 +59,23 @@ body {
   margin: 0;
   background: var(--db-fond);
   color: var(--db-encre);
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 16px; // minimum de la charte
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
   line-height: 1.5;
 }
 
-// Cibles tactiles et focus visible (charte)
-button, a, input, select, textarea { min-height: 44px; }
-:focus-visible { outline: 3px solid var(--db-primaire); outline-offset: 2px; }
-
-// Code : bloc monospace simple
-pre, code { font-family: ui-monospace, Consolas, 'Courier New', monospace; }
+:focus-visible { outline: 3px solid var(--db-focus); outline-offset: 2px; }
+pre, code { font-family: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace; }
 pre { overflow-x: auto; }
+a { color: var(--db-primaire); }
+h1, h2, h3 { color: var(--db-encre); }
+
+.mat-mdc-snack-bar-container.notification-erreur {
+  --mdc-snackbar-container-color: var(--db-erreur);
+  --mat-snack-bar-button-color: #fff;
+}
+.mat-mdc-dialog-container { --mdc-dialog-container-shape: 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

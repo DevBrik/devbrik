@@ -1,0 +1,21 @@
+<mat-menu #menu="matMenu" [yPosition]="yPosition()" xPosition="before" class="menu-compte">
+  @if (auth.utilisateur(); as u) {
+    <a mat-menu-item [routerLink]="['/developpeurs', u.id]">
+      <span class="material-icons" aria-hidden="true">person</span> Mon profil
+    </a>
+  }
+  <a mat-menu-item routerLink="/briques/mes-briques">
+    <span class="material-icons" aria-hidden="true">inventory_2</span> Mes briques
+  </a>
+  <a mat-menu-item routerLink="/compte/profil">
+    <span class="material-icons" aria-hidden="true">manage_accounts</span> Mon compte
+  </a>
+  @if (auth.estAdmin()) {
+    <a mat-menu-item routerLink="/admin/signalements">
+      <span class="material-icons" aria-hidden="true">admin_panel_settings</span> Administration
+    </a>
+  }
+  <button mat-menu-item type="button" (click)="deconnecter()">
+    <span class="material-icons" aria-hidden="true">logout</span> Se déconnecter
+  </button>
+</mat-menu>

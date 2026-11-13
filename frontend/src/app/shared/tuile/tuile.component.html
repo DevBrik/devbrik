@@ -1,0 +1,7 @@
+<div class="tuile" [class.inverse]="libelleEnHaut()" [class.active]="active()">
+  <span class="valeur">{{ valeur() }}</span>
+  <span class="libelle">{{ libelle() }}</span>
+  @if (detail(); as d) {
+    <span class="detail">{{ d }}</span>
+  }
+</div>

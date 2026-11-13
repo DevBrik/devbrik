@@ -1,0 +1,29 @@
+<div class="champ-mdp" [class.avec-icone]="avecIcone()" [class.invalide]="invalide()">
+  @if (avecIcone()) {
+    <span class="material-icons icone" aria-hidden="true">lock</span>
+  }
+  <input
+    [id]="identifiant()"
+    [type]="visible() ? 'text' : 'password'"
+    [autocomplete]="autocomplete()"
+    [placeholder]="placeholder()"
+    maxlength="72"
+    [value]="valeur()"
+    [disabled]="desactive()"
+    [attr.aria-describedby]="decritPar()"
+    [attr.aria-invalid]="invalide() ? 'true' : null"
+    [attr.data-invalide]="invalide() ? 'true' : null"
+    (input)="saisir($any($event.target).value)"
+    (blur)="surTouche()"
+  />
+  <button
+    type="button"
+    class="oeil"
+    [attr.aria-label]="visible() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+    [attr.aria-pressed]="visible()"
+    [attr.aria-controls]="identifiant()"
+    (click)="visible.set(!visible())"
+  >
+    <span class="material-icons" aria-hidden="true">{{ visible() ? 'visibility_off' : 'visibility' }}</span>
+  </button>
+</div>

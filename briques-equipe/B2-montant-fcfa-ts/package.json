@@ -1,0 +1,9 @@
+{
+  "name": "b2-montant-fcfa-ts",
+  "version": "1.0.0",
+  "description": "Brique B2 : formatage et lecture d'un montant en FCFA (TypeScript, sans dépendance)",
+  "type": "module",
+  "scripts": { "test": "node --test index.test.ts" },
+  "engines": { "node": ">=22.18" },
+  "license": "MIT"
+}

@@ -1,0 +1,4 @@
+:host { display: block; }
+.tuile-bouton { padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; border-radius: 12px; text-align: inherit; }
+.compteur-liste { margin: 0 0 1rem; color: var(--db-primaire); font-size: 0.875rem; font-weight: 500; }
+@media (max-width: 640px) { .entete-page .btn { width: 100%; } }

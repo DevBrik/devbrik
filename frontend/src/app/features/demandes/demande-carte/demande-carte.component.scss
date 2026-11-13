@@ -1,0 +1,12 @@
+:host { display: block; }
+.carte-demande {
+  display: grid; gap: 0.5rem; padding: 1.25rem; background: var(--db-surface); border-radius: var(--db-rayon);
+  box-shadow: var(--db-ombre); border: 1px solid transparent;
+}
+.carte-demande.resolue { border-color: var(--db-orange); }
+.haut { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; }
+.titre { margin: 0; font-size: 1.125rem; font-weight: 700; text-transform: uppercase; overflow-wrap: anywhere; }
+.extrait { margin: 0; overflow-wrap: anywhere; }
+.ligne { margin: 0; font-weight: 600; }
+.bas { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+@media (max-width: 640px) { .bas .btn { width: 100%; } }

@@ -1,0 +1,97 @@
+<div class="conteneur">
+  <avis-admin-entete />
+
+  <!-- ===== Signalements à examiner ===== -->
+  <section aria-labelledby="titre-liste">
+    <h2 id="titre-liste">Signalements à examiner</h2>
+
+    @if (chargement() && !signalements()) {
+      <div class="squelette" aria-hidden="true"><span></span><span></span><span></span></div>
+      <p class="sr-only" role="status">Chargement des signalements…</p>
+    } @else if (erreur(); as e) {
+      <div class="etat" role="alert">
+        <p class="erreur">{{ e.message }}</p>
+        @if (e.statut !== 403 && e.statut !== 404) {
+          <button type="button" class="btn btn-primaire" (click)="chargerSignalements()">Réessayer</button>
+        }
+      </div>
+    } @else if (signalements(); as p) {
+      @if (p.totalElements === 0) {
+        <p class="etat vide">Aucun signalement à examiner.</p>
+      } @else {
+        <ul class="cartes" [attr.aria-busy]="chargement()">
+          @for (s of p.contenu; track s.id) {
+            <li>
+              <avis-carte-signalement
+                [signalement]="s"
+                [selectionnee]="s.id === selectionId()"
+                (examiner)="examiner($event)"
+              />
+            </li>
+          }
+        </ul>
+        <db-pagination
+          libelle="Pagination des signalements"
+          [page]="p.page"
+          [totalPages]="p.totalPages"
+          (pageChange)="allerSignalements($event)"
+        />
+      }
+    }
+  </section>
+
+  <!-- ===== Détails du signalement ===== -->
+  <section aria-labelledby="titre-details" class="details">
+    <h2 id="titre-details" #titreDetails tabindex="-1">Détails du signalement</h2>
+    @if (selection(); as s) {
+      <avis-detail-signalement
+        [signalement]="s"
+        [enCours]="enCours()"
+        (conserver)="traiter('CONSERVER')"
+        (masquer)="traiter('MASQUER_BRIQUE')"
+      />
+    } @else {
+      <p class="etat vide">Choisissez un signalement dans la liste pour voir ses détails.</p>
+    }
+  </section>
+
+  <!-- ===== Briques masquées ===== -->
+  <section aria-labelledby="titre-masquees">
+    <h2 id="titre-masquees">Briques masquées</h2>
+
+    @if (chargementMasquees() && !masquees()) {
+      <div class="squelette" aria-hidden="true"><span></span><span></span></div>
+      <p class="sr-only" role="status">Chargement des briques masquées…</p>
+    } @else if (erreurMasquees(); as e) {
+      <div class="etat" role="alert">
+        <p class="erreur">{{ e.message }}</p>
+        @if (e.statut !== 403 && e.statut !== 404) {
+          <button type="button" class="btn btn-primaire" (click)="chargerMasquees()">Réessayer</button>
+        }
+      </div>
+    } @else if (masquees(); as p) {
+      @if (p.totalElements === 0) {
+        <p class="etat vide">Aucune brique masquée.</p>
+      } @else {
+        <ul class="cartes" [attr.aria-busy]="chargementMasquees()">
+          @for (b of p.contenu; track b.id) {
+            <li>
+              <db-brique-carte
+                [brique]="b"
+                actions="republier"
+                [enCours]="republication() === b.id"
+                (republier)="republier(b)"
+              />
+            </li>
+          }
+        </ul>
+        <db-pagination
+          libelle="Pagination des briques masquées"
+          [page]="p.page"
+          [totalPages]="p.totalPages"
+          (pageChange)="allerMasquees($event)"
+        />
+      }
+    }
+  </section>
+</div>

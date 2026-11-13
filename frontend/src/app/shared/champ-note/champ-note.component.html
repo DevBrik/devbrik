@@ -1,0 +1,26 @@
+<div
+  class="groupe"
+  role="radiogroup"
+  [attr.aria-labelledby]="libelleId()"
+  [attr.aria-describedby]="decritPar()"
+  [attr.aria-invalid]="invalide() ? 'true' : null"
+  (focusout)="toucher()"
+>
+  @for (n of valeurs; track n) {
+    <button
+      type="button"
+      role="radio"
+      class="etoile"
+      [disabled]="desactive()"
+      [attr.aria-checked]="valeur() === n"
+      [attr.aria-label]="n + ' sur 5'"
+      [attr.tabindex]="indexFocus(n)"
+      [attr.data-invalide]="invalide() ? 'true' : null"
+      (click)="choisir(n)"
+      (keydown)="clavier($event, n)"
+    >
+      <span aria-hidden="true">{{ (valeur() ?? 0) >= n ? '★' : '☆' }}</span>
+    </button>
+  }
+</div>
+<p class="texte">{{ valeur() === null ? 'Aucune note choisie' : valeur() + ' sur 5' }}</p>

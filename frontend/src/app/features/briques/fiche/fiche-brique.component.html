@@ -1,0 +1,118 @@
+<div class="page">
+  <a class="btn btn-primaire btn-petit retour" routerLink="/briques"><span aria-hidden="true">←</span> Retour aux briques</a>
+
+  @if (etat(); as e) {
+    @if (e === 'chargement') {
+      <db-etat-page type="chargement" titre="Chargement de la brique…" />
+    } @else if (e === 'erreur') {
+      <db-etat-page type="erreur" (reessayer)="recharger()" />
+    } @else {
+      <db-etat-page [type]="e" />
+    }
+  } @else if (brique(); as b) {
+    <article class="fiche" aria-labelledby="titre-brique">
+      <!-- En-tête -->
+      <header class="carte entete-fiche">
+        <div class="ligne-haut">
+          <db-langage-badge [langage]="b.langage" />
+          <div class="pastilles-haut">
+            @if (b.statut === 'MASQUEE') {
+              <db-pastille type="masquee" />
+            }
+            <db-pastille [type]="typeTest()" />
+          </div>
+        </div>
+        <db-pastille type="categorie" [libelle]="b.categorie.nom" />
+        <h1 id="titre-brique" class="titre-brique">{{ b.titre }}</h1>
+        <p class="resume texte-brut">{{ b.resume }}</p>
+        <p class="meta">{{ b.categorie.nom }} · {{ licence() }}</p>
+        <p class="meta">
+          Publiée par
+          @if (b.auteur; as a) {
+            <a [routerLink]="['/developpeurs', a.id]">{{ auteur() }}</a>
+          } @else {
+            {{ auteur() }}
+          }
+          · <time [attr.datetime]="b.dateCreation">{{ b.dateCreation | date: 'd MMMM y' }}</time>
+        </p>
+        <p class="meta">
+          Version {{ b.versionCode }} · Dernière modification :
+          <time [attr.datetime]="b.dateModification">{{ b.dateModification | date: 'd MMMM y' }}</time>
+        </p>
+      </header>
+
+      <!-- Tuiles -->
+      <div class="tuiles">
+        <section class="carte tuile-fiche" aria-labelledby="titre-evaluation">
+          <h2 id="titre-evaluation" class="titre-tuile">Évaluation</h2>
+          @if (note(); as n) {
+            <p class="valeur-tuile"><span class="etoile" aria-hidden="true">★</span> {{ n }} / 5</p>
+            <p class="detail-tuile">{{ b.nombreAvis }} avis</p>
+          } @else {
+            <p class="detail-tuile">Pas encore d'avis</p>
+          }
+        </section>
+        <section class="carte tuile-fiche" aria-labelledby="titre-tests">
+          <h2 id="titre-tests" class="titre-tuile">Tests</h2>
+          <p class="test-ok"><span class="material-icons" aria-hidden="true">check_circle</span> {{ b.testsOk }} {{ b.testsOk > 1 ? 'tests OK' : 'test OK' }}</p>
+          <p class="test-ko"><span class="material-icons" aria-hidden="true">error</span> {{ b.testsKo }} {{ b.testsKo > 1 ? 'tests KO' : 'test KO' }}</p>
+          <p class="detail-tuile">Tests de la version {{ b.versionCode }}</p>
+          <p class="detail-tuile">
+            @if (b.derniereVerification) {
+              Dernière vérification :
+              <time [attr.datetime]="b.derniereVerification">{{ b.derniereVerification | date: 'd MMMM y' }}</time>
+            } @else {
+              Pas encore testée sur cette version
+            }
+          </p>
+        </section>
+      </div>
+
+      <db-zone-code [code]="b.code" />
+
+      @if (etapes().length > 0) {
+        <section class="carte bloc" aria-labelledby="titre-mode-emploi">
+          <h2 id="titre-mode-emploi" class="titre-bloc">Mode d'emploi</h2>
+          <ol class="etapes">
+            @for (e of etapes(); track $index) {
+              <li><span class="numero" aria-hidden="true">{{ $index + 1 }}</span><span class="texte-brut">{{ e }}</span></li>
+            }
+          </ol>
+        </section>
+      }
+
+      @if (prerequis().length > 0) {
+        <section class="carte bloc" aria-labelledby="titre-prerequis">
+          <h2 id="titre-prerequis" class="titre-bloc">Prérequis</h2>
+          <ul class="prerequis">
+            @for (p of prerequis(); track $index) {
+              <li><span class="puce" aria-hidden="true"></span><span class="texte-brut">{{ p }}</span></li>
+            }
+          </ul>
+        </section>
+      }
+
+      <p class="licence"><strong>Licence : {{ licence() }}</strong><br />Version : {{ b.versionCode }}</p>
+
+      <db-actions-evaluation [brique]="b" (changed)="recharger()" />
+
+      @if (estAuteur() || estAdmin()) {
+        <div class="actions-gestion" role="group" aria-label="Gérer la brique">
+          @if (estAuteur()) {
+            <a class="btn btn-accent" [routerLink]="['/briques', b.id, 'modifier']">Modifier la fiche</a>
+          }
+          @if (estAdmin()) {
+            <button type="button" class="btn btn-contour" [disabled]="action() !== null" (click)="basculerStatut()">
+              {{ action() === 'statut' ? 'Mise à jour en cours…' : b.statut === 'PUBLIEE' ? 'Masquer la brique' : 'Republier la brique' }}
+            </button>
+          }
+          <button type="button" class="btn btn-destructif" [disabled]="action() !== null" (click)="supprimer()">
+            {{ action() === 'suppression' ? 'Suppression en cours…' : 'Supprimer la fiche' }}
+          </button>
+        </div>
+      }
+
+      <db-avis-bloc [briqueId]="b.id" (changed)="recharger()" />
+    </article>
+  }
+</div>

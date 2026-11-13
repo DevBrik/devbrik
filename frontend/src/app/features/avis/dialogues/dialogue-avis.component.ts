@@ -7,8 +7,7 @@ import { focaliserPremierInvalide, messageChamp, traiterEchec } from '../avis.er
 import { Avis, Ecriture } from '../avis.modeles';
 import { AvisService } from '../avis.service';
 import { SocleAvis } from '../avis.socle';
-import { STYLES_COMMUNS } from '../avis.styles';
-import { ChampNoteLocalComponent } from '../champ-note-local/champ-note-local.component';
+import { ChampNoteComponent } from '../../../shared/champ-note/champ-note.component';
 
 export interface DonneesDialogueAvis {
   idBrique: number;
@@ -21,57 +20,9 @@ export interface DonneesDialogueAvis {
 @Component({
   selector: 'avis-dialogue-avis',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ReactiveFormsModule, MatDialogModule, ChampNoteLocalComponent],
-  template: `
-    <h2 mat-dialog-title>Donner votre avis</h2>
-    <form [formGroup]="formulaire" (ngSubmit)="envoyer()" novalidate>
-      <mat-dialog-content>
-        <p>Partagez votre expérience avec cette brique.</p>
-        @if (donnees.titreBrique) {
-          <p class="objet">Brique : <strong>{{ donnees.titreBrique }}</strong></p>
-        }
-
-        <div class="champ">
-          <span class="etiquette" id="etiquette-note">
-            Votre note <span class="obligatoire" aria-hidden="true">*</span>
-          </span>
-          <avis-champ-note
-            formControlName="note"
-            libelleId="etiquette-note"
-            decritPar="erreur-note"
-            [invalide]="noteInvalide()"
-          />
-          @if (noteInvalide()) {
-            <p class="erreur" id="erreur-note" role="alert">Choisissez une note de 1 à 5.</p>
-          }
-        </div>
-
-        <div class="champ">
-          <label class="etiquette" for="avis-commentaire">Votre commentaire (facultatif)</label>
-          <textarea
-            id="avis-commentaire"
-            formControlName="commentaire"
-            rows="5"
-            placeholder="Décrivez ce que vous avez pensé de cette brique…"
-            aria-describedby="compteur-commentaire erreur-commentaire"
-            [attr.aria-invalid]="erreurCommentaire() ? 'true' : null"
-            [attr.data-invalide]="erreurCommentaire() ? 'true' : null"
-          ></textarea>
-          <p class="compteur" id="compteur-commentaire">{{ longueur() }} / 2 000</p>
-          @if (erreurCommentaire(); as message) {
-            <p class="erreur" id="erreur-commentaire" role="alert">{{ message }}</p>
-          }
-        </div>
-      </mat-dialog-content>
-      <mat-dialog-actions class="actions">
-        <button type="submit" class="btn btn-primaire" [disabled]="envoi()">
-          {{ envoi() ? 'Envoi en cours…' : 'Envoyer mon avis' }}
-        </button>
-        <button type="button" class="btn btn-destructif" mat-dialog-close>Annuler</button>
-      </mat-dialog-actions>
-    </form>
-  `,
-  styles: [STYLES_COMMUNS],
+  imports: [ReactiveFormsModule, MatDialogModule, ChampNoteComponent],
+  templateUrl: './dialogue-avis.component.html',
+  styleUrl: './dialogue-avis.component.scss',
 })
 export class DialogueAvisComponent {
   private readonly service = inject(AvisService);

@@ -1,0 +1,36 @@
+:host { display: block; }
+.tuile-unique { max-width: 240px; margin-bottom: 1.5rem; }
+.tableau { width: 100%; border-collapse: separate; border-spacing: 0 0.625rem; }
+thead th {
+  background: var(--db-primaire); color: #fff; padding: 0.625rem 0.75rem; text-align: left; font-weight: 600;
+  &:first-child { border-radius: 999px 0 0 999px; padding-left: 1rem; }
+  &:last-child { border-radius: 0 999px 999px 0; }
+}
+tbody td {
+  padding: 0.625rem 0.75rem; border-top: 1px solid var(--db-primaire); border-bottom: 1px solid var(--db-primaire);
+  color: var(--db-primaire); font-weight: 600;
+  &:first-child { border-left: 1px solid var(--db-primaire); border-radius: 14px 0 0 14px; }
+  &:last-child { border-right: 1px solid var(--db-primaire); border-radius: 0 14px 14px 0; }
+}
+.rang {
+  display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--db-primaire); color: #fff; font-size: 1.125rem; font-weight: 700;
+}
+.rang.or { background: #FACC15; color: var(--db-encre); }
+.rang.argent { background: #CBD5E1; color: var(--db-encre); }
+.rang.bronze { background: #D97706; color: var(--db-encre); }
+.dev { display: grid; }
+.dev a { font-weight: 700; }
+.pays { font-size: 0.875rem; font-weight: 500; }
+@media (max-width: 640px) {
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+  .tableau, tbody { display: block; }
+  tbody tr {
+    display: grid; grid-template-columns: auto 1fr; gap: 0.25rem 0.75rem; margin-bottom: 0.75rem; padding: 0.75rem;
+    border: 1px solid var(--db-primaire); border-radius: 14px;
+  }
+  tbody td { border: 0 !important; border-radius: 0 !important; padding: 0; }
+  tbody td:first-child { grid-row: span 2; align-self: center; }
+  tbody td:nth-child(n + 3) { grid-column: 2; font-weight: 500; font-size: 0.875rem; }
+  tbody td:nth-child(n + 3)::before { content: attr(data-libelle) ' : '; }
+}

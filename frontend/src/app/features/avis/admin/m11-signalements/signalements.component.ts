@@ -9,18 +9,15 @@ import {
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatDialog } from '@angular/material/dialog';
 import { PageReponse } from '../../../../core/api/modeles';
 import { ErreurApi, lireErreur } from '../../avis.erreurs';
 import { ActionTraitement, BriqueResumeAdmin, Signalement } from '../../avis.modeles';
 import { AvisService } from '../../avis.service';
 import { SocleAvis } from '../../avis.socle';
-import { STYLES_COMMUNS } from '../../avis.styles';
-import { confirmer } from '../../dialogues/dialogue-confirmation-local.component';
+import { DialogueService } from '../../../../shared/dialogue-confirmation/dialogue.service';
 import { AdminEnteteComponent } from '../admin-entete.component';
-import { STYLES_ADMIN } from '../admin.styles';
-import { PaginationLocaleComponent } from '../pagination-locale.component';
-import { CarteBriqueMasqueeComponent } from './carte-brique-masquee.component';
+import { BriqueCarteComponent } from '../../../../shared/brique-carte/brique-carte.component';
+import { PaginationComponent } from '../../../../shared/pagination/pagination.component';
 import { CarteSignalementComponent } from './carte-signalement.component';
 import { DetailSignalementComponent } from './detail-signalement.component';
 
@@ -38,129 +35,16 @@ const TAILLE = 20;
     AdminEnteteComponent,
     CarteSignalementComponent,
     DetailSignalementComponent,
-    CarteBriqueMasqueeComponent,
-    PaginationLocaleComponent,
+    BriqueCarteComponent,
+    PaginationComponent,
   ],
-  template: `
-    <div class="conteneur">
-      <avis-admin-entete />
-
-      <!-- ===== Signalements à examiner ===== -->
-      <section aria-labelledby="titre-liste">
-        <h2 id="titre-liste">Signalements à examiner</h2>
-
-        @if (chargement() && !signalements()) {
-          <div class="squelette" aria-hidden="true"><span></span><span></span><span></span></div>
-          <p class="sr-only" role="status">Chargement des signalements…</p>
-        } @else if (erreur(); as e) {
-          <div class="etat" role="alert">
-            <p class="erreur">{{ e.message }}</p>
-            @if (e.statut !== 403 && e.statut !== 404) {
-              <button type="button" class="btn btn-primaire" (click)="chargerSignalements()">Réessayer</button>
-            }
-          </div>
-        } @else if (signalements(); as p) {
-          @if (p.totalElements === 0) {
-            <p class="etat vide">Aucun signalement à examiner.</p>
-          } @else {
-            <ul class="cartes" [attr.aria-busy]="chargement()">
-              @for (s of p.contenu; track s.id) {
-                <li>
-                  <avis-carte-signalement
-                    [signalement]="s"
-                    [selectionnee]="s.id === selectionId()"
-                    (examiner)="examiner($event)"
-                  />
-                </li>
-              }
-            </ul>
-            <avis-pagination
-              libelle="Pagination des signalements"
-              [page]="p.page"
-              [totalPages]="p.totalPages"
-              (pageChange)="allerSignalements($event)"
-            />
-          }
-        }
-      </section>
-
-      <!-- ===== Détails du signalement ===== -->
-      <section aria-labelledby="titre-details" class="details">
-        <h2 id="titre-details" #titreDetails tabindex="-1">Détails du signalement</h2>
-        @if (selection(); as s) {
-          <avis-detail-signalement
-            [signalement]="s"
-            [enCours]="enCours()"
-            (conserver)="traiter('CONSERVER')"
-            (masquer)="traiter('MASQUER_BRIQUE')"
-          />
-        } @else {
-          <p class="etat vide">Choisissez un signalement dans la liste pour voir ses détails.</p>
-        }
-      </section>
-
-      <!-- ===== Briques masquées ===== -->
-      <section aria-labelledby="titre-masquees">
-        <h2 id="titre-masquees">Briques masquées</h2>
-
-        @if (chargementMasquees() && !masquees()) {
-          <div class="squelette" aria-hidden="true"><span></span><span></span></div>
-          <p class="sr-only" role="status">Chargement des briques masquées…</p>
-        } @else if (erreurMasquees(); as e) {
-          <div class="etat" role="alert">
-            <p class="erreur">{{ e.message }}</p>
-            @if (e.statut !== 403 && e.statut !== 404) {
-              <button type="button" class="btn btn-primaire" (click)="chargerMasquees()">Réessayer</button>
-            }
-          </div>
-        } @else if (masquees(); as p) {
-          @if (p.totalElements === 0) {
-            <p class="etat vide">Aucune brique masquée.</p>
-          } @else {
-            <ul class="cartes" [attr.aria-busy]="chargementMasquees()">
-              @for (b of p.contenu; track b.id) {
-                <li>
-                  <avis-carte-brique-masquee
-                    [brique]="b"
-                    [enCours]="republication() === b.id"
-                    (republier)="republier(b)"
-                  />
-                </li>
-              }
-            </ul>
-            <avis-pagination
-              libelle="Pagination des briques masquées"
-              [page]="p.page"
-              [totalPages]="p.totalPages"
-              (pageChange)="allerMasquees($event)"
-            />
-          }
-        }
-      </section>
-    </div>
-  `,
-  styles: [
-    STYLES_COMMUNS,
-    STYLES_ADMIN,
-    `
-      .conteneur { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
-      section { margin-bottom: 2rem; }
-      h2 { margin: 0 0 1rem; font-size: 1.5rem; font-weight: 700; }
-      #titre-details:focus { outline: none; }
-      #titre-details:focus-visible { outline: 3px solid var(--db-focus); outline-offset: 4px; }
-      .cartes {
-        list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-      @media (max-width: 960px) { .cartes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-      @media (max-width: 640px) { .cartes { grid-template-columns: 1fr; } }
-    `,
-  ],
+  templateUrl: './signalements.component.html',
+  styleUrl: './signalements.component.scss',
 })
 export class SignalementsComponent {
   private readonly service = inject(AvisService);
   private readonly socle = inject(SocleAvis);
-  private readonly dialog = inject(MatDialog);
+  private readonly dialogues = inject(DialogueService);
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly titreDetails = viewChild<ElementRef<HTMLElement>>('titreDetails');
@@ -302,7 +186,7 @@ export class SignalementsComponent {
       return;
     }
     const titre = signalement.brique?.titre ?? 'cette brique';
-    confirmer(this.dialog, {
+    this.dialogues.confirmer({
       titre: 'Masquer cette brique ?',
       message: `La brique « ${titre} » disparaîtra des listes publiques et des recherches. Son auteur et les administrateurs pourront toujours la consulter.`,
       libelleConfirmer: 'Masquer la brique',

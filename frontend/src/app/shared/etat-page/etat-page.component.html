@@ -1,0 +1,21 @@
+<section class="etat" [attr.role]="role()" [attr.aria-busy]="type() === 'chargement' ? 'true' : null">
+  @if (type() === 'chargement') {
+    <span class="spinner" aria-hidden="true"></span>
+  } @else {
+    <span class="material-icons icone" aria-hidden="true">{{ defaut().icone }}</span>
+  }
+  <h2 class="titre">{{ titreAffiche() }}</h2>
+  @if (messageAffiche()) {
+    <p class="message">{{ messageAffiche() }}</p>
+  }
+  @if (type() === 'erreur') {
+    <button type="button" class="btn btn-primaire" (click)="reessayer.emit()">Réessayer</button>
+  }
+  @if (libelleAction(); as libelle) {
+    @if (lien(); as l) {
+      <a class="btn btn-primaire" [routerLink]="l" [queryParams]="actionParametres()">{{ libelle }}</a>
+    } @else {
+      <button type="button" class="btn btn-primaire" (click)="action.emit()">{{ libelle }}</button>
+    }
+  }
+</section>

@@ -1,0 +1,8 @@
+<span class="badge">
+  @if (image(); as src) {
+    <img [src]="src" alt="" aria-hidden="true" width="24" height="24" (error)="iconeEchouee.set(true)" />
+  } @else if (iconeMaterial(); as icone) {
+    <span class="material-icons" aria-hidden="true">{{ icone }}</span>
+  }
+  <span class="nom">{{ langage().nom }}</span>
+</span>

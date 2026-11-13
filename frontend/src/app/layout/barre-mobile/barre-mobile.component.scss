@@ -1,0 +1,15 @@
+:host { display: none; }
+@media (max-width: 760px) {
+  :host { display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; }
+}
+.barre {
+  display: grid; grid-template-columns: repeat(4, 1fr); background: var(--db-surface);
+  border-top: 1px solid var(--db-bordure-deco); box-shadow: 0 -2px 8px rgb(15 23 42 / 0.06);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+a, button {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  min-height: 56px; border: 0; background: none; font: inherit; font-size: 0.75rem; font-weight: 500;
+  color: var(--db-encre); text-decoration: none; cursor: pointer;
+}
+.actif { color: var(--db-orange-texte); font-weight: 600; }

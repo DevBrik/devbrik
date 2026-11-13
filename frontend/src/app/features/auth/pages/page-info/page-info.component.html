@@ -1,0 +1,27 @@
+<div class="page page-etroite">
+  <article class="carte info">
+    <h1 class="titre-page">{{ titre() }}</h1>
+    @if (miseAJour(); as d) {
+      <p class="sous-titre-page">Dernière mise à jour : <time [attr.datetime]="d">{{ d | date: 'd MMMM y' }}</time></p>
+    }
+    @if (introduction(); as i) {
+      <p class="introduction">{{ i }}</p>
+    }
+    <ol class="sections">
+      @for (s of sections(); track s.titre; let i = $index) {
+        <li>
+          <h2 class="titre-info"><span class="numero" aria-hidden="true">{{ i + 1 }}</span> {{ s.titre }}</h2>
+          @for (p of s.paragraphes; track $index) {
+            <p>{{ p }}</p>
+          }
+          @if (s.liste; as l) {
+            <ul>
+              @for (e of l; track $index) {<li>{{ e }}</li>}
+            </ul>
+          }
+        </li>
+      }
+    </ol>
+    <ng-content />
+  </article>
+</div>

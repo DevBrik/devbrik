@@ -1,0 +1,124 @@
+<div class="page page-etroite">
+  <h1 class="titre-page">{{ modification() ? 'Modifier la brique' : 'Publier une nouvelle brique' }}</h1>
+  <p class="sous-titre-page">Partagez une solution réutilisable avec la communauté.</p>
+
+  @if (etat(); as e) {
+    @if (e === 'chargement') {
+      <db-etat-page type="chargement" titre="Chargement de la brique…" />
+    } @else if (e === 'erreur') {
+      <db-etat-page type="erreur" (reessayer)="recharger()" />
+    } @else {
+      <db-etat-page [type]="e" />
+    }
+  } @else {
+    <form class="formulaire" [formGroup]="formulaire" (ngSubmit)="envoyer()" novalidate>
+      <h2 class="titre-section">Informations générales</h2>
+      <p class="aide">Les champs marqués d'un astérisque (<span class="obligatoire">*</span>) sont obligatoires.</p>
+
+      <div class="champ">
+        <div class="entete-champ">
+          <label class="etiquette" for="brique-titre">Titre <span class="obligatoire" aria-hidden="true">*</span></label>
+          <span class="compteur" id="compteur-titre">{{ longueurs().titre }} / 120</span>
+        </div>
+        <input id="brique-titre" type="text" formControlName="titre" maxlength="120" autocomplete="off"
+          aria-required="true" [attr.aria-invalid]="erreur('titre') ? 'true' : null" [attr.data-invalide]="erreur('titre') ? 'true' : null"
+          aria-describedby="compteur-titre erreur-titre" />
+        @if (erreur('titre'); as m) {<p class="erreur" id="erreur-titre">{{ m }}</p>}
+      </div>
+
+      <div class="champ">
+        <div class="entete-champ">
+          <label class="etiquette" for="brique-resume">Description <span class="obligatoire" aria-hidden="true">*</span></label>
+          <span class="compteur" id="compteur-resume">{{ longueurs().resume }} / 300</span>
+        </div>
+        <textarea id="brique-resume" formControlName="resume" rows="3" maxlength="300"
+          aria-required="true" [attr.aria-invalid]="erreur('resume') ? 'true' : null" [attr.data-invalide]="erreur('resume') ? 'true' : null"
+          aria-describedby="compteur-resume erreur-resume"></textarea>
+        @if (erreur('resume'); as m) {<p class="erreur" id="erreur-resume">{{ m }}</p>}
+      </div>
+
+      <div class="rangee-champs">
+        <div class="champ">
+          <label class="etiquette" for="brique-categorie">Catégorie <span class="obligatoire" aria-hidden="true">*</span></label>
+          <select id="brique-categorie" formControlName="idCategorie" aria-required="true"
+            [attr.aria-invalid]="erreur('idCategorie') ? 'true' : null" [attr.data-invalide]="erreur('idCategorie') ? 'true' : null" aria-describedby="erreur-idCategorie">
+            <option [ngValue]="null" disabled>Choisir une catégorie</option>
+            @for (c of categories(); track c.id) {<option [ngValue]="c.id">{{ c.nom }}</option>}
+          </select>
+          @if (erreur('idCategorie'); as m) {<p class="erreur" id="erreur-idCategorie">{{ m }}</p>}
+        </div>
+        <div class="champ">
+          <label class="etiquette" for="brique-langage">Langage <span class="obligatoire" aria-hidden="true">*</span></label>
+          <select id="brique-langage" formControlName="idLangage" aria-required="true"
+            [attr.aria-invalid]="erreur('idLangage') ? 'true' : null" [attr.data-invalide]="erreur('idLangage') ? 'true' : null" aria-describedby="erreur-idLangage">
+            <option [ngValue]="null" disabled>Choisir un langage</option>
+            @for (l of langages(); track l.id) {<option [ngValue]="l.id">{{ l.nom }}</option>}
+          </select>
+          @if (erreur('idLangage'); as m) {<p class="erreur" id="erreur-idLangage">{{ m }}</p>}
+        </div>
+      </div>
+
+      <div class="champ">
+        <label class="etiquette" for="brique-code">Code source <span class="obligatoire" aria-hidden="true">*</span></label>
+        <p class="aide" id="aide-code">Le code est stocké et affiché en texte brut ; DevBrik ne l'exécute jamais.</p>
+        <db-champ-code formControlName="code" identifiant="brique-code" decritPar="aide-code erreur-code" [invalide]="!!erreur('code')" />
+        @if (erreur('code'); as m) {<p class="erreur" id="erreur-code">{{ m }}</p>}
+        @if (versionActuelle(); as v) {
+          <p class="info version">Version actuelle : {{ v }}. Elle augmente si vous modifiez le code.</p>
+        }
+      </div>
+
+      <div class="champ">
+        <div class="entete-champ">
+          <label class="etiquette" for="brique-mode-emploi">Mode d'emploi <span class="obligatoire" aria-hidden="true">*</span></label>
+          <span class="compteur" id="compteur-mode">{{ longueurs().modeEmploi }} / 10 000</span>
+        </div>
+        <p class="aide" id="aide-mode">Une étape par ligne : installation, exemple d'appel, limites connues, source des règles.</p>
+        <db-champ-lignes formControlName="modeEmploi" identifiant="brique-mode-emploi" [numerote]="true" libelleElement="Étape"
+          decritPar="aide-mode compteur-mode erreur-modeEmploi" [invalide]="!!erreur('modeEmploi')" />
+        @if (erreur('modeEmploi'); as m) {<p class="erreur" id="erreur-modeEmploi">{{ m }}</p>}
+      </div>
+
+      <div class="champ">
+        <div class="entete-champ">
+          <label class="etiquette" for="brique-prerequis">Prérequis</label>
+          <span class="compteur" id="compteur-prerequis">{{ longueurs().prerequis }} / 500</span>
+        </div>
+        <db-champ-lignes formControlName="prerequis" identifiant="brique-prerequis" libelleElement="Prérequis"
+          decritPar="compteur-prerequis erreur-prerequis" [invalide]="!!erreur('prerequis')" />
+        @if (erreur('prerequis'); as m) {<p class="erreur" id="erreur-prerequis">{{ m }}</p>}
+      </div>
+
+      <div class="champ">
+        <label class="etiquette" for="brique-licence">Licence <span class="obligatoire" aria-hidden="true">*</span></label>
+        <select id="brique-licence" formControlName="licence" aria-required="true" aria-describedby="aide-licence erreur-licence"
+          [attr.data-invalide]="erreur('licence') ? 'true' : null">
+          @for (l of licences; track l.valeur) {<option [ngValue]="l.valeur">{{ l.libelle }}</option>}
+        </select>
+        <p class="aide" id="aide-licence">Seules des licences permissives sont acceptées.</p>
+        @if (erreur('licence'); as m) {<p class="erreur" id="erreur-licence">{{ m }}</p>}
+      </div>
+
+      <div class="champ">
+        <label class="case">
+          <input type="checkbox" formControlName="droitsConfirmes" aria-required="true"
+            [attr.aria-invalid]="erreur('droitsConfirmes') ? 'true' : null" [attr.data-invalide]="erreur('droitsConfirmes') ? 'true' : null"
+            aria-describedby="erreur-droitsConfirmes" />
+          <span>Je confirme détenir les droits nécessaires pour publier ce code. <span class="obligatoire" aria-hidden="true">*</span></span>
+        </label>
+        @if (erreur('droitsConfirmes'); as m) {<p class="erreur" id="erreur-droitsConfirmes">{{ m }}</p>}
+      </div>
+
+      <div class="boutons-formulaire">
+        <button type="submit" class="btn btn-primaire" [disabled]="envoi()">
+          @if (envoi()) {
+            {{ modification() ? 'Enregistrement en cours…' : 'Publication en cours…' }}
+          } @else {
+            {{ modification() ? 'Enregistrer les modifications' : 'Publier la brique' }}
+          }
+        </button>
+        <button type="button" class="btn btn-destructif" (click)="annuler()">Annuler</button>
+      </div>
+    </form>
+  }
+</div>

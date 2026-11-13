@@ -1,0 +1,25 @@
+<header class="entete">
+  <div class="interieur">
+    <a routerLink="/briques" class="lien-logo" aria-label="DevBrik, accueil">
+      <db-logo [taille]="40" />
+    </a>
+    <nav class="navigation" aria-label="Navigation principale">
+      <a routerLink="/briques" routerLinkActive="actif" ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: false }">Briques</a>
+      <a routerLink="/demandes" routerLinkActive="actif" ariaCurrentWhenActive="page">Demandes</a>
+      <a routerLink="/developpeurs/classement" routerLinkActive="actif" ariaCurrentWhenActive="page">Classement</a>
+    </nav>
+    <div class="compte">
+      @if (auth.estConnecte()) {
+        <button type="button" class="pastille-compte" [matMenuTriggerFor]="menuCompte.menu()" aria-label="Menu du compte">
+          <span class="initiales" aria-hidden="true">{{ initiales() }}</span>
+          <span class="nom">{{ nom() }}</span>
+          <span class="material-icons" aria-hidden="true">expand_more</span>
+        </button>
+        <db-menu-compte #menuCompte="menuCompte" />
+      } @else {
+        <button type="button" class="btn btn-primaire btn-petit" (click)="connexion()">Se connecter</button>
+        <a class="btn btn-contour btn-petit inscription" routerLink="/compte/inscription">S'inscrire</a>
+      }
+    </div>
+  </div>
+</header>

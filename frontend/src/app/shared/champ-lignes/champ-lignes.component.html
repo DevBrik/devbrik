@@ -1,0 +1,37 @@
+<div class="champ-lignes" [class.invalide]="invalide()">
+  <div class="saisie">
+    <input
+      [id]="identifiant()"
+      type="text"
+      placeholder="Entrer pour ajouter"
+      autocomplete="off"
+      [value]="saisie()"
+      [disabled]="desactive()"
+      [attr.aria-describedby]="decritPar()"
+      [attr.aria-invalid]="invalide() ? 'true' : null"
+      [attr.data-invalide]="invalide() ? 'true' : null"
+      (input)="saisie.set($any($event.target).value)"
+      (keydown)="clavier($event)"
+      (blur)="surTouche()"
+    />
+    <button type="button" class="btn btn-contour btn-petit" [disabled]="desactive() || !saisie().trim()" (click)="ajouter()">
+      Ajouter
+    </button>
+  </div>
+  @if (lignes().length > 0) {
+    <ol class="pastilles" [class.numerote]="numerote()">
+      @for (l of lignes(); track $index) {
+        <li class="pastille-ligne">
+          @if (numerote()) {
+            <span class="numero" aria-hidden="true">{{ $index + 1 }}</span>
+          }
+          <span class="texte">{{ l }}</span>
+          <button type="button" class="retirer" [attr.aria-label]="'Retirer : ' + l" [disabled]="desactive()" (click)="retirer($index)">
+            <span class="material-icons" aria-hidden="true">close</span>
+          </button>
+        </li>
+      }
+    </ol>
+  }
+</div>
+<p class="sr-only" aria-live="polite">{{ annonce() }}</p>

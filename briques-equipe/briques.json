@@ -1,0 +1,12 @@
+[
+  { "id": "B1", "dossier": "B1-validation-telephone-java", "fichier": "ValidationTelephone.java", "titre": "Validation et normalisation des numéros de téléphone sénégalais", "categorie": "validation-donnees", "langage": "java", "environnementTest": "Java 21, Linux (javac + classe de test fournie)" },
+  { "id": "B2", "dossier": "B2-montant-fcfa-ts", "fichier": "index.ts", "titre": "Formatage d'un montant en FCFA", "categorie": "formats-devises", "langage": "typescript", "environnementTest": "Node.js 22, node --test" },
+  { "id": "B3", "dossier": "B3-montant-en-lettres-java", "fichier": "MontantEnLettres.java", "titre": "Montant en lettres en français", "categorie": "formats-devises", "langage": "java", "environnementTest": "Java 21, Linux (javac + classe de test fournie)" },
+  { "id": "B4", "dossier": "B4-date-dakar", "fichier": "index.js", "titre": "Date et heure en Africa/Dakar", "categorie": "formats-devises", "langage": "javascript", "environnementTest": "Node.js 22, Jest 29" },
+  { "id": "B5", "dossier": "B5-signature-hmac-python", "fichier": "signature_hmac.py", "titre": "Vérification d'une signature de rappel (webhook) HMAC-SHA256", "categorie": "securite-authentification", "langage": "python", "environnementTest": "Python 3.12, unittest, vecteurs RFC 4231" },
+  { "id": "B6", "dossier": "B6-reessai-exponentiel-ts", "fichier": "index.ts", "titre": "Réessai avec attente exponentielle", "categorie": "reseau-instable", "langage": "typescript", "environnementTest": "Node.js 22, node --test, horloge simulée" },
+  { "id": "B7", "dossier": "B7-coordonnees-gps-sql", "fichier": "coordonnees.sql", "titre": "Validation de coordonnées GPS et distance en SQL", "categorie": "donnees-geographiques", "langage": "sql", "environnementTest": "PostgreSQL 16, psql" },
+  { "id": "B8", "dossier": "B8-file-hors-ligne-js", "fichier": "index.js", "titre": "File d'envoi hors ligne avec reprise", "categorie": "reseau-instable", "langage": "javascript", "environnementTest": "Node.js 22, node --test" },
+  { "id": "B9", "dossier": "B9-texte-sans-accents-java", "fichier": "TexteSansAccents.java", "titre": "Normalisation de texte sans accents pour la recherche", "categorie": "outils", "langage": "java", "environnementTest": "Java 21, Linux (javac + classe de test fournie)" },
+  { "id": "B10", "dossier": "B10-masquage-telephone-kotlin", "fichier": "MasquageTelephone.kt", "titre": "Masquage d'un numéro de téléphone dans les journaux", "categorie": "securite-authentification", "langage": "kotlin", "environnementTest": "Kotlin 2.1, JVM 21" }
+]

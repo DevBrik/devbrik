@@ -1,4 +1,5 @@
-import { ReferenceUtilisateur } from '../../core/api/modeles';
+import { BriqueResume, ReferenceUtilisateur } from '../../core/api/modeles';
+export { formaterNote, libelleLicence, nomAuteur, pastilleTest } from '../../core/libelles';
 
 /** Interfaces du contrat d'API, section 11.5 du dossier v1.1. Dates en ISO 8601 UTC. */
 
@@ -128,66 +129,6 @@ export function etoiles(note: number): string {
   return '★'.repeat(n) + '☆'.repeat(5 - n);
 }
 
-export function nomAuteur(auteur: ReferenceUtilisateur | null): string {
-  if (!auteur) {
-    return 'Utilisateur supprimé';
-  }
-  const nom = auteur.nomAffiche?.trim();
-  return nom ? nom : auteur.pseudo;
-}
 
 // ---------- briques vues par l'administration (BriqueResume, section 11.4) ----------
-export interface BriqueResumeAdmin {
-  id: number;
-  titre: string;
-  resume: string;
-  licence: string;
-  statut: StatutBrique;
-  versionCode: number;
-  dateCreation: string;
-  dateModification: string;
-  categorie: { slug: string; nom: string };
-  langage: { slug: string; nom: string };
-  auteur: ReferenceUtilisateur | null;
-  noteMoyenne: number | null;
-  nombreAvis: number;
-  testsOk: number;
-  testsKo: number;
-  derniereVerification: string | null;
-}
-
-const LICENCES: Record<string, string> = {
-  MIT: 'MIT',
-  APACHE_2_0: 'Apache 2.0',
-  BSD_2_CLAUSE: 'BSD 2-Clause',
-  BSD_3_CLAUSE: 'BSD 3-Clause',
-  ISC: 'ISC',
-  CC0_1_0: 'CC0 1.0',
-};
-
-export function libelleLicence(licence: string): string {
-  return LICENCES[licence] ?? licence;
-}
-
-/** Virgule décimale : 4.8 devient « 4,8 ». */
-export function formaterNote(note: number): string {
-  return String(note).replace('.', ',');
-}
-
-/** Règle 6.4 de la charte : pastille « Testé » d'une brique (tests de la version actuelle). */
-export function pastilleTest(brique: Pick<BriqueResumeAdmin, 'testsOk' | 'testsKo'>): {
-  libelle: string;
-  classe: 'ok' | 'ko' | 'neutre';
-  icone: string;
-} {
-  if (brique.testsOk > brique.testsKo) {
-    return { libelle: 'Testé OK', classe: 'ok', icone: 'check' };
-  }
-  if (brique.testsKo > brique.testsOk) {
-    return { libelle: 'Testé KO', classe: 'ko', icone: 'priority_high' };
-  }
-  if (brique.testsOk > 0) {
-    return { libelle: 'Avis partagés', classe: 'neutre', icone: 'balance' };
-  }
-  return { libelle: 'Non testée', classe: 'neutre', icone: 'help_outline' };
-}
+export type BriqueResumeAdmin = BriqueResume;

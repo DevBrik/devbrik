@@ -1,0 +1,50 @@
+<form (ngSubmit)="confirmer()" novalidate>
+  <div class="entete">
+    @if (donnees.destructif !== false) {
+      <span class="material-icons alerte" aria-hidden="true">warning</span>
+    }
+    <h2 mat-dialog-title>{{ donnees.titre }}</h2>
+  </div>
+  <mat-dialog-content>
+    <p class="message">{{ donnees.message }}</p>
+    @if (donnees.rappel) {
+      <p class="rappel">{{ donnees.rappel }}</p>
+    }
+    @if (donnees.avecMotDePasse) {
+      <div class="champ">
+        <label class="etiquette" for="confirmation-mdp">Mot de passe actuel</label>
+        <div class="avec-oeil">
+          <input
+            id="confirmation-mdp"
+            name="motDePasse"
+            [type]="visible() ? 'text' : 'password'"
+            autocomplete="current-password"
+            [ngModel]="motDePasse()"
+            (ngModelChange)="motDePasse.set($event)"
+            [attr.aria-invalid]="tente() && !motDePasse() ? 'true' : null"
+            aria-describedby="erreur-confirmation-mdp"
+            cdkFocusInitial
+          />
+          <button
+            type="button"
+            class="oeil"
+            [attr.aria-label]="visible() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+            [attr.aria-pressed]="visible()"
+            (click)="visible.set(!visible())"
+          >
+            <span class="material-icons" aria-hidden="true">{{ visible() ? 'visibility_off' : 'visibility' }}</span>
+          </button>
+        </div>
+        @if (tente() && !motDePasse()) {
+          <p class="erreur" id="erreur-confirmation-mdp" role="alert">Saisissez votre mot de passe.</p>
+        }
+      </div>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions class="actions">
+    <button type="submit" class="btn btn-destructif">{{ donnees.libelleConfirmer }}</button>
+    <button type="button" class="btn btn-contour-erreur" [mat-dialog-close]="null" [attr.cdkFocusInitial]="donnees.avecMotDePasse ? null : ''">
+      {{ donnees.libelleAnnuler ?? 'Annuler' }}
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,53 @@
+<div class="page page-etroite">
+  <div class="carte cadre">
+    <h1 class="titre-page">Classement des développeurs</h1>
+    <p class="sous-titre-page">Découvrez les contributeurs qui font grandir la communauté DevBrik.</p>
+
+    @if (resultat(); as r) {
+      <div class="tuile-unique"><db-tuile [valeur]="r.totalElements" libelle="Contributeurs" /></div>
+    }
+
+    @if (chargement() && !resultat()) {
+      <db-etat-page type="chargement" titre="Chargement du classement…" />
+    } @else if (erreur()) {
+      <db-etat-page type="erreur" (reessayer)="charger()" />
+    } @else if (resultat(); as r) {
+      @if (r.contenu.length === 0) {
+        <db-etat-page type="vide" titre="Aucun contributeur pour le moment" message="Publiez une brique ou répondez à une demande pour apparaître ici." />
+      } @else {
+        <table class="tableau">
+          <caption class="sr-only">Classement des développeurs par réputation décroissante</caption>
+          <thead>
+            <tr>
+              <th scope="col">Rang</th>
+              <th scope="col">Développeur</th>
+              <th scope="col">Briques</th>
+              <th scope="col">Tests OK</th>
+              <th scope="col">Réponses</th>
+              <th scope="col">Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (e of r.contenu; track e.developpeur.id; let i = $index) {
+              <tr>
+                <td data-libelle="Rang">
+                  <span class="rang" [class]="'rang ' + medaille(rang(r, i))">{{ rang(r, i) }}</span>
+                  <span class="sr-only">{{ libelleMedaille(rang(r, i)) }}</span>
+                </td>
+                <td data-libelle="Développeur" class="dev">
+                  <a [routerLink]="['/developpeurs', e.developpeur.id]">{{ nom(e.developpeur) }}</a>
+                  @if (e.pays) {<span class="pays">{{ e.pays }}</span>}
+                </td>
+                <td data-libelle="Briques">{{ e.nombreBriques }}</td>
+                <td data-libelle="Tests OK">{{ e.testsOkRecus }}</td>
+                <td data-libelle="Réponses">{{ e.nombreReponsesAcceptees }}</td>
+                <td data-libelle="Points" class="points">{{ e.reputation }} pts</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+        <db-pagination libelle="Pagination du classement" [page]="r.page" [totalPages]="r.totalPages" (pageChange)="changerPage($event)" />
+      }
+    }
+  </div>
+</div>

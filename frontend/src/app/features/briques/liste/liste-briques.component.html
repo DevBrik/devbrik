@@ -1,0 +1,59 @@
+<div class="page">
+  <section class="accroche">
+    <h1 class="titre-accroche">Les bonnes briques.<br />Pour les projets d'ici.</h1>
+    <p class="sous-titre-accroche">
+      Découvrez, partagez et réutilisez des solutions créées par la communauté des développeurs.
+    </p>
+  </section>
+
+  <db-barre-filtres [valeurs]="filtres()" identifiant="briques" (filtresChange)="changerFiltres($event)" />
+
+  <section aria-labelledby="titre-explorer">
+    <div class="entete-liste">
+      <div>
+        <h2 id="titre-explorer" class="titre-explorer">Explorer les briques</h2>
+        @if (resultat(); as r) {
+          <p class="compteur-liste" role="status">
+            {{ r.totalElements }} {{ r.totalElements > 1 ? 'briques disponibles' : 'brique disponible' }}
+          </p>
+        }
+      </div>
+      <a class="btn btn-primaire" routerLink="/briques/nouvelle">
+        <span aria-hidden="true">+</span> Publier une brique
+      </a>
+    </div>
+
+    @if (chargement() && !resultat()) {
+      <db-squelette-cartes [nombre]="6" libelle="Chargement des briques…" />
+    } @else if (erreur()) {
+      <db-etat-page type="erreur" (reessayer)="charger()" />
+    } @else if (resultat(); as r) {
+      @if (r.contenu.length === 0) {
+        @if (filtresActifs()) {
+          <db-etat-page
+            type="vide"
+            titre="Aucune brique ne correspond"
+            message="Essayez un autre mot-clé ou retirez un filtre."
+            actionLibelle="Effacer les filtres"
+            (action)="reinitialiser()"
+          />
+        } @else {
+          <db-etat-page
+            type="vide"
+            titre="Aucune brique pour le moment"
+            message="Soyez le premier à partager une brique avec la communauté."
+            actionLibelle="+ Publier une brique"
+            actionLien="/briques/nouvelle"
+          />
+        }
+      } @else {
+        <ul class="grille-cartes" [attr.aria-busy]="chargement()">
+          @for (b of r.contenu; track b.id) {
+            <li><db-brique-carte [brique]="b" /></li>
+          }
+        </ul>
+        <db-pagination libelle="Pagination des briques" [page]="r.page" [totalPages]="r.totalPages" (pageChange)="changerPage($event)" />
+      }
+    }
+  </section>
+</div>

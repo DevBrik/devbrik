@@ -1,0 +1,28 @@
+<article class="carte" [class.selectionnee]="selectionnee()">
+  <h3 class="titre">{{ titreBrique() }}</h3>
+  <p class="ligne">
+    <span class="motif"
+      ><span class="material-icons" aria-hidden="true">flag</span> {{ libelleMotif(signalement().motif) }}</span
+    >
+  </p>
+  <p class="meta">Signalé par {{ nomAuteur(signalement().auteur) }}</p>
+  <p class="meta">
+    <time [attr.datetime]="signalement().dateCreation">{{ signalement().dateCreation | date: 'd MMMM y' }}</time>
+  </p>
+  <div class="pied">
+    @if (selectionnee()) {
+      <span class="etat-selection"
+        ><span class="material-icons" aria-hidden="true">check_circle</span> Sélectionné</span
+      >
+    }
+    <button
+      type="button"
+      class="btn btn-primaire"
+      [attr.aria-current]="selectionnee() ? 'true' : null"
+      [attr.aria-label]="'Examiner le signalement de la brique ' + titreBrique()"
+      (click)="examiner.emit(signalement().id)"
+    >
+      Examiner
+    </button>
+  </div>
+</article>

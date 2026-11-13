@@ -1,0 +1,21 @@
+:host { display: block; }
+.panneau {
+  height: 100%; min-height: 520px; box-sizing: border-box; padding: 3rem 2.5rem; border-radius: 24px;
+  background: linear-gradient(180deg, var(--db-primaire) 0%, #5B73B8 55%, var(--db-fond) 100%);
+  display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;
+}
+.apercu {
+  display: grid; gap: 0.75rem; padding: 1.5rem; border-radius: 16px; background: rgb(255 255 255 / 0.85);
+  filter: blur(1.5px); transform: rotate(-2deg) translateX(1.5rem);
+}
+.ligne { height: 14px; border-radius: 7px; background: #c7d2e8; }
+.l1 { width: 55%; height: 18px; background: var(--db-primaire); opacity: 0.6; }
+.l2 { width: 80%; }
+.l3 { width: 40%; }
+.bloc { height: 42px; border-radius: 8px; border: 1px solid #c7d2e8; }
+.code { display: grid; gap: 6px; padding: 1rem; border-radius: 10px; background: var(--db-encre); }
+.code span { height: 8px; border-radius: 4px; background: #64748b; }
+.code span:nth-child(2) { width: 70%; }
+.code span:nth-child(3) { width: 85%; }
+.code span:nth-child(4) { width: 40%; }
+.message { margin: 2rem 0 0; text-align: center; font-size: 1.5rem; font-weight: 700; color: var(--db-encre); }

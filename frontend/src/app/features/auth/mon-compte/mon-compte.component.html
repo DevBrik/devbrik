@@ -1,0 +1,109 @@
+<div class="page page-etroite">
+  <h1 class="titre-page">Mon compte</h1>
+  <p class="sous-titre-page">Gérez vos informations, votre sécurité et vos données.</p>
+
+  @if (chargement() && !utilisateur()) {
+    <db-etat-page type="chargement" titre="Chargement de votre compte…" />
+  } @else if (erreurChargement()) {
+    <db-etat-page type="erreur" (reessayer)="charger()" />
+  } @else if (utilisateur(); as u) {
+    <!-- Profil -->
+    <section aria-labelledby="titre-profil" class="section">
+      <h2 id="titre-profil" class="titre-section">Informations du profil</h2>
+      <form class="carte" [formGroup]="profil" (ngSubmit)="enregistrerProfil()" novalidate>
+        <div class="champ">
+          <label class="etiquette" for="compte-pseudo">Pseudo</label>
+          <input id="compte-pseudo" type="text" [value]="u.pseudo" readonly aria-describedby="aide-pseudo" />
+          <p class="aide" id="aide-pseudo">Le pseudo ne peut pas être modifié.</p>
+        </div>
+        <div class="champ">
+          <label class="etiquette" for="compte-nom">Nom affiché</label>
+          <input id="compte-nom" type="text" formControlName="nomAffiche" maxlength="80" autocomplete="name"
+            [attr.aria-invalid]="erreurProfil('nomAffiche') ? 'true' : null" [attr.data-invalide]="erreurProfil('nomAffiche') ? 'true' : null"
+            aria-describedby="erreur-nom" />
+          @if (erreurProfil('nomAffiche'); as m) {<p class="erreur" id="erreur-nom">{{ m }}</p>}
+        </div>
+        <div class="champ">
+          <div class="entete-champ">
+            <label class="etiquette" for="compte-bio">Bio</label>
+            <span class="compteur" id="compteur-bio">{{ longueurBio() }} / 500</span>
+          </div>
+          <textarea id="compte-bio" formControlName="bio" rows="3" maxlength="500"
+            [attr.aria-invalid]="erreurProfil('bio') ? 'true' : null" [attr.data-invalide]="erreurProfil('bio') ? 'true' : null"
+            aria-describedby="compteur-bio erreur-bio"></textarea>
+          @if (erreurProfil('bio'); as m) {<p class="erreur" id="erreur-bio">{{ m }}</p>}
+        </div>
+        <div class="rangee-champs">
+          <div class="champ">
+            <label class="etiquette" for="compte-pays">Pays</label>
+            <select id="compte-pays" formControlName="pays">
+              <option value="">Non précisé</option>
+              @for (p of listePays(); track p) {<option [value]="p">{{ p }}</option>}
+            </select>
+          </div>
+          <div class="champ">
+            <label class="etiquette" for="compte-site">Site personnel</label>
+            <input id="compte-site" type="url" formControlName="lienProfil" maxlength="255" placeholder="https://" autocomplete="url"
+              [attr.aria-invalid]="erreurProfil('lienProfil') ? 'true' : null" [attr.data-invalide]="erreurProfil('lienProfil') ? 'true' : null"
+              aria-describedby="erreur-site" />
+            @if (erreurProfil('lienProfil'); as m) {<p class="erreur" id="erreur-site">{{ m }}</p>}
+          </div>
+        </div>
+        <div class="boutons-formulaire fin">
+          <button type="submit" class="btn btn-primaire" [disabled]="envoiProfil()">{{ envoiProfil() ? 'Enregistrement en cours…' : 'Enregistrer' }}</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Sécurité -->
+    <section aria-labelledby="titre-securite" class="section">
+      <h2 id="titre-securite" class="titre-section">Sécurité</h2>
+      <form class="carte" [formGroup]="securite" (ngSubmit)="changerMotDePasse()" novalidate>
+        <div class="champ">
+          <label class="etiquette" for="compte-ancien">Ancien mot de passe</label>
+          <db-champ-mot-de-passe formControlName="ancienMotDePasse" identifiant="compte-ancien" decritPar="erreur-ancien" [invalide]="!!erreurSecurite('ancienMotDePasse')" />
+          @if (erreurSecurite('ancienMotDePasse'); as m) {<p class="erreur" id="erreur-ancien">{{ m }}</p>}
+        </div>
+        <div class="champ">
+          <label class="etiquette" for="compte-nouveau">Nouveau mot de passe</label>
+          <db-champ-mot-de-passe formControlName="nouveauMotDePasse" identifiant="compte-nouveau" autocomplete="new-password"
+            decritPar="regles-nouveau erreur-nouveau" [invalide]="!!erreurSecurite('nouveauMotDePasse')" />
+          <p class="aide" id="regles-nouveau">8 à 72 caractères.</p>
+          @if (erreurSecurite('nouveauMotDePasse'); as m) {<p class="erreur" id="erreur-nouveau">{{ m }}</p>}
+        </div>
+        <div class="champ">
+          <label class="etiquette" for="compte-confirmation">Confirmer le mot de passe</label>
+          <db-champ-mot-de-passe formControlName="confirmation" identifiant="compte-confirmation" autocomplete="new-password"
+            decritPar="erreur-confirmation" [invalide]="!!erreurSecurite('confirmation')" />
+          @if (erreurSecurite('confirmation'); as m) {<p class="erreur" id="erreur-confirmation">{{ m }}</p>}
+        </div>
+        <div class="boutons-formulaire fin">
+          <button type="submit" class="btn btn-accent" [disabled]="envoiMdp()">{{ envoiMdp() ? 'Modification en cours…' : 'Modifier' }}</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Données -->
+    <section aria-labelledby="titre-donnees" class="section">
+      <h2 id="titre-donnees" class="titre-section">Mes données</h2>
+      <div class="carte">
+        <p class="texte-carte">Exporter une copie de vos données personnelles (profil, briques, avis, tests, demandes, réponses, signalements) au format JSON.</p>
+        <button type="button" class="btn btn-accent" [disabled]="export()" (click)="exporter()">{{ export() ? 'Export en cours…' : 'Exporter mes données' }}</button>
+      </div>
+    </section>
+
+    <!-- Suppression -->
+    <section aria-labelledby="titre-suppression" class="section">
+      <h2 id="titre-suppression" class="titre-section">Suppression du compte</h2>
+      <div class="carte">
+        <p class="texte-carte">La suppression de votre compte est une opération définitive.</p>
+        <button type="button" class="btn btn-destructif" [disabled]="estAdmin() || suppression()" [attr.aria-describedby]="estAdmin() ? 'explication-admin' : null" (click)="supprimerCompte()">
+          {{ suppression() ? 'Suppression en cours…' : 'Supprimer mon compte' }}
+        </button>
+        @if (estAdmin()) {
+          <p class="aide" id="explication-admin">Un compte administrateur ne peut pas être supprimé.</p>
+        }
+      </div>
+    </section>
+  }
+</div>

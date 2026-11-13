@@ -1,0 +1,9 @@
+{
+  "name": "b8-file-hors-ligne-js",
+  "version": "1.0.0",
+  "description": "Brique B8 : file d'envoi hors ligne avec reprise (JavaScript, sans dépendance)",
+  "type": "module",
+  "main": "index.js",
+  "scripts": { "test": "node --test index.test.js" },
+  "license": "MIT"
+}

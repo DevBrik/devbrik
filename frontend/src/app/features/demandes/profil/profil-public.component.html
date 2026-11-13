@@ -1,0 +1,71 @@
+<div class="page">
+  @if (etat(); as e) {
+    @if (e === 'chargement') {
+      <db-etat-page type="chargement" titre="Chargement du profil…" />
+    } @else if (e === 'erreur') {
+      <db-etat-page type="erreur" (reessayer)="recharger()" />
+    } @else {
+      <db-etat-page [type]="e" />
+    }
+  } @else if (profil(); as p) {
+    <section class="carte identite" aria-labelledby="nom-profil">
+      <span class="avatar" aria-hidden="true">{{ initiales() }}</span>
+      <div class="infos">
+        <h1 id="nom-profil" class="nom">{{ nom() }}</h1>
+        <p class="pseudo">&#64;{{ p.pseudo }}@if (p.pays) { · {{ p.pays }}}</p>
+        @if (p.bio) {
+          <p class="bio texte-brut">{{ p.bio }}</p>
+        }
+        @if (lien(); as l) {
+          <p class="site"><span class="libelle-site">Site personnel : </span><a [href]="l" target="_blank" rel="noopener noreferrer">{{ p.lienProfil }}</a></p>
+        }
+        <p class="meta">Membre depuis le <time [attr.datetime]="p.dateCreation">{{ p.dateCreation | date: 'd MMMM y' }}</time></p>
+        @if (estMoi()) {
+          <a class="btn btn-contour btn-petit modifier" routerLink="/compte/profil">Modifier mon profil</a>
+        }
+      </div>
+    </section>
+
+    <div class="tuiles-profil">
+      <db-tuile [valeur]="p.nombreBriques" libelle="Briques" />
+      <db-tuile [valeur]="p.testsOkRecus" libelle="Tests OK reçus" />
+      <db-tuile [valeur]="p.nombreReponsesAcceptees" libelle="Réponses acceptées" />
+      <db-tuile [valeur]="p.reputation" libelle="Réputation" detail="points" />
+    </div>
+    <p class="calcul">
+      Réputation = 10 × {{ p.nombreBriques }} (briques) + 5 × {{ p.testsOkRecus }} (tests OK) + 3 × {{ p.nombreReponsesAcceptees }}
+      (réponses acceptées) = <strong>{{ p.reputation }} points</strong>
+    </p>
+
+    <section aria-labelledby="titre-briques-profil">
+      <div class="entete-liste">
+        <div>
+          <h2 id="titre-briques-profil" class="titre-section">Briques de {{ nom() }}</h2>
+          @if (liste(); as l) {
+            <p class="compteur-liste" role="status">{{ l.totalElements }} {{ l.totalElements > 1 ? 'briques disponibles' : 'brique disponible' }}</p>
+          }
+        </div>
+        @if (estMoi()) {
+          <a class="btn btn-primaire" routerLink="/briques/nouvelle"><span aria-hidden="true">+</span> Publier une brique</a>
+        }
+      </div>
+      <db-barre-filtres [valeurs]="filtres()" identifiant="profil" (filtresChange)="changerFiltres($event)" />
+      @if (chargementListe() && !liste()) {
+        <db-squelette-cartes [nombre]="3" />
+      } @else if (erreurListe()) {
+        <db-etat-page type="erreur" (reessayer)="chargerListe()" />
+      } @else if (liste(); as l) {
+        @if (l.contenu.length === 0) {
+          <db-etat-page type="vide" titre="Aucune brique publiée" [message]="estMoi() ? 'Vous n\'avez pas encore publié de brique.' : 'Ce développeur n\'a pas encore publié de brique.'" />
+        } @else {
+          <ul class="grille-cartes">
+            @for (b of l.contenu; track b.id) {
+              <li><db-brique-carte [brique]="b" /></li>
+            }
+          </ul>
+          <db-pagination libelle="Pagination des briques du profil" [page]="l.page" [totalPages]="l.totalPages" (pageChange)="changerPage($event)" />
+        }
+      }
+    </section>
+  }
+</div>

@@ -1,0 +1,56 @@
+<div class="page page-etroite">
+  <h1 class="titre-page">Nouvelle demande</h1>
+  <p class="sous-titre-page">Expliquez clairement ce que vous recherchez.</p>
+
+  <form class="formulaire" [formGroup]="formulaire" (ngSubmit)="envoyer()" novalidate>
+    <div class="champ">
+      <div class="entete-champ">
+        <label class="etiquette" for="demande-titre">Titre <span class="obligatoire" aria-hidden="true">*</span></label>
+        <span class="compteur" id="compteur-titre">{{ longueurs().titre }} / 150</span>
+      </div>
+      <input id="demande-titre" type="text" formControlName="titre" maxlength="150" autocomplete="off" aria-required="true"
+        placeholder="Exemple : Générer un montant en lettres"
+        [attr.aria-invalid]="erreur('titre') ? 'true' : null" [attr.data-invalide]="erreur('titre') ? 'true' : null"
+        aria-describedby="compteur-titre erreur-titre" />
+      @if (erreur('titre'); as m) {<p class="erreur" id="erreur-titre">{{ m }}</p>}
+    </div>
+
+    <div class="champ">
+      <div class="entete-champ">
+        <label class="etiquette" for="demande-description">Description <span class="obligatoire" aria-hidden="true">*</span></label>
+        <span class="compteur" id="compteur-description">{{ longueurs().description }} / 5 000</span>
+      </div>
+      <textarea id="demande-description" formControlName="description" rows="8" maxlength="5000" aria-required="true"
+        placeholder="Décrivez le besoin, le contexte et un exemple d'entrée et de sortie attendue."
+        [attr.aria-invalid]="erreur('description') ? 'true' : null" [attr.data-invalide]="erreur('description') ? 'true' : null"
+        aria-describedby="compteur-description erreur-description"></textarea>
+      @if (erreur('description'); as m) {<p class="erreur" id="erreur-description">{{ m }}</p>}
+    </div>
+
+    <div class="rangee-champs">
+      <div class="champ">
+        <label class="etiquette" for="demande-categorie">Catégorie <span class="obligatoire" aria-hidden="true">*</span></label>
+        <select id="demande-categorie" formControlName="idCategorie" aria-required="true"
+          [attr.aria-invalid]="erreur('idCategorie') ? 'true' : null" [attr.data-invalide]="erreur('idCategorie') ? 'true' : null" aria-describedby="erreur-idCategorie">
+          <option [ngValue]="null" disabled>Choisir une catégorie</option>
+          @for (c of categories(); track c.id) {<option [ngValue]="c.id">{{ c.nom }}</option>}
+        </select>
+        @if (erreur('idCategorie'); as m) {<p class="erreur" id="erreur-idCategorie">{{ m }}</p>}
+      </div>
+      <div class="champ">
+        <label class="etiquette" for="demande-langage">Langage <span class="obligatoire" aria-hidden="true">*</span></label>
+        <select id="demande-langage" formControlName="idLangage" aria-required="true"
+          [attr.aria-invalid]="erreur('idLangage') ? 'true' : null" [attr.data-invalide]="erreur('idLangage') ? 'true' : null" aria-describedby="erreur-idLangage">
+          <option [ngValue]="null" disabled>Choisir un langage</option>
+          @for (l of langages(); track l.id) {<option [ngValue]="l.id">{{ l.nom }}</option>}
+        </select>
+        @if (erreur('idLangage'); as m) {<p class="erreur" id="erreur-idLangage">{{ m }}</p>}
+      </div>
+    </div>
+
+    <div class="boutons-formulaire">
+      <button type="submit" class="btn btn-primaire" [disabled]="envoi()">{{ envoi() ? 'Publication en cours…' : 'Publier la demande' }}</button>
+      <button type="button" class="btn btn-destructif" (click)="annuler()">Annuler</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,36 @@
+<div class="conteneur">
+  <avis-admin-entete />
+
+  <section aria-labelledby="titre-tableau">
+    <h2 id="titre-tableau">Tableau de bord</h2>
+    <p class="sous-titre">Vue globale de l'activité de la plateforme.</p>
+
+    @if (chargement()) {
+      <div class="tuiles squelette-tuiles" aria-hidden="true">
+        @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+          <span></span>
+        }
+      </div>
+      <p class="sr-only" role="status">Chargement des statistiques…</p>
+    } @else if (erreur(); as e) {
+      <div class="etat" role="alert">
+        <p class="erreur">{{ e.message }}</p>
+        @if (e.statut !== 403 && e.statut !== 404) {
+          <button type="button" class="btn btn-primaire" (click)="charger()">Réessayer</button>
+        }
+      </div>
+    } @else {
+      <ul class="tuiles">
+        @for (t of tuiles(); track t.cle) {
+          <li class="tuile">
+            <h3 class="libelle">{{ t.libelle }}</h3>
+            <p class="valeur">{{ t.valeur.toLocaleString('fr-FR') }}</p>
+            @if (t.detail) {
+              <p class="detail">{{ t.detail }}</p>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</div>

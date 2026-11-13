@@ -1,0 +1,12 @@
+:host { display: block; height: 100%; }
+.tuile {
+  height: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 0.25rem; padding: 1.25rem 1rem; text-align: center;
+  background: var(--db-surface); border: 1px solid var(--db-bordure); border-radius: 12px;
+}
+.tuile.active { border: 3px solid var(--db-primaire); }
+.inverse { flex-direction: column-reverse; justify-content: flex-end; }
+.inverse .detail { order: -1; }
+.valeur { font-size: 1.75rem; font-weight: 700; line-height: 1.2; color: var(--db-orange-texte); }
+.libelle { font-size: 1.125rem; font-weight: 600; }
+.detail { font-size: 0.875rem; color: var(--db-texte-secondaire); }

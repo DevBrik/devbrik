@@ -21,6 +21,8 @@ jobs:
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 21 }
       - run: chmod +x mvnw && ./mvnw -B test
+        env:
+          DB_PASSWORD: devbrik
         working-directory: backend
   frontend:
     runs-on: ubuntu-latest

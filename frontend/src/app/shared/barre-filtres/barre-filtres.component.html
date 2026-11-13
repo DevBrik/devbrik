@@ -1,0 +1,48 @@
+<form class="barre" role="search" (submit)="valider($event)">
+  <div class="recherche">
+    <label class="sr-only" [for]="identifiant() + '-q'">{{ placeholder() }}</label>
+    <span class="material-icons loupe" aria-hidden="true">search</span>
+    <input
+      [id]="identifiant() + '-q'"
+      type="search"
+      maxlength="100"
+      [placeholder]="placeholder()"
+      [value]="q()"
+      (input)="saisir($any($event.target).value)"
+      [attr.aria-describedby]="qTropCourt() ? identifiant() + '-aide' : null"
+    />
+  </div>
+  @if (qTropCourt()) {
+    <p class="aide-q" [id]="identifiant() + '-aide'">Saisissez au moins 2 caractères.</p>
+  }
+  <div class="filtres">
+    <div class="filtre">
+      <label [for]="identifiant() + '-categorie'">Catégories</label>
+      <select [id]="identifiant() + '-categorie'" [value]="categorie()" (change)="changer('categorie', $any($event.target).value)">
+        <option value="">Toutes les catégories</option>
+        @for (c of categories(); track c.slug) {
+          <option [value]="c.slug" [selected]="c.slug === categorie()">{{ c.nom }}</option>
+        }
+      </select>
+    </div>
+    <div class="filtre">
+      <label [for]="identifiant() + '-langage'">Langage</label>
+      <select [id]="identifiant() + '-langage'" [value]="langage()" (change)="changer('langage', $any($event.target).value)">
+        <option value="">Tous les langages</option>
+        @for (l of langages(); track l.slug) {
+          <option [value]="l.slug" [selected]="l.slug === langage()">{{ l.nom }}</option>
+        }
+      </select>
+    </div>
+    @if (avecTri()) {
+      <div class="filtre">
+        <label [for]="identifiant() + '-tri'">Trier par</label>
+        <select [id]="identifiant() + '-tri'" [value]="tri()" (change)="changer('tri', $any($event.target).value)">
+          @for (t of tris; track t.valeur) {
+            <option [value]="t.valeur" [selected]="t.valeur === tri()">{{ t.libelle }}</option>
+          }
+        </select>
+      </div>
+    }
+  </div>
+</form>

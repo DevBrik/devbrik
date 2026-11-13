@@ -48,5 +48,5 @@ dans `docker-compose.yml`.
 1. Démarrer le backend avec les trois variables : les journaux indiquent « Administrateur « admin.demo » créé » et deux
    lignes « Compte de démonstration … : CREE ».
 2. Redémarrer : « Un administrateur existe déjà » et « … : DEJA_PRESENT ».
-3. Collection Postman, dossier 7, avec `demoMotDePasse` renseigné dans l'environnement.
+3. Collection Postman (`docs/postman/`), dossier « 1. Authentification », avec la variable `motDePasse` renseignée.
 4. Réinitialiser les données de démonstration : supprimer les comptes concernés (la cascade supprime leur contenu), puis redémarrer.

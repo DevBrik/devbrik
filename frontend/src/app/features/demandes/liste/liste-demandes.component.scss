@@ -1,0 +1,13 @@
+:host { display: block; }
+.onglets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.onglet {
+  min-height: 56px; padding: 0 1rem; border: 2px solid var(--db-primaire); border-radius: 12px; background: transparent;
+  color: var(--db-primaire); font: inherit; font-size: 1.25rem; font-weight: 600; cursor: pointer;
+}
+.onglet.actif { background: var(--db-primaire); color: #fff; }
+.liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+.compteur-liste { margin: 0 0 1rem; color: var(--db-primaire); font-size: 0.875rem; font-weight: 500; }
+@media (max-width: 640px) {
+  .onglet { font-size: 1rem; }
+  .entete-page .btn { width: 100%; }
+}

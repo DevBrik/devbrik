@@ -1,0 +1,61 @@
+<section class="evaluation" aria-label="Évaluer cette brique">
+  <div class="actions">
+    <button
+      type="button"
+      class="btn btn-primaire"
+      [disabled]="evaluationBloquee()"
+      [attr.aria-describedby]="explication() ? 'explication-evaluation' : null"
+      (click)="tester()"
+    >
+      Tester cette brique
+    </button>
+    <button
+      type="button"
+      class="btn btn-accent"
+      [disabled]="evaluationBloquee()"
+      [attr.aria-describedby]="explication() ? 'explication-evaluation' : null"
+      (click)="donnerAvis()"
+    >
+      Donner mon avis
+    </button>
+    <button type="button" class="btn btn-destructif" [disabled]="signalementBloque()" (click)="signaler()">
+      Signaler
+    </button>
+  </div>
+
+  @if (explication(); as texte) {
+    <p class="explication" id="explication-evaluation">{{ texte }}</p>
+  }
+
+  @if (erreurMoi(); as message) {
+    <div role="alert">
+      <p class="erreur">{{ message }}</p>
+      <button type="button" class="btn btn-primaire" (click)="chargerMoi()">Réessayer</button>
+    </div>
+  }
+
+  @if (moi(); as m) {
+    @if (m.monAvis || m.monTest) {
+      <ul class="mes-evaluations">
+        @if (m.monAvis; as a) {
+          <li>Votre avis : <strong>{{ a.note }} sur 5</strong></li>
+        }
+        @if (m.monTest; as t) {
+          <li>
+            Votre test : <strong>{{ libelleResultat(t.resultat) }}</strong>
+            @if (t.environnement) {
+              <span>({{ t.environnement }})</span>
+            }
+          </li>
+        }
+      </ul>
+    }
+    @if (testObsolete()) {
+      <p class="info" role="note">
+        <span aria-hidden="true">!</span>
+        Votre test porte sur la version {{ m.monTest?.versionCode }} du code ; la version actuelle est la
+        {{ brique().versionCode }}. Il ne compte plus : refaites-le avec « Tester cette brique ».
+      </p>
+    }
+  }
+</section>

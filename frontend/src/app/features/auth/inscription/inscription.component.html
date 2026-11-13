@@ -1,0 +1,40 @@
+<div class="page disposition-auth">
+  <section class="formulaire-auth" aria-labelledby="titre-inscription">
+    <db-logo [taille]="56" [avecTexte]="false" />
+    <h1 id="titre-inscription" class="titre-auth">Inscrivez-vous à <span class="marque">DevBrik</span></h1>
+    <p class="bascule">Avez-vous déjà un compte ? <a routerLink="/compte/connexion" [queryParams]="retour ? { retour } : {}">Connectez-vous !</a></p>
+
+    <form [formGroup]="formulaire" (ngSubmit)="envoyer()" novalidate>
+      <div class="champ">
+        <label class="etiquette" for="inscription-pseudo">Pseudo</label>
+        <div class="avec-icone">
+          <span class="material-icons icone" aria-hidden="true">person</span>
+          <input id="inscription-pseudo" type="text" formControlName="pseudo" maxlength="30" autocomplete="username" autocapitalize="off" spellcheck="false"
+            aria-required="true" [attr.aria-invalid]="erreur('pseudo') ? 'true' : null" [attr.data-invalide]="erreur('pseudo') ? 'true' : null"
+            aria-describedby="regles-pseudo erreur-pseudo" />
+        </div>
+        <p class="regles" id="regles-pseudo">3 à 30 caractères : lettres, chiffres, point, tiret, tiret bas ; commence par une lettre ou un chiffre.</p>
+        @if (erreur('pseudo'); as m) {<p class="erreur" id="erreur-pseudo">{{ m }}</p>}
+      </div>
+      <div class="champ">
+        <label class="etiquette" for="inscription-mdp">Mot de passe</label>
+        <db-champ-mot-de-passe formControlName="motDePasse" identifiant="inscription-mdp" autocomplete="new-password" [avecIcone]="true"
+          decritPar="regles-mdp erreur-mdp" [invalide]="!!erreur('motDePasse')" />
+        <p class="regles" id="regles-mdp">8 à 72 caractères.</p>
+        @if (erreur('motDePasse'); as m) {<p class="erreur" id="erreur-mdp">{{ m }}</p>}
+      </div>
+      <div class="champ">
+        <label class="etiquette" for="inscription-confirmation">Confirmer le mot de passe</label>
+        <db-champ-mot-de-passe formControlName="confirmation" identifiant="inscription-confirmation" autocomplete="new-password" [avecIcone]="true"
+          decritPar="erreur-confirmation" [invalide]="!!erreur('confirmation')" />
+        @if (erreur('confirmation'); as m) {<p class="erreur" id="erreur-confirmation">{{ m }}</p>}
+      </div>
+      <button type="submit" class="btn btn-primaire plein" [disabled]="envoi()">{{ envoi() ? 'Inscription en cours…' : "S'inscrire" }}</button>
+    </form>
+    <p class="mentions">
+      En vous inscrivant, vous acceptez les <a routerLink="/infos/conditions">conditions d'utilisation</a> et la
+      <a routerLink="/infos/confidentialite">politique de confidentialité</a>.
+    </p>
+  </section>
+  <db-panneau-auth class="panneau" message="Inscrivez-vous et commencez à publier vos briques" />
+</div>

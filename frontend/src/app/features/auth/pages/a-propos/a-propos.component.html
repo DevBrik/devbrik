@@ -1,0 +1,41 @@
+<div class="page page-etroite">
+  <header class="carte bloc centre">
+    <h1 class="titre-page">À propos de DevBrik</h1>
+    <p class="sous-titre-page">Une bibliothèque de solutions réutilisables</p>
+  </header>
+
+  <section class="carte bloc centre" aria-labelledby="titre-objectif">
+    <h2 id="titre-objectif" class="titre-orange">Notre objectif</h2>
+    <p>
+      Faciliter le partage de connaissances et de solutions entre développeurs grâce à des briques de code documentées,
+      testées et réutilisables : validation des numéros de téléphone, montants en FCFA, fuseau Africa/Dakar, réseaux
+      instables… Chaque brique indique sa licence, sa version et la date de sa dernière vérification.
+    </p>
+  </section>
+
+  <section class="carte bloc centre" aria-labelledby="titre-communaute">
+    <h2 id="titre-communaute" class="titre-orange">Notre communauté</h2>
+    <p>
+      Développeurs, étudiants et passionnés de programmation peuvent partager leurs réalisations, découvrir celles des
+      autres, poster une demande quand une brique manque et y répondre. Pour les devs, par les devs.
+    </p>
+    <div class="liens">
+      <a class="btn btn-primaire" routerLink="/briques">Découvrir les briques</a>
+      <a class="btn btn-accent" routerLink="/demandes">Voir les demandes</a>
+    </div>
+  </section>
+
+  <section class="carte bloc centre" aria-labelledby="titre-equipe">
+    <h2 id="titre-equipe" class="titre-equipe">L'équipe</h2>
+    <p class="sous-titre-page">Les Lions et les Lionnes du code · concours CADEV 2026</p>
+    <ul class="equipe">
+      @for (m of equipe; track m.numero) {
+        <li class="membre">
+          <span class="pastille-membre" aria-hidden="true">{{ m.numero }}</span>
+          <h3>Membre {{ m.numero }} · {{ m.role }}</h3>
+          <p>{{ m.module }}</p>
+        </li>
+      }
+    </ul>
+  </section>
+</div>

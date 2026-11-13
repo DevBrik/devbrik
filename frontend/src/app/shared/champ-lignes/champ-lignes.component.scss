@@ -1,0 +1,24 @@
+:host { display: block; }
+.champ-lignes {
+  padding: 0.75rem; border: 1px solid var(--db-bordure); border-radius: 0.5rem; background: var(--db-surface);
+  display: grid; gap: 0.75rem;
+}
+.champ-lignes.invalide { border-color: var(--db-erreur); border-width: 2px; }
+.saisie { display: flex; gap: 0.5rem; }
+input { flex: 1; min-width: 0; min-height: 44px; padding: 0 0.5rem; border: 0; font: inherit; background: transparent; }
+.pastilles { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pastille-ligne {
+  display: inline-flex; align-items: center; gap: 0.5rem; max-width: 100%; padding: 0.25rem 0.25rem 0.25rem 0.75rem;
+  border-radius: 999px; background: var(--db-orange-bouton); color: #fff; font-weight: 600;
+}
+.numerote .pastille-ligne { background: var(--db-primaire); padding-left: 0.25rem; }
+.numero {
+  display: inline-flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem;
+  border-radius: 50%; background: var(--db-orange-bouton); color: #fff; font-size: 0.875rem; flex: none;
+}
+.texte { overflow-wrap: anywhere; }
+.retirer {
+  display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-width: 36px;
+  border: 0; border-radius: 50%; background: rgb(255 255 255 / 0.2); color: #fff; cursor: pointer;
+  .material-icons { font-size: 1.125rem; }
+}

@@ -1,0 +1,13 @@
+@use '../admin';
+
+.conteneur { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+section { margin-bottom: 2rem; }
+h2 { margin: 0 0 1rem; font-size: 1.5rem; font-weight: 700; }
+#titre-details:focus { outline: none; }
+#titre-details:focus-visible { outline: 3px solid var(--db-focus); outline-offset: 4px; }
+.cartes {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 960px) { .cartes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .cartes { grid-template-columns: 1fr; } }

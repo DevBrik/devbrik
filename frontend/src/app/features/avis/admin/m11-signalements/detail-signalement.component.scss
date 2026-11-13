@@ -1,0 +1,14 @@
+@use '../admin';
+
+.panneau {
+  display: grid; gap: 0.75rem; padding: 1.25rem; border: 2px dashed var(--db-primaire);
+  border-radius: 1rem; background: #fff;
+}
+.ligne { margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.brique { margin: 0; font-size: 1.25rem; overflow-wrap: anywhere; }
+.info { margin: 0; font-size: 1rem; overflow-wrap: anywhere; }
+.description { display: grid; gap: 0.25rem; }
+.texte { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.consulter { justify-self: start; }
+.actions { justify-content: flex-end; }
+@media (max-width: 480px) { .consulter { justify-self: stretch; } }

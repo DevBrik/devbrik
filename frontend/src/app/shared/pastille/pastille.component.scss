@@ -1,0 +1,13 @@
+:host { display: inline-flex; }
+.pastille-db {
+  display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.125rem 0.625rem;
+  border-radius: 999px; font-size: 0.8125rem; font-weight: 600; line-height: 1.6; white-space: nowrap;
+}
+.material-icons { font-size: 1rem; }
+.test-ok { background: var(--db-vert-pale); color: var(--db-succes); }
+.test-ko { background: var(--db-rose-pale); color: var(--db-erreur); }
+.avis-partages, .non-testee, .masquee { background: var(--db-gris-pale); color: var(--db-texte-secondaire); }
+.publiee, .ouverte { background: var(--db-bleu-pale); color: var(--db-primaire); }
+.acceptee, .resolue { background: var(--db-orange-pale); color: var(--db-orange-texte); }
+.categorie { background: var(--db-surface); color: var(--db-primaire); border: 1px solid var(--db-primaire); }
+.motif { background: var(--db-surface); color: var(--db-erreur); border: 1px solid var(--db-erreur); }

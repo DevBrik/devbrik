@@ -1,0 +1,8 @@
+@if (texte(); as t) {
+  <span class="note">
+    <span class="etoile" aria-hidden="true">★</span>
+    <span>{{ t }} sur 5@if (nombre() !== undefined) { ({{ nombre() }} avis)}</span>
+  </span>
+} @else {
+  <span class="note vide">Pas encore d'avis</span>
+}

@@ -1,0 +1,43 @@
+<article class="carte-brique" [attr.aria-labelledby]="'titre-brique-' + brique().id">
+  <div class="ligne-haut">
+    <db-langage-badge [langage]="brique().langage" />
+    <db-pastille [type]="typeTest()" />
+  </div>
+  <div class="ligne-pastilles">
+    <db-pastille type="categorie" [libelle]="brique().categorie.nom" />
+    @if (actions() !== 'aucune' || brique().statut === 'MASQUEE') {
+      <db-pastille [type]="brique().statut === 'MASQUEE' ? 'masquee' : 'publiee'" />
+    }
+  </div>
+  <h3 class="titre" [id]="'titre-brique-' + brique().id">{{ brique().titre }}</h3>
+  <p class="resume">{{ brique().resume }}</p>
+  <p class="meta">{{ brique().categorie.nom }} · {{ licence() }}</p>
+  <p class="meta">
+    @if (brique().auteur; as a) {
+      <a class="auteur" [routerLink]="['/developpeurs', a.id]">{{ auteur() }}</a>
+    } @else {
+      {{ auteur() }}
+    }
+    · <db-note [valeur]="brique().noteMoyenne" [nombre]="brique().noteMoyenne === null ? undefined : brique().nombreAvis" />
+  </p>
+  <p class="meta">Version {{ brique().versionCode }}</p>
+
+  <div class="actions-carte">
+    @switch (actions()) {
+      @case ('auteur') {
+        <a class="btn btn-primaire btn-petit" [routerLink]="['/briques', brique().id]" [attr.aria-label]="'Voir la brique ' + brique().titre">Voir</a>
+        <button type="button" class="btn btn-accent btn-petit" [attr.aria-label]="'Modifier la brique ' + brique().titre" (click)="modifier.emit()">Modifier</button>
+        <button type="button" class="btn btn-destructif btn-petit" [attr.aria-label]="'Supprimer la brique ' + brique().titre" (click)="supprimer.emit()">Supprimer</button>
+      }
+      @case ('republier') {
+        <a class="btn btn-primaire btn-petit" [routerLink]="['/briques', brique().id]" [attr.aria-label]="'Voir la brique ' + brique().titre">Voir</a>
+        <button type="button" class="btn btn-accent btn-petit" [disabled]="enCours()" [attr.aria-label]="'Republier la brique ' + brique().titre" (click)="republier.emit()">
+          {{ enCours() ? 'Republication en cours…' : 'Republier' }}
+        </button>
+      }
+      @default {
+        <a class="btn btn-primaire btn-petit" [routerLink]="['/briques', brique().id]" [attr.aria-label]="'Voir la brique ' + brique().titre">Voir la brique</a>
+      }
+    }
+  </div>
+</article>
