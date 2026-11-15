@@ -9,7 +9,7 @@
  *
  * Usage :
  *   DEVBRIK_URL=https://devbrik.example \
- *   COMPTE_A=awa.dev COMPTE_B=moussa.dev DEMO_MOT_DE_PASSE='…' \
+ *   COMPTE_A=fleury COMPTE_B=bousso DEMO_MOT_DE_PASSE='…' \
  *   node scripts/publier-briques-equipe.mjs [--tester] [--simulation]
  *
  * Aucune dépendance (Node.js 18 ou plus). Aucun mot de passe n'est affiché.
@@ -20,7 +20,7 @@ import { fileURLToPath } from 'node:url';
 
 const racine = join(dirname(fileURLToPath(import.meta.url)), '..', 'briques-equipe');
 const URL_API = (process.env.DEVBRIK_URL ?? 'http://localhost:8080').replace(/\/$/, '');
-const COMPTES = [process.env.COMPTE_A ?? 'awa.dev', process.env.COMPTE_B ?? 'moussa.dev'];
+const COMPTES = [process.env.COMPTE_A ?? 'fleury', process.env.COMPTE_B ?? 'bousso'];
 const MOT_DE_PASSE = process.env.DEMO_MOT_DE_PASSE;
 const TESTER = process.argv.includes('--tester');
 const SIMULATION = process.argv.includes('--simulation');

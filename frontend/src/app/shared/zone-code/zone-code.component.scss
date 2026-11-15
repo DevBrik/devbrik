@@ -20,7 +20,18 @@
 .copier:focus-visible { outline: none; }
 .copier:focus-visible .pastille-copie { outline: 3px solid var(--db-focus); outline-offset: 2px; }
 .icone-copie { width: 16px; height: 16px; fill: #F8FAFC; }
-.defilement { display: flex; overflow-x: auto; max-height: 70vh; overflow-y: auto; }
-pre { margin: 0; padding: 1rem 0.75rem; font-size: 0.9rem; line-height: 1.6; }
-.numeros { text-align: right; color: #94A3B8; user-select: none; border-right: 1px solid rgb(248 250 252 / 0.15); }
+// Un seul conteneur défile (numéros et code ensemble). Les <pre> ne doivent pas défiler eux-mêmes :
+// la règle globale « pre { overflow-x: auto } » en faisait deux zones de défilement désynchronisées.
+.defilement {
+  display: flex; align-items: flex-start; overflow: auto; max-height: 70vh;
+  // Barre de défilement assortie au bloc sombre (Chrome, Edge, Firefox).
+  color-scheme: dark;
+  scrollbar-color: rgb(148 163 184 / 0.55) var(--db-encre);
+  scrollbar-width: thin;
+}
+pre { margin: 0; padding: 1rem 0.75rem; font-size: 0.9rem; line-height: 1.6; overflow: visible; }
+.numeros {
+  flex: none; position: sticky; left: 0; z-index: 1; min-height: 100%; background: var(--db-encre);
+  text-align: right; color: #94A3B8; user-select: none; border-right: 1px solid rgb(248 250 252 / 0.15);
+}
 .code { flex: 1; white-space: pre; tab-size: 4; }

@@ -14,6 +14,8 @@
 | Modules briques et demandes (backend) | Claude | Selon les prompts de la section 21 du dossier | Membres 2 et 4 |
 | **Achèvement du frontend** (12 novembre) | Claude | Voir 2 | Voir 4 |
 | **Briques de l'équipe B1 à B3, B5 à B10** (12 novembre) | Claude | Voir 3 | Voir 4 |
+| **Déploiement Datacloud** (15 novembre) | Claude | Pas à pas du déploiement (Docker, HTTPS Let's Encrypt, DuckDNS, sauvegarde), correctif CSP des styles (`inlineCritical`), barre de défilement de la zone de code, script SQL des comptes de l'équipe | Commandes exécutées et vérifiées par le membre 1 sur le serveur |
+| **Vidéo de démonstration** (15 novembre) | Claude ; Playwright ; Kokoro (synthèse vocale, voix `ff_siwis`) | Script d'enregistrement automatique (`scripts/video-demo/`), texte et voix off générés | Vidéo relue par le membre 1 |
 | **Documentation** (12 novembre) | Claude | README, `docs/api.md`, `architecture.md`, `tests.md`, `deploiement.md`, `guide-demo.md`, `LICENCES.md`, ce fichier, collection Postman | Relecture par le membre 1 |
 
 Rien n'est repris d'AgriLion dans le frontend ni dans les briques. Pour le backend, les parties génériques reprises d'AgriLion (dossier 9.5 : gestionnaire d'erreurs, configuration de sécurité, Flyway, Log4j2) sont à confirmer ici par le membre 1 avec la liste des fichiers.

@@ -4,6 +4,8 @@
 
 DevBrik est la bibliothèque de briques de code locales, partagées, testées et notées par les développeurs africains : validation des numéros de téléphone, montants en FCFA, fuseau Africa/Dakar, signatures de webhooks, réseaux instables… Chaque brique est publiée avec son code, un mode d'emploi, une licence permissive et des **preuves de fonctionnement** : notes, avis et signal « testé » daté et lié à la version du code. Les développeurs postent aussi des **demandes** auxquelles la communauté répond, et une **réputation** récompense ceux qui publient et ceux qui aident.
 
+**Démo en ligne : https://devbrik.duckdns.org** (serveur cloud Datacloud, Madrid · Docker Compose, HTTPS Let's Encrypt).
+
 *Concours CADEV 2026 · thème « Construire la plateforme d'échange africaine, pour les devs, par les devs » · équipe « Les Lions et les Lionnes du code ».*
 
 ## Équipe
@@ -60,7 +62,7 @@ Prérequis : Java 21, Node.js 22, PostgreSQL 18 (ou Docker).
    npm start
    ```
    Ouvrir http://localhost:4200.
-4. **Contenu de démonstration** (facultatif) : définir `DEMO_MOT_DE_PASSE` pour le backend (crée `awa.dev` et `moussa.dev`), puis
+4. **Contenu de démonstration** (facultatif) : définir `DEMO_MOT_DE_PASSE` pour le backend (crée `fleury` et `bousso`), puis
    `DEMO_MOT_DE_PASSE=… node scripts/publier-briques-equipe.mjs --tester`.
 
 ## Tests

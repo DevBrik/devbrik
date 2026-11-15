@@ -18,7 +18,7 @@ Aucun mot de passe n'est écrit dans le dépôt (S9). Tout passe par des variabl
   développeur, il n'est jamais promu : un avertissement est écrit dans les journaux.
 - Variables invalides (pseudo mal formé, mot de passe trop court ou trop long) : le démarrage échoue avec un message clair,
   sans afficher le mot de passe.
-- `DemoInitialiseur` crée `awa.dev` (Awa Diop) et `moussa.dev` (Moussa Ndiaye), sans jamais modifier un compte existant.
+- `DemoInitialiseur` crée `fleury` (Fleury Ba) et `bousso` (Bousso Diémé), sans jamais modifier un compte existant.
 - S12 : `DEMO_MOT_DE_PASSE` doit différer de `ADMIN_MOT_DE_PASSE`, sinon aucun compte de démonstration n'est créé.
   Le mot de passe de l'administrateur de démonstration doit aussi différer de celui du développement local
   (`devbrik_dev`) et être changé après la démonstration.

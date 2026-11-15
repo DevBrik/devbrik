@@ -1,0 +1,11 @@
+{
+  "name": "devbrik-video-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "demo": "node enregistrer-demo.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.65.1"
+  }
+}

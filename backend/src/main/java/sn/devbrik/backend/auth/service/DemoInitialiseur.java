@@ -28,10 +28,10 @@ public class DemoInitialiseur implements ApplicationRunner {
     }
 
     static final List<CompteDemo> COMPTES = List.of(
-            new CompteDemo("awa.dev", "Awa Diop", "Sénégal",
-                    "Développeuse backend à Dakar, passionnée par les paiements mobiles."),
-            new CompteDemo("moussa.dev", "Moussa Ndiaye", "Sénégal",
-                    "Étudiant en informatique de gestion, je partage mes petits utilitaires."));
+            new CompteDemo("fleury", "Fleury Ba", "Sénégal",
+                    "Développeur full stack, membre de l'équipe DevBrik."),
+            new CompteDemo("bousso", "Bousso Diémé", "Sénégal",
+                    "Développeuse, membre de l'équipe DevBrik."));
 
     private final String motDePasseDemo;
     private final String motDePasseAdmin;

@@ -20,3 +20,12 @@ Thumbs.db
 # Certificats HTTPS et sauvegardes (serveur)
 deploy/certs/
 sauvegardes/
+
+# Vidéo de démonstration
+scripts/video-demo/node_modules/
+scripts/video-demo/video-tmp/
+scripts/video-demo/*.webm
+scripts/video-demo/*.mp4
+
+# Mots de passe des comptes de l equipe (production)
+scripts/comptes-equipe.sql

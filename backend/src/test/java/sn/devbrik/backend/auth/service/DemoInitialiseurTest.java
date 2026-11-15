@@ -36,8 +36,8 @@ class DemoInitialiseurTest {
 
         new DemoInitialiseur(MDP_DEMO, MDP_ADMIN, comptes).initialiser();
 
-        verify(comptes).creerDeveloppeurSiAbsent(eq("awa.dev"), eq("Awa Diop"), anyString(), anyString(), eq(MDP_DEMO));
-        verify(comptes).creerDeveloppeurSiAbsent(eq("moussa.dev"), eq("Moussa Ndiaye"), anyString(), anyString(),
+        verify(comptes).creerDeveloppeurSiAbsent(eq("fleury"), eq("Fleury Ba"), anyString(), anyString(), eq(MDP_DEMO));
+        verify(comptes).creerDeveloppeurSiAbsent(eq("bousso"), eq("Bousso Diémé"), anyString(), anyString(),
                 eq(MDP_DEMO));
     }
 

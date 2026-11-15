@@ -30,7 +30,7 @@ cp .env.example .env && chmod 600 .env && nano .env
 | `DB_NAME`, `DB_USER`, `DB_PASSWORD` | Base de production (mot de passe différent du développement) |
 | `JWT_SECRET` | `openssl rand -base64 48` (32 caractères au moins) |
 | `ADMIN_PSEUDO`, `ADMIN_MOT_DE_PASSE` | Premier administrateur (pseudo valide et non réservé, par exemple `admin.demo`) |
-| `DEMO_MOT_DE_PASSE` | Comptes `awa.dev` et `moussa.dev` ; différent de `ADMIN_MOT_DE_PASSE` (S12) |
+| `DEMO_MOT_DE_PASSE` | Comptes `fleury` et `bousso` ; différent de `ADMIN_MOT_DE_PASSE` (S12) |
 | `NGINX_CONF` | `http.conf` avant le certificat, `https.conf` après |
 
 `deploy/.env` est ignoré par Git : il ne quitte jamais le serveur.
