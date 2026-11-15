@@ -5,7 +5,7 @@ Serveur cloud Datacloud : Ubuntu Server 24.04 LTS, 2 cœurs, 4 Go, 60 Go, Madrid
 ## 1. Préparer le serveur
 
 ```bash
-ssh -i ~/.ssh/id_ed25519 ubuntu@<IP>
+ssh -i ~/.ssh/devbrik-prod.pem root@<IP>   # clé fournie par Datacloud ; utilisateur root
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y docker.io docker-compose-v2 git ufw
 sudo usermod -aG docker $USER   # puis se reconnecter
@@ -47,7 +47,7 @@ curl -i http://<IP>/api/categories # 200 et 8 catégories
 
 ## 4. Domaine et HTTPS
 
-1. Enregistrement DNS `A` vers l'IP du serveur.
+1. Enregistrement DNS `A` vers l'IP du serveur. Production actuelle : sous-domaine gratuit DuckDNS `devbrik.duckdns.org` (champ « current ip » = IP du serveur), ce qui donne https://devbrik.duckdns.org.
 2. Certificat Let's Encrypt (le conteneur nginx arrêté pour libérer le port 80) :
    ```bash
    docker compose stop nginx

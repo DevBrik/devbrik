@@ -23,7 +23,7 @@ DevBrik est la bibliothèque de briques de code locales, partagées, testées et
 | Niveau | Contenu | État |
 | --- | --- | --- |
 | P0 | Comptes (pseudo, jeton 12 h) ; publier, modifier, supprimer une brique ; liste avec recherche, filtres, tris ; fiche avec « Copier le code » ; catégories et langages ; administrateur ; déploiement HTTPS | Fait |
-| P1 | Notes et avis ; « testé » OK / KO avec environnement ; signalements et modération ; demandes, réponses, acceptation ; profil public ; gestion du compte (profil, mot de passe, export, suppression) ; statistiques ; 10 briques réelles | Fait (briques à publier sur le serveur : `scripts/publier-briques-equipe.mjs`) |
+| P1 | Notes et avis ; « testé » OK / KO avec environnement ; signalements et modération ; demandes, réponses, acceptation ; profil public ; gestion du compte (profil, mot de passe, export, suppression) ; statistiques ; 10 briques réelles | Fait (10 briques publiées en ligne, deux par membre) |
 | P2 | Classement des contributeurs | Fait |
 
 ## Stack
